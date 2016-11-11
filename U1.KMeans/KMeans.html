@@ -11803,7 +11803,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>There is not a unique formal definition of the clustering problem. Different algorithms group data into clusters following different criteria. The appropriate choice of the clustering algorithm may depend on the particular application scenario.</p>
 <p>The image below, taken from the scikit-learn site, shows that different algorithms follow different grouping criteria, clustering the same datasets in different forms.</p>
-<p>&lt;img src="<a href="http://scikit-learn.org/stable/_images/sphx_glr_plot_cluster_comparison_001.png">http://scikit-learn.org/stable/_images/sphx_glr_plot_cluster_comparison_001.png</a>", width=600&gt;</p>
+<p><img src="http://scikit-learn.org/stable/_images/sphx_glr_plot_cluster_comparison_001.png", width=600></p>
 
 </div>
 </div>
@@ -11832,7 +11832,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="2.-The-$K$-means-algorithm">2. The $K$-means algorithm<a class="anchor-link" href="#2.-The-$K$-means-algorithm">&#182;</a></h2><p>$K$-Means is a proximity-based clustering algorithm. It searches for cluster centers or <strong>centroids</strong> which are representative of all points in a cluster. Representativenes is measures by proximity: "good" cluster are those such that all data points are close to its centroid.</p>
 <p>Given a dataset $\mathcal{S} = \{{\bf x}^{(0)},\ldots,{\bf x}^{(N-1)}\}$, the $K$-means tries to minimize the following <strong>distortion function</strong>:</p>
-$$D = \sum_{k=1}^K \sum_{{\bf x} \in {\cal{G}}_k}\|{\bf x}-{\mu}_k\|_2^2$$<p>where ${\mu}_k$ is the centroid of cluster $\mathcal{G}_k$.</p>
+$$D = \sum_{k=1}^K \sum_{{\bf x} \in {\cal{G}}_k}\|{\bf x}-{\mu}_k\|_2^2$$<p>where ${\mu}_k$ is the centroid of cluster $\mathcal{G}_k$, and $K$ a preselected number of clusters.</p>
 
 </div>
 </div>
@@ -11845,7 +11845,9 @@ $$D = \sum_{k=1}^K \sum_{{\bf x} \in {\cal{G}}_k}\|{\bf x}-{\mu}_k\|_2^2$$<p>whe
 <h3 id="2.1.-Steps-of-the-algorithm">2.1. Steps of the algorithm<a class="anchor-link" href="#2.1.-Steps-of-the-algorithm">&#182;</a></h3><p>After initialization of centroids:</p>
 <ol>
 <li>Assign each data point to closest centroid</li>
-<li>Recalculate centroids positions as the average of the data points from its cluster</li>
+<li>Recalculate centroids positions as the average of the data points from its cluster
+$$\mu_k \leftarrow \frac{1}{\#{\cal{G}}_k}\sum_{{\bf x} \in {\cal{G}}_k} {\bf x}$$
+(where $\#{\cal{G}}_k$ is the number of data points assigned to cluster $k$).</li>
 <li>Go back to 1 until no further changes or max iterations achieved</li>
 </ol>
 
@@ -11865,7 +11867,7 @@ $$D = \sum_{k=1}^K \sum_{{\bf x} \in {\cal{G}}_k}\|{\bf x}-{\mu}_k\|_2^2$$<p>whe
 <li>User-selected</li>
 </ol>
 <p>Typically, different runs are executed, and the best one is kept.</p>
-<p>Check out &lt;a href=<a href="http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html&gt;">http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html&gt;</a> the Scikit-Learn site&lt;/a&gt; for parameters, attributes, and methods.</p>
+<p>Check out <a href=http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html> the Scikit-Learn site</a> for parameters, attributes, and methods.</p>
 
 </div>
 </div>
