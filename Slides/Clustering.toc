@@ -1,5 +1,0 @@
-\beamer@endinputifotherversion {3.20pt}
-\beamer@sectionintoc {1}{Introduction and organization}{2}{0}{1}
-\beamer@sectionintoc {2}{K-means}{5}{0}{2}
-\beamer@sectionintoc {3}{Spectral clustering}{7}{0}{3}
-\beamer@sectionintoc {4}{Agglomerative Clustering algorithms}{10}{0}{4}
