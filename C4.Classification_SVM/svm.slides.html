@@ -34,6 +34,29 @@ if( window.location.search.match( /print-pdf/gi ) ) {
 <script src="reveal.js/lib/js/html5shiv.js"></script>
 <![endif]-->
 
+<!-- Loading the mathjax macro -->
+<!-- Load mathjax -->
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration -->
+
 <!-- Get Font-awesome from cdn -->
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css">
 
@@ -145,11 +168,9 @@ if( window.location.search.match( /print-pdf/gi ) ) {
 
 <style type="text/css">
 /* Overrides of notebook CSS for static HTML export */
-html {
-  overflow-y: auto;
-}
 .reveal {
   font-size: 160%;
+  overflow-y: scroll;
 }
 .reveal pre {
   width: inherit;
@@ -202,6 +223,14 @@ div.output_prompt {
   /* 5px right shift to account for margin in parent container */
   margin: 5px 5px 0 0;
 }
+div.text_cell.rendered .rendered_html {
+  /* The H1 height seems miscalculated, we are just hidding the scrollbar */
+  overflow-y: hidden;
+}
+a.anchor-link {
+  /* There is still an anchor, we are only hidding it */
+  display: none;
+}
 .rendered_html p {
   text-align: inherit;
 }
@@ -215,9 +244,7 @@ div.output_prompt {
 <body>
 <div class="reveal">
 <div class="slides">
-<section>
-    <section>
-    
+<section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -240,42 +267,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div style=display:none>
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># To visualize plots in the notebook</span>
-<span class="o">%</span><span class="k">matplotlib</span> inline
-
-<span class="c"># Imported libraries</span>
-<span class="c">#import csv</span>
-<span class="c">#import random</span>
-<span class="c">#import matplotlib</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">mpl_toolkits</span> <span class="kn">import</span> <span class="n">mplot3d</span>
-<span class="c">#import pylab</span>
-
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="c">#from sklearn.preprocessing import PolynomialFeatures</span>
-<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">svm</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets.samples_generator</span> <span class="kn">import</span> <span class="n">make_blobs</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets.samples_generator</span> <span class="kn">import</span> <span class="n">make_circles</span>
-
-<span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">interact</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-    </div></section>
-    </section><section>
-    <section>
-    
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -297,10 +289,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div></section>
-    </section><section>
-    <section>
-    
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -313,7 +302,6 @@ div.output_prompt {
 </div>
 </div>
 </div></section><section>
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
@@ -618,7 +606,6 @@ QghhlRQIIYQQVkmBEEIIYZUUCCGEEFb9P9aGKYdmcr7MAAAAAElFTkSuQmCC
 </div>
 
 </div></section><section>
-    
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -628,8 +615,7 @@ QghhlRQIIYQQVkmBEEIIYZUUCCGEEFb9P9aGKYdmcr7MAAAAAElFTkSuQmCC
 
 </div>
 </div>
-</div></section><section>
-    
+</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
@@ -994,8 +980,7 @@ QoggShCEEEIE/T+oim/reUC36QAAAABJRU5ErkJggg==
 </div>
 </div>
 
-</div></section><section>
-    
+</div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -1008,7 +993,6 @@ QoggShCEEEIE/T+oim/reUC36QAAAABJRU5ErkJggg==
 </div>
 </div>
 </div></section><section>
-    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
@@ -1424,7 +1408,6 @@ kvQMcDAiDjQdyGw0/I5yZmaWy1sQZmaWyw3CzMxyuUGYmVkuNwgzM8vlBmFmZrncIMzMLJcbhJmZ
 </div>
 
 </div></section><section>
-    
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -1434,10 +1417,7 @@ kvQMcDAiDjQdyGw0/I5yZmaWy1sQZmaWyw3CzMxyuUGYmVkuNwgzM8vlBmFmZrncIMzMLJcbhJmZ
 
 </div>
 </div>
-</div></section>
-    </section><section>
-    <section>
-    
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -1457,7 +1437,6 @@ $$\mathbf{w}^\intercal \mathbf{x} - b=-1.$$</p>
 </div>
 </div>
 </div></section><section>
-    
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -1470,7 +1449,6 @@ $$\text{Distance between hyperplanes} = \left[\frac{\mathbf{w}}{\|\mathbf{w}\|}\
 </div>
 </div>
 </div></section><section>
-    
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -1492,7 +1470,6 @@ $$
 </div>
 </div>
 </div></section><section>
-    
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -1507,10 +1484,7 @@ $$<p>This is a particular case of a <em>quadratic programming</em> problem.</p>
 
 </div>
 </div>
-</div></section>
-    </section><section>
-    <section>
-    
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -1531,7 +1505,6 @@ $$</p>
 </div>
 </div>
 </div></section><section>
-    
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -1546,7 +1519,6 @@ $$<p>where ${\cal{S}}_{SV}$ is the set of indexes associated to support vectors.
 </div>
 </div>
 </div></section><section>
-    
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -1560,10 +1532,7 @@ b = \frac{1}{N_{SV}} \sum_{k\in {\cal{S}}_{SV}}{(\mathbf{w}^\intercal\mathbf{x}^
 $$
 </div>
 </div>
-</div></section>
-    </section><section>
-    <section>
-    
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -1593,7 +1562,6 @@ $$
 </div>
 </div>
 </div></section><section>
-    
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -1615,10 +1583,7 @@ $</li>
 
 </div>
 </div>
-</div></section>
-    </section><section>
-    <section>
-    
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -1629,8 +1594,7 @@ $</li>
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="20">
-    
+</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
@@ -1662,9 +1626,7 @@ $</li>
 </div>
 </div>
 
-</div>
-    </div><div class="fragment" data-fragment-index="21">
-    
+</div></div><div class="fragment">
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -1674,9 +1636,7 @@ $</li>
 
 </div>
 </div>
-</div>
-    </div></section><section>
-    
+</div></div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
@@ -2001,7 +1961,6 @@ dQH8zhiLBhCJoj7tQ2auyehoGjshhFgRi7/TJoQQ8h8KbUIIsSIU2oQQYkUotAkhxIpQaBNCiBWh
 </div>
 
 </div></section><section>
-    
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -2011,8 +1970,7 @@ dQH8zhiLBhCJoj7tQ2auyehoGjshhFgRi7/TJoQQ8h8KbUIIsSIU2oQQYkUotAkhxIpQaBNCiBWh
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="24">
-    
+</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
@@ -2344,9 +2302,7 @@ hBBiQyi0CSHEhlBoE0KIDaHQJoQQG0KhTQghNoRCmxBCbMj/A7D1ug4Af/5vAAAAAElFTkSuQmCC
 </div>
 </div>
 
-</div>
-    </div></section><section>
-    
+</div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -2356,289 +2312,7 @@ hBBiQyi0CSHEhlBoE0KIDaHQJoQQG0KhTQghNoRCmxBCbMj/A7D1ug4Af/5vAAAAAElFTkSuQmCC
 
 </div>
 </div>
-</div><div style=display:none>
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">plot_svm</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-                      <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cluster_std</span><span class="o">=</span><span class="mf">0.60</span><span class="p">)</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:</span><span class="n">N</span><span class="p">]</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="n">N</span><span class="p">]</span>
-    <span class="n">clf</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s">&#39;linear&#39;</span><span class="p">)</span>
-    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">&#39;copper&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
-    <span class="n">plot_svc_decision_function</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">())</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">clf</span><span class="o">.</span><span class="n">support_vectors_</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">clf</span><span class="o">.</span><span class="n">support_vectors_</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
-                <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">)</span>
-    
-<span class="n">interact</span><span class="p">(</span><span class="n">plot_svm</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">],</span> <span class="n">kernel</span><span class="o">=</span><span class="s">&#39;linear&#39;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;function __main__.plot_svm&gt;</pre>
-</div>
-
-</div>
-
-<div class="output_area"><div class="prompt"></div>
-
-
-<div class="output_png output_subarea ">
-<img src="data:image/png;base64,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
-"
->
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    </div><div style=display:none>
-    
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Notice the unique thing about SVM is that only the support vectors matter: that is, if you moved any of the other points without letting them cross the decision boundaries, they would have no effect on the classification results!</p>
-
-</div>
-</div>
-</div>
-    </div></section>
-    </section><section>
-    <section>
-    
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -2655,7 +2329,6 @@ $$
 </div>
 </div>
 </div></section><section>
-    
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -2679,10 +2352,7 @@ $$<p>Note that the only difference with the separable case is given by the const
 
 </div>
 </div>
-</div></section>
-    </section><section>
-    <section>
-    
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -2696,7 +2366,6 @@ $$<p>Note that the only difference with the separable case is given by the const
 </div>
 </div>
 </div></section><section>
-    
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -2710,7 +2379,6 @@ $$\begin{align}\hat y({\mathbf{x}}) & = {\mathbf {w^\ast}}^\intercal {\mathbf{x}
 </div>
 </div>
 </div></section><section>
-    
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -2726,10 +2394,7 @@ $$\begin{align}\hat y({\mathbf{x}}) & = {\mathbf {w^\ast}}^\intercal {\mathbf{x}
 
 </div>
 </div>
-</div></section>
-    </section><section>
-    <section>
-    
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -2741,8 +2406,7 @@ To motivate the need for kernels, let's look at some data which is not linearly 
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="34">
-    
+</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
@@ -3141,9 +2805,7 @@ EVJyFxEpQkruIiJFSMldRKQIKbmLiBQhJXcRkSKk5C4iUoT+B0JjdWmHMlwjAAAAAElFTkSuQmCC
 </div>
 </div>
 
-</div>
-    </div></section><section>
-    
+</div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -3155,8 +2817,7 @@ One way we can adjust this is to apply a <strong>kernel</strong>, which is some 
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="36">
-    
+</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
@@ -3169,9 +2830,7 @@ One way we can adjust this is to apply a <strong>kernel</strong>, which is some 
 </div>
 </div>
 
-</div>
-    </div></section><section>
-    
+</div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -3181,8 +2840,7 @@ One way we can adjust this is to apply a <strong>kernel</strong>, which is some 
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="38">
-    
+</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
@@ -3766,9 +3424,7 @@ oF4QEBAQMCNC0BUQEBAwI/8f4H30Uj2jT3sAAAAASUVORK5CYII=
 </div>
 </div>
 
-</div>
-    </div></section><section>
-    
+</div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -3779,8 +3435,7 @@ This is a relatively simple kernel; SVM has a more sophisticated version of this
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="40">
-    
+</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
@@ -4346,9 +4001,7 @@ CATVECHuAoFAUA0R4i4QCATVECHuAoFAUA0R4i4QCATVkP8DGC/QRFiGpxwAAAAASUVORK5CYII=
 </div>
 </div>
 
-</div>
-    </div></section><section>
-    
+</div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -4359,7 +4012,6 @@ CATVECHuAoFAUA0R4i4QCATVECHuAoFAUA0R4i4QCATVkP8DGC/QRFiGpxwAAAAASUVORK5CYII=
 </div>
 </div>
 </div></section><section>
-    
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -4369,10 +4021,7 @@ CATVECHuAoFAUA0R4i4QCATVECHuAoFAUA0R4i4QCATVkP8DGC/QRFiGpxwAAAAASUVORK5CYII=
 
 </div>
 </div>
-</div></section>
-    </section><section>
-    <section>
-    
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -4387,62 +4036,61 @@ CATVECHuAoFAUA0R4i4QCATVECHuAoFAUA0R4i4QCATVkP8DGC/QRFiGpxwAAAAASUVORK5CYII=
 
 </div>
 </div>
-</div></section>
-    </section>
+</div></section></section>
 </div>
 </div>
 
-<script src="reveal.js/lib/js/head.min.js"></script>
-
-<script src="reveal.js/js/reveal.js"></script>
-
 <script>
 
-// Full list of configuration options available here: https://github.com/hakimel/reveal.js#configuration
-Reveal.initialize({
-controls: true,
-progress: true,
-history: true,
+require(
+    {
+      // it makes sense to wait a little bit when you are loading
+      // reveal from a cdn in a slow connection environment
+      waitSeconds: 15
+    },
+    [
+      "reveal.js/lib/js/head.min.js",
+      "reveal.js/js/reveal.js"
+    ],
 
-theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/none
+    function(head, Reveal){
 
-// Optional libraries used to extend on reveal.js
-dependencies: [
-{ src: "reveal.js/lib/js/classList.js", condition: function() { return !document.body.classList; } },
-{ src: "reveal.js/plugin/notes/notes.js", async: true, condition: function() { return !!document.body.classList; } }
-]
-});
-</script>
+        // Full list of configuration options available here: https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
 
-<!-- Loading mathjax macro -->
-<!-- Load mathjax -->
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
-    <!-- MathJax configuration -->
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-            processEscapes: true,
-            processEnvironments: true
-        },
-        // Center justify equations in code and markdown cells. Elsewhere
-        // we use CSS to left justify single line equations in code cells.
-        displayAlign: 'center',
-        "HTML-CSS": {
-            styles: {'.MathJax_Display': {"margin": 0}},
-            linebreaks: { automatic: true }
-        }
-    });
-    </script>
-    <!-- End of mathjax configuration -->
+            theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+            transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/none
 
-<script>
-Reveal.addEventListener( 'slidechanged', function( event ) {
-  window.scrollTo(0,0);
-  MathJax.Hub.Rerender(event.currentSlide);
-});
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                { src: "reveal.js/lib/js/classList.js",
+                  condition: function() { return !document.body.classList; } },
+                { src: "reveal.js/plugin/notes/notes.js",
+                  async: true,
+                  condition: function() { return !!document.body.classList; } }
+            ]
+        });
+
+        var update = function(event){
+          if(MathJax.Hub.getAllJax(Reveal.getCurrentSlide())){
+            MathJax.Hub.Rerender(Reveal.getCurrentSlide());
+          }
+        };
+
+        Reveal.addEventListener('slidechanged', update);
+
+        var update_scroll = function(event){
+          $(".reveal").scrollTop(0);
+        };
+
+        Reveal.addEventListener('slidechanged', update_scroll);
+
+    }
+);
+
 </script>
 
 </body>
