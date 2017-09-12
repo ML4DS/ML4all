@@ -58,4 +58,5 @@ target/
 # Other useless things [added by JCS]
 .DS_Store
 .pyc
-*.ipynb_checkpoints/
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
