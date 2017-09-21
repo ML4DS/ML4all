@@ -31,7 +31,7 @@ for dirpath, dirnames, filenames in os.walk("."):
         					state = True
 
         os.system('jupyter nbconvert --to html ' + tgfile.replace(' ', '\ '))
-
+        os.system('jupyter nbconvert --to html ' + srcfile.replace(' ', '\ '))
 
 
 
