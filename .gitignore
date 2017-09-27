@@ -60,3 +60,4 @@ target/
 .pyc
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
+.zip
