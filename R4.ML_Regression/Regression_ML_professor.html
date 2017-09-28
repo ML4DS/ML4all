@@ -11795,6 +11795,7 @@ Author: Jesús Cid-Sueiro (jesus.cid@uc3m.es)
 
 <pre><code>Changes: v.1.0 - First version, expanding some cells from the Bayesian Regression 
                  notebook
+         v.1.1 - Python 3 version.
 
 Pending changes: * Include regression on the stock data</code></pre>
 
@@ -11878,7 +11879,7 @@ Pending changes: * Include regression on the stock data</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="1.4.-Parametric-model-based-regression">1.4. Parametric model-based regression<a class="anchor-link" href="#1.4.-Parametric-model-based-regression">&#182;</a></h3><p>How can we estimate the posterior probability function of the target variable $s$? In this section we will explore a parametric estimation method: let us assume that $p$ belongs to a parametric family of distributions $p(s|{\bf x},{\bf w})$, where ${\bf w}$ is some unknown parameter. We will use the training data to estimate ${\bf w}$</p>
+<h3 id="&#160;1.4.-Parametric-model-based-regression">&#160;1.4. Parametric model-based regression<a class="anchor-link" href="#&#160;1.4.-Parametric-model-based-regression">&#182;</a></h3><p>How can we estimate the posterior probability function of the target variable $s$? In this section we will explore a parametric estimation method: let us assume that $p$ belongs to a parametric family of distributions $p(s|{\bf x},{\bf w})$, where ${\bf w}$ is some unknown parameter. We will use the training data to estimate ${\bf w}$</p>
 <p>&lt;img src="figs/ParametricReg.png", width=300&gt;</p>
 <p>The estimation of ${\bf w}$ from a given dataset $\mathcal{D}$ is the goal of the following sections</p>
 
@@ -11911,13 +11912,13 @@ $$</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>To compute the likelihood function we will assume that the inputs do not depend on ${\bf w}$ (i.e., $p({\bf x}|{\bf w}) = p({\bf x})$. This means that ${\bf w}$ is a parameter of the posterior distribution of $s$ and not a parameter of the marginal distribution.</p>
 <p>Then we can write</p>
 $$p(\mathcal{D}|{\bf w}) 
     = p({\bf s}, {\bf X}|{\bf w}) 
     = p({\bf s} | {\bf X}, {\bf w}) p({\bf X}|{\bf w})
     = p({\bf s} | {\bf X}, {\bf w}) p({\bf X})
-$$<p>(where, in the last step, we have used the fact that the inputs do not depend on ${\bf w}$, which is a parameter of the posterior distribution of $s$).</p>
-<p>Thus, we can express the estimation problem in
+$$<p>and we can express the estimation problem as the computation of
 $$
 \hat{\bf w}_{\text{ML}} = \arg \max_{\bf w} p({\bf s}|{\bf X},{\bf w})
 $$</p>
@@ -12246,13 +12247,14 @@ $$</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Solution</strong>:</p>
-<p>The likelihood function is 
+<SOL>
+The likelihood function is 
 $$
 p({\bf s}|w, {\bf X}) 
     = \prod_{k=1}^K w x^{(k)} \exp(- w x^{(k)} s^{(k)})
     = w^K \left(\prod_{k=1}^K x^{(k)}\right)  \exp\left(- w \sum_{k=1}^K x^{(k)} s^{(k)}\right)
-$$</p>
-
+$$
+</SOL>
 </div>
 </div>
 </div>
@@ -12315,7 +12317,8 @@ $$</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Solution</strong>:</p>
-<p>Applyng the logarithm to the likelihood function we get
+<SOL>
+Applyng the logarithm to the likelihood function we get
 $$
 \log p({\bf s}|{\bf w}, {\bf X}) 
     = K\log  w + \sum_{k=1}^K \log\left(x^{(k)}\right)  - w {\bf X}^\top {\bf s}
@@ -12323,9 +12326,8 @@ $$
 Whis is minimum for 
 $$
 w_\text{ML} = \frac{K}{{\bf X}^\top {\bf s}}
-$$</p>
-<p>&lt;/SOL&gt;</p>
-
+$$
+</SOL>
 </div>
 </div>
 </div>
