@@ -1,0 +1,20 @@
+\beamer@endinputifotherversion {3.36pt}
+\beamer@sectionintoc {1}{1. Overview and block objectives}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{NLP}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{Block overview}{6}{0}{1}
+\beamer@sectionintoc {2}{Corpus acquisition}{8}{0}{2}
+\beamer@subsectionintoc {2}{1}{NSF dataset construction}{10}{0}{2}
+\beamer@sectionintoc {3}{Corpus preprocessing}{12}{0}{3}
+\beamer@subsectionintoc {3}{1}{Natural Language Processing Toolkit (NLTK)}{14}{0}{3}
+\beamer@subsectionintoc {3}{2}{Tokenization}{16}{0}{3}
+\beamer@subsectionintoc {3}{3}{Homogenization}{17}{0}{3}
+\beamer@subsectionintoc {3}{4}{Cleaning}{21}{0}{3}
+\beamer@subsectionintoc {3}{5}{Vectorization}{22}{0}{3}
+\beamer@subsectionintoc {3}{6}{Exercises}{24}{0}{3}
+\beamer@sectionintoc {4}{Topic Modeling with LDA}{25}{0}{4}
+\beamer@subsectionintoc {4}{1}{Topic Models}{26}{0}{4}
+\beamer@subsectionintoc {4}{2}{LDA}{29}{0}{4}
+\beamer@subsectionintoc {4}{3}{Topic visualization}{34}{0}{4}
+\beamer@subsectionintoc {4}{4}{Open issues}{35}{0}{4}
+\beamer@subsectionintoc {4}{5}{Exercises}{36}{0}{4}
+\beamer@sectionintoc {5}{Graph Analysis}{37}{0}{5}
