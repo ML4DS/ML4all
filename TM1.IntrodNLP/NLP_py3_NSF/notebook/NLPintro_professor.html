@@ -11809,6 +11809,8 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">zipfile</span> <span class="k">as</span> <span class="nn">zp</span>
 <span class="c1"># import shutil</span>
 <span class="c1"># import difflib</span>
+
+<span class="kn">import</span> <span class="nn">gensim</span>
 </pre></div>
 
 </div>
@@ -12314,7 +12316,7 @@ institution       (tuple with elements: name, zipcode, and statecode)</code></pr
 
 <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">text</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">corpus_raw</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">n</span><span class="o">%</span><span class="k">100</span>:
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">Tokenizing abstract&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;out of&#39;</span><span class="p">,</span> <span class="n">ndocs</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">Tokenizing document&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;out of&#39;</span><span class="p">,</span> <span class="n">ndocs</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1"># Tokenize each text entry. </span>
     <span class="c1"># tokens = &lt;FILL IN&gt;</span>
@@ -12369,7 +12371,7 @@ institution       (tuple with elements: name, zipcode, and statecode)</code></pr
 
 <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">corpus_tokens</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">n</span><span class="o">%</span><span class="k">1000</span>:
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">Filtering abstract&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;out of&#39;</span><span class="p">,</span> <span class="n">ndocs</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">Filtering document&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;out of&#39;</span><span class="p">,</span> <span class="n">ndocs</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1">#&lt;SOL&gt;</span>
     <span class="n">corpus_filtered</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">el</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">el</span><span class="o">.</span><span class="n">isalnum</span><span class="p">()])</span>
@@ -12448,13 +12450,13 @@ institution       (tuple with elements: name, zipcode, and statecode)</code></pr
 
 <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">doc</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">corpus_filtered</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">n</span><span class="o">%</span><span class="k">200</span>:
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">Lemmatizing abstract&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;out of&#39;</span><span class="p">,</span> <span class="n">ndocs</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">Lemmatizing document&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;out of&#39;</span><span class="p">,</span> <span class="n">ndocs</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1">#&lt;SOL&gt;</span>
     <span class="n">corpus_lemmatized</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">wnl</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">el</span><span class="p">)</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">])</span>
     <span class="c1">#&lt;/SOL&gt;</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Result for the first abstract in the dataset applying lemmatization&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Result for the first document in the dataset applying lemmatization&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">corpus_lemmatized</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 
@@ -12494,13 +12496,13 @@ institution       (tuple with elements: name, zipcode, and statecode)</code></pr
 
 <span class="n">corpus_clean</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">abstract</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">corpus_lemmatized</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">doc</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">corpus_lemmatized</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">n</span><span class="o">%</span><span class="k">100</span>:
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">Cleaning abstract&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;out of&#39;</span><span class="p">,</span> <span class="n">ndocs</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">Cleaning document&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;out of&#39;</span><span class="p">,</span> <span class="n">ndocs</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         
-    <span class="c1"># Remove all tokens in the stopwords list and append the result to clean_abstracts</span>
+    <span class="c1"># Remove all tokens in the stopwords list and append the result to corpus_clean</span>
     <span class="c1"># &lt;SOL&gt;</span>
-    <span class="n">clean_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">abstract</span> <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords_en</span><span class="p">]</span>    
+    <span class="n">clean_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span> <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords_en</span><span class="p">]</span>    
     <span class="c1"># &lt;/SOL&gt;</span>
     <span class="n">corpus_clean</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clean_tokens</span><span class="p">)</span>
     
@@ -12529,9 +12531,7 @@ institution       (tuple with elements: name, zipcode, and statecode)</code></pr
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">gensim</span>
-
-<span class="c1"># Create dictionary of tokens</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create dictionary of tokens</span>
 <span class="n">D</span> <span class="o">=</span> <span class="n">gensim</span><span class="o">.</span><span class="n">corpora</span><span class="o">.</span><span class="n">Dictionary</span><span class="p">(</span><span class="n">corpus_clean</span><span class="p">)</span>
 <span class="n">n_tokens</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
 
@@ -12606,7 +12606,9 @@ institution       (tuple with elements: name, zipcode, and statecode)</code></pr
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">corpus_bow</span> <span class="o">=</span> <span class="p">[</span><span class="n">D</span><span class="o">.</span><span class="n">doc2bow</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">corpus_clean</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
+<span class="n">corpus_bow</span> <span class="o">=</span> <span class="p">[</span><span class="n">D</span><span class="o">.</span><span class="n">doc2bow</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">corpus_clean</span><span class="p">]</span>
+<span class="c1"># &lt;/SOL&gt;</span>
 </pre></div>
 
 </div>

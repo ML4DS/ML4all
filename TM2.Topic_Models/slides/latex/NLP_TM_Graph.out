@@ -1,0 +1,19 @@
+\BOOKMARK [2][]{Outline0.1}{1. Overview and block objectives}{}% 1
+\BOOKMARK [3][]{Outline0.1.1.3}{NLP}{Outline0.1}% 2
+\BOOKMARK [3][]{Outline0.1.2.6}{Block overview}{Outline0.1}% 3
+\BOOKMARK [2][]{Outline0.2}{Corpus acquisition}{}% 4
+\BOOKMARK [3][]{Outline0.2.1.10}{NSF dataset construction}{Outline0.2}% 5
+\BOOKMARK [2][]{Outline0.3}{Corpus preprocessing}{}% 6
+\BOOKMARK [3][]{Outline0.3.1.14}{Natural Language Processing Toolkit \(NLTK\)}{Outline0.3}% 7
+\BOOKMARK [3][]{Outline0.3.2.16}{Tokenization}{Outline0.3}% 8
+\BOOKMARK [3][]{Outline0.3.3.17}{Homogenization}{Outline0.3}% 9
+\BOOKMARK [3][]{Outline0.3.4.21}{Cleaning}{Outline0.3}% 10
+\BOOKMARK [3][]{Outline0.3.5.22}{Vectorization}{Outline0.3}% 11
+\BOOKMARK [3][]{Outline0.3.6.24}{Exercises}{Outline0.3}% 12
+\BOOKMARK [2][]{Outline0.4}{Topic Modeling with LDA}{}% 13
+\BOOKMARK [3][]{Outline0.4.1.26}{Topic Models}{Outline0.4}% 14
+\BOOKMARK [3][]{Outline0.4.2.29}{LDA}{Outline0.4}% 15
+\BOOKMARK [3][]{Outline0.4.3.34}{Topic visualization}{Outline0.4}% 16
+\BOOKMARK [3][]{Outline0.4.4.35}{Open issues}{Outline0.4}% 17
+\BOOKMARK [3][]{Outline0.4.5.36}{Exercises}{Outline0.4}% 18
+\BOOKMARK [2][]{Outline0.5}{Graph Analysis}{}% 19
