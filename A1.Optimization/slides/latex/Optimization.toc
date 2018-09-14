@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.36pt}
+\beamer@sectionintoc {1}{1. Overview of Optimization}{4}{0}{1}
+\beamer@subsectionintoc {1}{1}{The role of optimization in Machine Learning}{4}{0}{1}
+\beamer@subsectionintoc {1}{2}{Convex optimization}{8}{0}{1}
+\beamer@sectionintoc {2}{2. Gradient and Hessian-Based Methods}{11}{0}{2}
+\beamer@subsectionintoc {2}{1}{Gradient Descent}{11}{0}{2}
+\beamer@subsectionintoc {2}{2}{Newton's Method}{14}{0}{2}
