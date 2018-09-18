@@ -3,6 +3,27 @@ import os.path
 import sys
 
 
+"""
+Simple code to transform a teacher version of a notebook into a student
+version, removing the solutions to the proposed exercises.
+
+Usage:
+
+    python generate-student.py [path]
+
+where path is the path to the input file or files:
+
+    - If path points to a teacher file, it will be transformed
+    - If path is a directory, all teacher notebooks in
+
+If no path is provided, it is requested.
+
+The name of the teacher notebook must end with the suffix contained in variable
+sufixsrd (which is _professor.ipynb at the time of writing these lines). All
+notebooks with a different extension will be ignored.
+"""
+
+
 def transform_nb(dirpath, src_fname, tg_fname):
     """
     Transforms teacher notebook version in src_fname in folder dirpath into a

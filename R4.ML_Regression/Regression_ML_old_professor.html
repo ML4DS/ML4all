@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Regression_ML_student</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Regression_ML_old_professor</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -11779,7 +11779,7 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Parametric-Model-Based-regression">Parametric Model-Based regression<a class="anchor-link" href="#Parametric-Model-Based-regression">&#182;</a></h1>
-<pre><code>Notebook version: 1.2 (Sep 17, 2018)
+<pre><code>Notebook version: 1.0 (Sep 23, 2016)
 
 Author: Jesús Cid-Sueiro (jesus.cid@uc3m.es)
         Jerónimo Arenas García (jarenas@tsc.uc3m.es)</code></pre>
@@ -11796,7 +11796,6 @@ Author: Jesús Cid-Sueiro (jesus.cid@uc3m.es)
 <pre><code>Changes: v.1.0 - First version, expanding some cells from the Bayesian Regression 
                  notebook
          v.1.1 - Python 3 version.
-         v.1.2 - Revised presentation. 
 
 Pending changes: * Include regression on the stock data</code></pre>
 
@@ -11805,7 +11804,7 @@ Pending changes: * Include regression on the stock data</code></pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Import some libraries that will be necessary for working with data and displaying plots</span>
@@ -11830,20 +11829,7 @@ Pending changes: * Include regression on the stock data</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="A-quick-note-on-the-mathematical-notation">A quick note on the mathematical notation<a class="anchor-link" href="#A-quick-note-on-the-mathematical-notation">&#182;</a></h2><p>In this notebook we will make extensive use of probability distributions. In general, we will use capital leters
-${\bf X}$, $S$, $E$ ..., to denote random variables, and lower-case letters ${\bf x}$, $s$, $\epsilon$ ..., to denote the values they can take.</p>
-<p>In general, we will use letter $p$ for probability density functions (pdf). When necessary, we will use, capital subindices to make the random variable explicit. For instance, $p_{{\bf X}, S}({\bf x}, s)$ would be the joind pdf of random variables ${\bf X}$ and $S$ at values ${\bf x}$ and $s$, respectively.</p>
-<p>However, to avoid a notation overload, we will omit subindices when they are clear from the context. For instance, we will $p({\bf x}, s)$ instead of $p_{{\bf X}, S}({\bf x}, s)$.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.-Model-based-parametric-regression">1. Model-based parametric regression<a class="anchor-link" href="#1.-Model-based-parametric-regression">&#182;</a></h2><h3 id="1.1.-The-regression-problem">1.1. The regression problem<a class="anchor-link" href="#1.1.-The-regression-problem">&#182;</a></h3><p>Given an observation vector ${\bf x}$, the goal of the regression problem is to find a function $f({\bf x})$ providing <em>good</em> predictions about some unknown variable $s$. To do so, we assume that a set of <em>labelled</em> training examples, $\{{\bf x}^{(k)}, s^{(k)}\}_{k=0}^{K-1}$ is available.</p>
+<h2 id="1.-Model-based-parametric-regression">1. Model-based parametric regression<a class="anchor-link" href="#1.-Model-based-parametric-regression">&#182;</a></h2><h3 id="1.1.-The-regression-problem">1.1. The regression problem<a class="anchor-link" href="#1.1.-The-regression-problem">&#182;</a></h3><p>Given an observation vector ${\bf x}$, the goal of the regression problem is to find a function $f({\bf x})$ providing <em>good</em> predictions about some unknown variable $s$. To do so, we assume that a set of <em>labelled</em> training examples, $\{{\bf x}^{(k)}, s^{(k)}\}_{k=1}^K$ is available.</p>
 <p>The predictor function should make good predictions for new observations ${\bf x}$ not used during training. In practice, this is tested using a second set (the <em>test set</em>) of labelled samples.</p>
 
 </div>
@@ -11854,15 +11840,25 @@ ${\bf X}$, $S$, $E$ ..., to denote random variables, and lower-case letters ${\b
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="1.2.-The-underlying-model-assumption">1.2. The underlying model assumption<a class="anchor-link" href="#1.2.-The-underlying-model-assumption">&#182;</a></h3><p>Many regression algorithms are grounded on the idea that all samples from the training set have been generated independently by some common stochastic process.</p>
+<h3 id="1.2.-The-i.i.d.-assumption">1.2. The i.i.d. assumption<a class="anchor-link" href="#1.2.-The-i.i.d.-assumption">&#182;</a></h3><p>Most regression algorithms are grounded on the idea that all samples from the training and test sets have been generated independently by some common stochastic process. This is the reason why a model adjusted with the training data can make good predictions over new test samples.</p>
+<p>Mathematically, this means that all pairs $({\bf x}^{(k)}, s^{(k)})$ from the training and test sets are independent and identically distributed (i.i.d.) samples from some distribution $p_{{\bf X}, S}({\bf x}, s)$. Unfortunately, this distribution is generally unknown.</p>
 <p>&lt;img src="figs/DataModel.png", width=180&gt;</p>
-<p>If $p({\bf x}, s)$ were know, we could apply estimation theory to estimate $s$ for a given ${\bf x}$ using $p$. For instance, we could apply any of the following classical estimates:</p>
+<p>NOTE: In the following, we will use capital letters, ${\bf X}$, $S$, ..., to denote random variables, and lower-case letters ${\bf x}$, s, ..., to the denote the values they can take. When there is no ambigüity, we will remove subindices of the density functions, $p_{{\bf X}, S}({\bf x}, s)= p({\bf x}, s)$ to simplify the mathematical notation.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="1.3.-Model-based-regression">1.3. Model-based regression<a class="anchor-link" href="#1.3.-Model-based-regression">&#182;</a></h3><p>If $p({\bf x}, s)$ were know, we could apply estimation theory to estimate $s$ from $p$. For instance, we could apply any of the following classical estimates:</p>
 <ul>
 <li>Maximum A Posterior (MAP): $$\hat{s}_{\text{MAP}} = \arg\max_s p(s| {\bf x})$$</li>
-<li>Minimum Mean Square Error (MSE): $$\hat{s}_{\text{MSE}} = \mathbb{E}\{S |{\bf x}\} = \int s \, p(s| {\bf x}) \, ds $$</li>
+<li>Minimum Mean Square Error (MSE): $$\hat{s}_{\text{MSE}} = \mathbb{E}\{S |{\bf x}\}$$</li>
 </ul>
-<p>Note that, since these estimators depend on $p(s |{\bf x})$, knowing the posterior distribution of the target variable is enough, and we do not need to know the joint distribution $p(s, {\bf X})$.</p>
-<p>More importantly, note that <strong>if we knew the underlying model, we would not need the data</strong> in ${\cal D}$ to make predictions on new data.</p>
+<p>Note that, since these estimators depend on $p(s |{\bf x})$, knowing the posterior distribution of the target variable is enough, and we do not need to know the joint distribution.</p>
 
 </div>
 </div>
@@ -11872,36 +11868,6 @@ ${\bf X}$, $S$, $E$ ..., to denote random variables, and lower-case letters ${\b
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Exercise-1:">Exercise 1:<a class="anchor-link" href="#Exercise-1:">&#182;</a></h4><p>Assume the target variable $s$ is a scaled noisy version of the input variable $x$: 
-$$
-s = 2 x + \epsilon
-$$
-where $\epsilon$ is Gaussian a noise variable with zero mean and unit variance, which does not depend on $x$.</p>
-<ol>
-<li>Compute the target model $p(s| x)$</li>
-<li>Compute prediction $\hat{s}_\text{MAP}$ for an arbitrary input $x$</li>
-<li>Compute prediction $\hat{s}_\text{MSE}$ for an arbitrary input $x$</li>
-<li>Compute prediction $\hat{s}_\text{MSE}$ for input $x=4$</li>
-</ol>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Solution:">Solution:<a class="anchor-link" href="#Solution:">&#182;</a></h4>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="1.3.-Model-based-regression">1.3. Model-based regression<a class="anchor-link" href="#1.3.-Model-based-regression">&#182;</a></h3><p>In practice, the underlying model is usually unknown.</p>
 <p>Model based-regression methods exploit the idea of using the training data to estimate the posterior distribution $p(s|{\bf x})$ and then apply estimation theory to make predictions.</p>
 <p>&lt;img src="figs/ModelBasedReg.png", width=280&gt;</p>
 
@@ -11913,45 +11879,7 @@ where $\epsilon$ is Gaussian a noise variable with zero mean and unit variance, 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="1.4.-Parametric-model-based-regression">1.4. Parametric model-based regression<a class="anchor-link" href="#1.4.-Parametric-model-based-regression">&#182;</a></h3><p>In some cases, we may have a partial knowledge about the underlying mode. In this notebook we will assume that $p$ belongs to a parametric family of distributions $p(s|{\bf x},{\bf w})$, where ${\bf w}$ is some unknown parameter.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Exercise-2:">Exercise 2:<a class="anchor-link" href="#Exercise-2:">&#182;</a></h4><p>Assume the target variable $s$ is a scaled noisy version of the input variable $x$: 
-$$
-s = w x + \epsilon
-$$
-where $\epsilon$ is Gaussian a noise variable with zero mean and unit variance, which does not depend on $x$. Assume that $w$ is known.</p>
-<ol>
-<li>Compute the target model $p(s| x, w)$</li>
-<li>Compute prediction $\hat{s}_\text{MAP}$ for an arbitrary input $x$</li>
-<li>Compute prediction $\hat{s}_\text{MSE}$ for an arbitrary input $x$</li>
-</ol>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Solution:">Solution:<a class="anchor-link" href="#Solution:">&#182;</a></h4>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We will use the training data to estimate ${\bf w}$</p>
+<h3 id="1.4.-Parametric-model-based-regression">1.4. Parametric model-based regression<a class="anchor-link" href="#1.4.-Parametric-model-based-regression">&#182;</a></h3><p>How can we estimate the posterior probability function of the target variable $s$? In this section we will explore a parametric estimation method: let us assume that $p$ belongs to a parametric family of distributions $p(s|{\bf x},{\bf w})$, where ${\bf w}$ is some unknown parameter. We will use the training data to estimate ${\bf w}$</p>
 <p>&lt;img src="figs/ParametricReg.png", width=300&gt;</p>
 <p>The estimation of ${\bf w}$ from a given dataset $\mathcal{D}$ is the goal of the following sections</p>
 
@@ -11963,9 +11891,17 @@ where $\epsilon$ is Gaussian a noise variable with zero mean and unit variance, 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Maximum-Likelihood-parameter-estimation.">2. Maximum Likelihood parameter estimation.<a class="anchor-link" href="#2.-Maximum-Likelihood-parameter-estimation.">&#182;</a></h2><p>The ML (Maximum Likelihood) principle is well-known in statistics and can be stated as follows: take the value of the parameter to be estimated (in our case, ${\bf w}$) that best explains the given observations (in our case, the training dataset $\mathcal{D}$). Mathematically, this can be expressed as follows:
+<h3 id="1.5.-Maximum-Likelihood-parameter-estimation.">1.5. Maximum Likelihood parameter estimation.<a class="anchor-link" href="#1.5.-Maximum-Likelihood-parameter-estimation.">&#182;</a></h3><p>The ML (Maximum Likelihood) principle is well-known in statistics and can be stated as follows: take the value of the parameter to be estimated (in our case, ${\bf w}$) that best explains the given observations (in our case, the training dataset $\mathcal{D}$). Mathematically, this can be expressed as follows:
 $$
 \hat{\bf w}_{\text{ML}} = \arg \max_{\bf w} p(\mathcal{D}|{\bf w})
+$$</p>
+<p>To be more specific: let us group the target variables into a vector
+$$
+{\bf s} = \left(s^{(1)}, \dots, s^{(K)}\right)^\top
+$$
+and the input vectors into a matrix
+$$
+{\bf X} = \left({\bf x}^{(1)}, \dots, {\bf x}^{(K)}\right)^\top
 $$</p>
 
 </div>
@@ -11976,12 +11912,16 @@ $$</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Exercise-3:">Exercise 3:<a class="anchor-link" href="#Exercise-3:">&#182;</a></h4><p>All samples in dataset ${\cal D} = \{(x^{(k)}, s^{(k)}), k=0,\ldots,K-1 \}$ 
+<p>To compute the likelihood function we will assume that the inputs do not depend on ${\bf w}$ (i.e., $p({\bf x}|{\bf w}) = p({\bf x})$. This means that ${\bf w}$ is a parameter of the posterior distribution of $s$ and not a parameter of the marginal distribution.</p>
+<p>Then we can write</p>
+$$p(\mathcal{D}|{\bf w}) 
+    = p({\bf s}, {\bf X}|{\bf w}) 
+    = p({\bf s} | {\bf X}, {\bf w}) p({\bf X}|{\bf w})
+    = p({\bf s} | {\bf X}, {\bf w}) p({\bf X})
+$$<p>and we can express the estimation problem as the computation of
 $$
-s^{(k)} = w \cdot x^{(k)} + \epsilon^{(k)}
-$$
-where $\epsilon^{(k)}$ are i.i.d. (independent and identically distributed) Gaussian noise random variables with zero mean and unit variance, which do not depend on $x^{(k)}$.</p>
-<p>Compute the ML estimate, $\hat{w}_{\text{ML}}$, of $w$.</p>
+\hat{\bf w}_{\text{ML}} = \arg \max_{\bf w} p({\bf s}|{\bf X},{\bf w})
+$$</p>
 
 </div>
 </div>
@@ -11991,7 +11931,14 @@ where $\epsilon^{(k)}$ are i.i.d. (independent and identically distributed) Gaus
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Solution:">Solution:<a class="anchor-link" href="#Solution:">&#182;</a></h4><h1 id="&lt;/SOL&gt;">&lt;/SOL&gt;<a class="anchor-link" href="#&lt;/SOL&gt;">&#182;</a></h1>
+<h3 id="1.6.-Summary.">1.6. Summary.<a class="anchor-link" href="#1.6.-Summary.">&#182;</a></h3><p>Let's summarize what we need to do in order to design a regression algorithm:</p>
+<ol>
+<li>Assume a parametric data model $p(s| {\bf x},{\bf w})$</li>
+<li>Using the data model and the i.i.d. assumption, compute $p({\bf s}| {\bf X},{\bf w})$.</li>
+<li>Find an expression for ${\bf w}_{\text{ML}}$</li>
+<li>Assuming ${\bf w} = {\bf w}_{\text{ML}}$, compute the MAP or the minimum MSE estimate of $s$ given ${\bf x}$.</li>
+</ol>
+
 </div>
 </div>
 </div>
@@ -12000,8 +11947,148 @@ where $\epsilon^{(k)}$ are i.i.d. (independent and identically distributed) Gaus
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.-ML-estimation-for-a-Gaussian-model.">2. ML estimation for a Gaussian model.<a class="anchor-link" href="#2.-ML-estimation-for-a-Gaussian-model.">&#182;</a></h2><h3 id="2.1.-Step-1:-The-Gaussian-generative-model">2.1. Step 1: The Gaussian generative model<a class="anchor-link" href="#2.1.-Step-1:-The-Gaussian-generative-model">&#182;</a></h3><p>Let us assume that the target variables $s^{(k)}$ in dataset $\mathcal{D}$ are given by
+$$
+s^{(k)} = {\bf w}^\top {\bf z}^{(k)} + \varepsilon^{(k)}
+$$</p>
+<p>where ${\bf z}^{(k)}$ is the result of some transformation of the inputs, ${\bf z}^{(k)} = T({\bf x}^{(k)})$, and $\varepsilon^{(k)}$ are i.i.d. instances of a Gaussian random variable with mean zero and varianze $\sigma_\varepsilon^2$, i.e.,
+$$
+p_E(\varepsilon) = \frac{1}{\sqrt{2\pi}\sigma_\varepsilon}
+                   \exp\left(-\frac{\varepsilon^2}{2\sigma_\varepsilon^2}\right)
+$$</p>
+<p>Assuming that the noise variables are independent on ${\bf x}$ and ${\bf w}$, then, for a given ${\bf x}$ and ${\bf w}$, the target variable is gaussian with mean ${\bf w}^\top {\bf z}^{(k)}$ and variance $\varepsilon^2$
+$$
+p(s|{\bf x}, {\bf w}) = p_E(s-{\bf w}^\top{\bf z}) =
+    \frac{1}{\sqrt{2\pi}\sigma_\varepsilon}
+    \exp\left(-\frac{(s-{\bf w}^\top{\bf z})^2}{2\sigma_\varepsilon^2}\right)
+$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="2.2.-Step-2:-Likelihood-function">2.2. Step 2: Likelihood function<a class="anchor-link" href="#2.2.-Step-2:-Likelihood-function">&#182;</a></h3><p>Now we need to compute the likelihood function $p({\bf s}, {\bf X} | {\bf w})$. If the samples are i.i.d. we can write
+$$
+p({\bf s}| {\bf X}, {\bf w})
+    = \prod_{k=1}^{K} p(s^{(k)}| {\bf x}^{(k)}, {\bf w}) 
+    = \prod_{k=1}^{K} \frac{1}{\sqrt{2\pi}\sigma_\varepsilon}
+    \exp\left(-\frac{\left(s^{(k)}-{\bf w}^\top{\bf z}^{(k)}\right)^2}{2\sigma_\varepsilon^2}\right) \\
+    = \left(\frac{1}{\sqrt{2\pi}\sigma_\varepsilon}\right)^K
+      \exp\left(-\sum_{k=1}^K \frac{\left(s^{(k)}-{\bf w}^\top{\bf z}^{(k)}\right)^2}{2\sigma_\varepsilon^2}\right) \\
+$$
+Finally, grouping variables ${\bf z}^{(k)}$ in
+$${\bf Z} = \left({\bf z}^{(1)}, \dots, {\bf z}^{(K)}\right)^\top$$
+we get
+$$
+p({\bf s}| {\bf X}, {\bf w})
+    = \left(\frac{1}{\sqrt{2\pi}\sigma_\varepsilon}\right)^K
+      \exp\left(-\frac{1}{2\sigma_\varepsilon^2}\|{\bf s}-{\bf Z}{\bf w}\|^2\right)
+$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="2.3.-Step-3:-ML-estimation.">2.3. Step 3: ML estimation.<a class="anchor-link" href="#2.3.-Step-3:-ML-estimation.">&#182;</a></h3><p>The <b>maximum likelihood</b> solution is then given by:
+$$
+{\bf w}_{ML} = \arg \max_{\bf w} p({\bf s}|{\bf w}) = \arg \min_{\bf w} \|{\bf s} - {\bf Z}{\bf w}\|^2
+$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that this is exactly the same optimization problem of the Least Squares (LS) regression algorithm. The solution is
+$$
+{\bf w}_{ML} = ({\bf Z}^\top{\bf Z})^{-1}{\bf Z}^\top{\bf s}
+$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="2.4.-Step-4:-Prediction-function.">2.4. Step 4: Prediction function.<a class="anchor-link" href="#2.4.-Step-4:-Prediction-function.">&#182;</a></h3><p>The last step consists on computing an estimate of $s$ by assuming that the true value of the weight parameters is ${\bf w}_\text{ML}$. In particular, the minimum MSE estimate is
+$$
+\hat{s}_\text{MSE} = \mathbb{E}\{s|{\bf x},{\bf w}_\text{ML}\}
+$$
+Knowing that, given ${\bf x}$ and ${\bf w}$, $s$ is normally distributed with mean ${\bf w}^\top {\bf z}$ we can write
+$$
+\hat{s}_\text{MSE} = {\bf w}_\text{ML}^\top {\bf z}
+$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Exercise-1:">Exercise 1:<a class="anchor-link" href="#Exercise-1:">&#182;</a></h4><p>Assume that the targets in the one-dimensional dataset given by</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.41</span><span class="p">,</span> <span class="mf">0.53</span><span class="p">,</span> <span class="mf">0.80</span><span class="p">,</span> <span class="mf">0.89</span><span class="p">,</span> <span class="mf">0.92</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span> 
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.09</span><span class="p">,</span> <span class="mf">0.16</span><span class="p">,</span> <span class="mf">0.63</span><span class="p">,</span> <span class="mf">0.44</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">,</span> <span class="mf">0.82</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>have been generated by a linear Gaussian model (i.e., with $z = T(x) = x$) with noise variance</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sigma_eps</span> <span class="o">=</span> <span class="mf">0.3</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><strong>4.2.</strong> Compute the ML estimate</li>
+<li><strong>1.1.</strong> Represent a scatter plot of the data points</li>
 </ul>
 
 </div>
@@ -12012,9 +12099,13 @@ where $\epsilon^{(k)}$ are i.i.d. (independent and identically distributed) Gaus
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># wML = &lt;FILL IN&gt;</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The ML estimate is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wML</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># &lt;/SOL&gt;</span>
 </pre></div>
 
 </div>
@@ -12028,10 +12119,96 @@ where $\epsilon^{(k)}$ are i.i.d. (independent and identically distributed) Gaus
 <div class="output_area">
 <div class="prompt"></div>
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>The ML estimate is 0.79709787816564
-</pre>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
 </div>
+
 </div>
 
 </div>
@@ -12044,7 +12221,7 @@ where $\epsilon^{(k)}$ are i.i.d. (independent and identically distributed) Gaus
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><strong>4.3.</strong> Plot the likelihood as a function of parameter $w$ along the interval $-0.5\le w \le 2$, verifying that the ML estimate takes the maximum value.</li>
+<li><strong>1.2.</strong> Compute the ML estimate.</li>
 </ul>
 
 </div>
@@ -12055,23 +12232,55 @@ where $\epsilon^{(k)}$ are i.i.d. (independent and identically distributed) Gaus
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sigma_eps</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Note that, to use lstsq, the input matrix must be K x 1</span>
+<span class="n">Xcol</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+
+<span class="c1"># Compute the ML estimate using linalg.lstsq from Numpy.</span>
+<span class="c1"># wML = &lt;FILL IN&gt;</span>
+<span class="n">wML</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">Xcol</span><span class="p">,</span> <span class="n">s</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><strong>1.3.</strong> Plot the likelihood as a function of parameter $w$ along the interval $-0.5\le w \le 2$, verifying that the ML estimate takes the maximum value.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 <span class="n">wGrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
 
 <span class="n">p</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">wGrid</span><span class="p">:</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">s</span> <span class="o">-</span> <span class="n">X</span><span class="o">*</span><span class="n">w</span>
     <span class="c1"># p.append(&lt;FILL IN&gt;)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">*</span><span class="n">sigma_eps</span><span class="p">))</span><span class="o">**</span><span class="n">K</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma_eps</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span>
 
 <span class="c1"># Compute the likelihood for the ML parameter wML</span>
 <span class="c1"># d = &lt;FILL IN&gt;</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">s</span><span class="o">-</span><span class="n">X</span><span class="o">*</span><span class="n">wML</span>
 <span class="c1"># pML = [&lt;FILL IN&gt;]</span>
+<span class="n">pML</span> <span class="o">=</span> <span class="p">[(</span><span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">*</span><span class="n">sigma_eps</span><span class="p">))</span><span class="o">**</span><span class="n">K</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma_eps</span><span class="o">**</span><span class="mi">2</span><span class="p">))]</span>
 
 <span class="c1"># Plot the likelihood function and the optimal value</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wGrid</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">([</span><span class="n">wML</span><span class="p">],</span> <span class="n">pML</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">wML</span><span class="p">,</span> <span class="n">pML</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$w$&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Likelihood function&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -12091,250 +12300,187 @@ where $\epsilon^{(k)}$ are i.i.d. (independent and identically distributed) Gaus
 
 
 <div class="output_png output_subarea ">
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZgAAAEKCAYAAAAvlUMdAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
-AAALEgAACxIB0t1+/AAAIABJREFUeJzt3Xd8FWX2+PHPSUhooRNCCUgLJZFqRMCudAvIKoIFVv0u
-orLq2hZ1ratr76IsrgUr2BBYmlgQGyUgLUAgdEILLZRA6vn9cYf9xRiSS8hkcu8979drXnfK89x7
-hptwMjPPnBFVxRhjjClrYV4HYIwxJjhZgjHGGOMKSzDGGGNcYQnGGGOMKyzBGGOMcYUlGGOMMa6w
-BGOMMcYVlmCMMca4whKMMcYYV1TyOgAv1a9fX5s3b+51GMYYE1AWL168R1WjS2oX0gmmefPmJCUl
-eR2GMcYEFBHZ7E87O0VmjDHGFZZgjDHGuMISjDHGGFdYgjHGGOMKSzDGGGNcEdKjyIwJJF/9lsZz
-s1PYfuAojWtX5d6+bRnUpYnXYRlzQpZgjAkAX/2Wxv1fruBoTh4AaQeOcv+XKwAsyZgKy06RGVOB
-ZeXmkbLzEI9NS/5fcjnuaE4eT05fzbFC642pKOwIxpgKZn36YWat3Mm8teks2bKfnDw9Ydv0w1kk
-PDKbNjE1uKhdNL3jG9IpthYiUo4RG1M0SzDGVAC5efn8d/kOPl6whYWb9gEQ36gmN57dgvjGNXli
-+mrSD2X9oV/d6pFcd1YzFm7ax7gfNjD2+/W0iq7OiJ7NGdw1lqjK9ituvGM/fcZ4KC9fmbI0jVe/
-XcemvZm0qF+dMf3bcUWXJsTUrPK/dqr87hoMQNWIcB6+NP5/12AOZGbz9apdfDR/Mw9PSeaFr9dy
-6wWtGNGzOVUiwst934wR1RMffge7xMREtVpkxitLtx7gwckrSN5+kPhGNflb7zb0at/ghKe3vvot
-jfs+X052Xj5NShhF9tuW/bzy7TrmpqTTqFYVHro0ngEdGrm5OyaEiMhiVU0ssZ0lGEswpnwdzc7j
-6ZmreX/+ZhrUqMw/Lonnkg6NCAsr+brJ1f/+FYBJN/fw67N+Wb+HJ6evJnn7QfolNOTxQQk0qFGl
-5I7GFMPfBGOnyIwpR2t2HuSvH//Gut2H+XPP5tzdpw01qkS49nk9W9Vnym1n89aPG3npm7UseGkv
-Lw/twvltSqy0bswpc3WYsoj0E5EUEUkVkTFFbBcRedXZvlxEupbUV0SuEpFkEckXkT9kUBFpJiKH
-ReQe9/bMmJP3+eJtDHz9Z/Zn5vDBTd149PIEV5PLcZXCw7jlglbMuP1cYmpW4c/vLuSFr1PIyw/d
-sxemfLiWYEQkHBgL9AfigWEiEl+oWX8gzplGAm/60XclMBiYd4KPfhGYWXZ7YsypyctXnpq5mns+
-W8YZp9Vh5h3ncm5c+R9BtG4QxeRbz+bKrrG89l0qN3+wmMzs3HKPw4QON49gugGpqrpBVbOBicDA
-Qm0GAu+rz3ygtog0Kq6vqq5W1ZSiPlBEBgEbgWR3dsmYk3MsJ49bP1rMv3/YwHXdmzHhxm5E16js
-WTxVI8N57qpOPD4wge/W7GLo+PnsPnTMs3hMcHMzwTQBthZY3uas86eNP31/R0SigL8Dj5UyXmPK
-1OGsXG54dxFfr9rFI5fF88SgDkSEV4ziGcN7NOet4Yms23WYK9/8lW37M70OyQShivHTXjYeBV5S
-1cPFNRKRkSKSJCJJ6enp5ROZCTkZmTlc+58FLNy0j5eGdOaGs1t4HdIfXNw+hk9GdudAZjZDxv3K
-pj1HvA7JBBk3E0wa0LTAcqyzzp82/vQt7CzgWRHZBNwJPCAiows3UtXxqpqoqonR0TaSxpS9g8dy
-GP7OAlZvP8i4686o0MUoOzetzScju3M0J48h//6VjZZkTBlyM8EsAuJEpIWIRAJDgamF2kwFhjuj
-yboDGaq6w8++v6Oq56pqc1VtDrwM/EtVXy/jfTKmWEeycrnx3UUkbz/IG9d2pXd8jNchlSihcS0m
-3dyD3Hzluv8sYPuBo16HZIKEawlGVXOB0cBsYDXwqaomi8goERnlNJsBbABSgbeAW4vrCyAiV4jI
-NqAHMF1EZru1D8acjOzcfG7+YDFLtuzn1WFd6BUAyeW4NjE1eP/Gbhw8msN1by9g7+E/1j0z5mTZ
-nfx2J78pA6rKXZ8uY/JvaTx/VSeuPCPWlc852Tv5T9aiTfu4/u0FtI2pwcSRPagaaTXMzB/5eyd/
-MF3kN8Yzz3+dwuTf0rinTxvXkkt5OLN5XV4f1pXlaRnc/dlS8u1mTHMKLMEYc4o+X7yNsd+vZ1i3
-Ztx2YWuvwzllveJjeHBAe2as2MkLc4q85cwYv1gtMmNOwdKtB3hg8gp6tqrHPwcmBM2Dvm46pwXr
-048w9vv1tKgfFdBHZcY7dgRjTCntPnSMUR8spkGNyrx+TVcqVZCbKMuCiPD4wATObl2P+79czuLN
-+7wOyQSg4PmNMKYcZefmc+uHSzhwNJvx1ydSt3qk1yGVuYjwMN645gya1K7KbR/9ZiPLzEmzBGNM
-KTw2LZmkzft57spOxDeu6XU4rqlVLYKx13ZlX2Y2d05aahWYzUmxBGPMSZq2bDsfLdjCzee15LJO
-jb0Ox3UJjWvxz4EJ/LhuD69+u87rcEwAsQRjzEnYui+TB75cQZdmtbmnb1uvwyk3QxKbcuUZsbz6
-3TrmrbUafsY/lmCM8VNOXj5//eQ3EHh1aJcKUxm5PIgI/xx4Om1janDnpKXsPmgl/k3JQuc3xJhT
-9MLXa1m69QBPD+5I07rVvA6n3FWNDOf1a7qSmZ3LfV8sJ5SrgBj/WIIxxg8/rktn3A++mykv6djI
-63A807pBFA8MaM/clHQ+nL/Z63BMBWcJxpgSZBzN4d7PltO6QRQPX1r4qd+h5/rup3F+m2iemL6a
-1N2HvA7HVGCWYIwpwWPTkkk/nMWLQzpZ8Ud812Oeu7Ij1SLDuXPSUrJz870OyVRQlmCMKcbXyTv5
-ckkat13Qio6xtb0Op8JoULMKTw3uyMq0g7zy7VqvwzEVlCUYY05g35FsHpi8gvhGNRl9UZzX4VQ4
-/U5vyJVnxDLuhw2sTMvwOhxTAVmCMeYEHvpqJRlHc3jx6k5EVrJflaI8dEk8datHcu/ny8nJs1Nl
-5vfst8aYIsxcsYPpK3ZwZ682tGsYvKVgTlWtahE8Oeh0Vu84yLi5670Ox1QwlmCMKSTjaA4PT00m
-oXFNbj6vpdfhVHh9EhpyacdGvPZdKmt32agy8/+5mmBEpJ+IpIhIqoiMKWK7iMirzvblItK1pL4i
-cpWIJItIvogkFljfW0QWi8gK5/UiN/fNBK9nZq1h7+Esnh7cMahK8LvpscsTiKpSifs+X24FMc3/
-uPbbIyLhwFigPxAPDBORwjcR9AfinGkk8KYffVcCg4F5hd5rD3CZqnYARgAflPU+meC3cOM+Pl6w
-hRvPbkGH2FpehxMw6kVV5pHL4lm69QDv/7rJ63BMBeHmn2fdgFRV3aCq2cBEYGChNgOB99VnPlBb
-RBoV11dVV6vqH57jqqq/qep2ZzEZqCoild3ZNROMsnLzuP/L5cTWqcpdfdp4HU7AubxTY85rE80L
-X69ll9UqM7ibYJoAWwssb3PW+dPGn77F+ROwRFX/8IQkERkpIkkikpSeblVhzf839vv1rE8/whOD
-TqdapD1N/GSJCI9fnkB2Xj7//O8qr8MxFUDQnWAWkQTgGeDmorar6nhVTVTVxOjo6PINzlRYG/cc
-Ydzc9VzeqTEXtG3gdTgBq3n96tx2QWv+u3wHP66zP+BCnZsJJg1oWmA51lnnTxt/+v6BiMQCk4Hh
-qmpjJo1fVJVHpyYTWSmMf1zS3utwAt7N57ekRf3qPPTVSo7l5HkdjvGQmwlmERAnIi1EJBIYCkwt
-1GYqMNwZTdYdyFDVHX72/R0RqQ1MB8ao6s9lvTMmeH29ahc/rE3nb73b0KBmFa/DCXhVIsJ5fGAC
-m/Zm8u8fNngdjvGQawlGVXOB0cBsYDXwqaomi8goERnlNJsBbABSgbeAW4vrCyAiV4jINqAHMF1E
-ZjvvNRpoDTwsIkudyc51mGIdzc7j8WmraBtTgxE9TvM6nKBxblw0l3ZsxNi5qWzac8TrcIxHXL2S
-qaoz8CWRguvGFZhX4DZ/+zrrJ+M7DVZ4/RPAE6cYsgkxb8xNJe3AUSaN7G73vJSxhy6NZ25KOg9P
-TWbCDWciIl6HZMqZ/UaZkLVpzxH+/cMGBnZuzFkt63kdTtCJqVmFu/u0Yd7adGYn7/Q6HOMBSzAm
-JKkqj03zXdh/YIBd2HfL9d1Po01MFE/OWG0X/EOQJRgTkr5ZvZvvU9K5s1ccMXZh3zWVwsN45LIE
-tu47yts/bfQ6HFPOLMGYkJOVm8c//7uKuAZRjOjZ3Otwgt7ZrevTJz6Gsd+n2h3+IcYSjAk57/28
-iS37Mnn4sngi7MJ+uXjwkvbk5inPzFzjdSimHNlvlwkpew5n8fp3qVzUrgHnxlklh/JyWr3q3HRu
-C778LY0lW/Z7HY4pJ5ZgTEh5ac5ajubk2YV9D9x2YWuia1TmsWmryLeS/iHBEowJGSk7D/HJwi1c
-1/00WjeI8jqckBNVuRJ/79eOZVsPMPm3Eis/mSBgCcaEBFXliemrqFElgjsujvM6nJA1uEsTOjWt
-zTOz1nAkK9frcIzLLMGYkDA3JZ0f1+3h9ovjqFM90utwQlZYmPDwpfHsPpTF+HlWpyzYWYIxQS8n
-L58npq+iRf3qXN/d6o157YzT6nBJh0aMn7fBhi0HOUswJuh9vGAL69OP8MCA9kRWsh/5iuC+fm3J
-zc/npTlrvQ7FuKjE3zYRGSwi60QkQ0QOisghETlYHsEZc6oyMnN46Zu19GxVj17trbh2RXFavepc
-3705nyZtZc1O++8kWPnz59yzwOWqWktVa6pqDVWt6XZgxpSFV79bR8bRHP5xSbxV861g/npRa6Iq
-V+KpGXbzZbDyJ8HsUtXVrkdiTBnbui+T93/dxJAzmhLf2P4mqmjqVI9k9EWt+WFtuj1eOUj5k2CS
-RGSSiAxzTpcNFpHBrkdmzCl64esUwsOEv/Vu43Uo5gSG92hObJ2q/GvGGvLs5sug40+CqQlkAn2A
-y5zpUjeDMuZUrUzL4Kul27nx7BY0rGXVkiuqKhHh3Nu3Lat3HLSbL4NQiU+0VNUbyiMQY8rSs7NT
-qFU1gpvPb+V1KKYEl3VszDs/beT52Slc0qERVSPDvQ7JlBF/RpHFishkEdntTF+ISKw/by4i/UQk
-RURSRWRMEdtFRF51ti8Xka4l9RWRq0QkWUTyRSSx0Pvd77RPEZG+/sRogs8vqXuYtzad0Re2plbV
-CK/DMSUICxMeGNCenQeP8fZPdvNlMPHnFNm7wFSgsTNNc9YVS0TCgbFAfyAeGCYi8YWa9QfinGkk
-8KYffVcCg4F5hT4vHhgKJAD9gDec9zEhRFV5etYaGteqwvU97KbKQHFWy3r0jo/hzbnr2XM4y+tw
-TBnxJ8FEq+q7qprrTO8B/tQ57wakquoGVc0GJgIDC7UZCLyvPvOB2iLSqLi+qrpaVVOK+LyBwERV
-zVLVjUCq8z4mhMxYsZPl2zK4q09bqkTY3xeBZEz/dhzLzef171K9DsWUEX8SzF4RuU5Ewp3pOmCv
-H/2aAFsLLG9z1vnTxp++pfk8RGSkiCSJSFJ6ug2NDCY5efk8N3sNbWNqcEWXkn5cTEXTKjqKIYmx
-fLRgM1v2ZnodjikD/iSYG4EhwE5gB3AlELAX/lV1vKomqmpidLQ9cCqYTFy0lU17M/l7/7aEh9lN
-lYHojovbECbCC3OKOklhAk2JCUZVN6vq5aoaraoNVHWQqm7x473TgKYFlmOddf608advaT7PBKkj
-Wbm88s06urWoy4VtrSRMoGpYqwo3ntOCKUu3k7w9w+twzCk6YYIRkfuc19eckV6/m/x470VAnIi0
-EJFIfBfgpxZqMxUY7owm6w5kqOoOP/sWNhUYKiKVRaQFvoEDC/2I0wSBt3/ayJ7DWYzp385KwgS4
-Uee3olbVCJ6dZUcxga64+2COl4dJKs0bq2quiIwGZgPhwDuqmiwio5zt44AZwAB8F+QzcU69nagv
-gIhcAbyGb6DBdBFZqqp9nff+FFgF5AK3qWpeaWI3gWXv4Sz+/cN6+iU0pGuzOl6HY05RraoR3HpB
-K56auYZf1u+hZ6v6XodkSumECUZVpzmzmar6WcFtInKVP2+uqjPwJZGC68YVmFfgNn/7OusnA5NP
-0OdJ4El/YjPB47XvUjmak8c9fdt6HYopIyN6Nue9XzbxzKwUvrq1nh2VBih/LvLf7+c6Y8rd1n2Z
-fLRgM1ef2ZTWDaK8DseUkSoR4fytVxuWbT3ArJU7vQ7HlNIJj2BEpD++01dNCl1zqYnvFJQxnjte
-0PKOi62gZbAZ3LUJ43/cwHNfp9A7PoZK4fawuEBT3De2Hd/1l2PA4gLTVMDKsBjPWUHL4FYpPIx7
-+7ZlQ/oRPlu8zetwTCkUdw1mGbBMRCYDR45fMHfKr1Qup/iMOaFnZ6dQu5oVtAxmfeJj6NqsNi9/
-s5ZBnZtYIcwA488x59dA1QLLVYFv3AnHGP/8bAUtQ4KIMKZ/e3YdzOLdXzZ6HY45Sf4kmCqqevj4
-gjNfzb2QjClefr7y9Mw1NKldleu6W0HLYNetRV0uateAN+eu50BmttfhmJPgT4I5UqiM/hnAUfdC
-MqZ4M1buYEVaBnf1bmMFLUPEff3acjgrlzfnrvc6FHMS/EkwdwKficiPIvITMAkY7W5YxhQtJy+f
-52en0DamBoOsoGXIaNewJld0acJ7v2xiR4b9fRso/KlFtghoB9wCjALaq+pitwMzpihW0DJ03dW7
-Darw8px1Xodi/OTvwPIzgY5AV3wP/xruXkjGFM0KWoa22DrVuK77aXy2eCvrdh3yOhzjB38emfwB
-8DxwDr5EcyaQWGwnY1xgBS3N6ItaUy2yEs/NtkKYgaC4YpfHJQLxTt0wYzxhBS0NQN3qkdx8Xkte
-mLOWxZv3c8Zp9rNQkflzimwl0NDtQIwpzmvfpXIsN597+1lBy1B307ktqB9VmWdmrcH+7q3Y/Ekw
-9YFVIjJbRKYen9wOzJjjtuz1FbQcktiUVtFW0DLUVYusxB0Xt2bhxn18n7Lb63BMMfw5Rfao20EY
-U5wX5vgKWt7ZK87rUEwFMbRbM97+aSPPzEzh/DYNbERhBeXPMOUfiprKIzhjVqZlMGXpdm46pwUx
-Na2gpfGJCA/j3r7tSNl1iC+XWCHMisqfUWSHROSgMx0TkTwROVgewRnzzKw11LGClqYIAzo0pFNs
-LV6cs5ZjOfbw2orInyOYGqpaU1Vr4it0+SfgDdcjMyHvx3Xp/LhuD6MviqNmFStoaX7veCHMHRnH
-mPDLJq/DMUU4qSf4qM9X+Pk8GBHpJyIpIpIqImOK2C4i8qqzfXmhmmdF9hWRuiIyR0TWOa91nPUR
-IjJBRFaIyGoRsaduBrDfF7Rs5nU4poLq0aoeF7aNZuz3qWRk5ngdjinEn1NkgwtMV4rI0/geQlZS
-v3BgLNAfiMdXASC+ULP+QJwzjQTe9KPvGOBbVY0DvnWWAa4CKqtqB+AM4GYRaV5SnKZimrZ8O8nb
-D3JP3zZUrmQFLc2J3devHYeycnljbqrXoZhC/DmCuazA1Bc4BAz0o183IFVVN6hqNjCxiH4Dgfed
-I6P5QG0RaVRC34HABGd+AjDImVeguohUwncqLxuwa0UBKCs3j+e/TqF9o5oM7GQFLU3x2jeqyeAu
-sbz7yybSDlghzIrkhAlGRJ5xZmeq6g3O9BdVfVJV/Rl83gTYWmB5m7POnzbF9Y1R1R3O/E4gxpn/
-HDgC7AC2AM+r6r4i9mukiCSJSFJ6erofu2HK28cLtrB131HG9G9HmA0/NX64q08bAF6as9bjSExB
-xR3BDBBfwac/XDupKJzyNcdv5e0G5AGNgRbA3SLSsog+41U1UVUTo6Ojyy9Y45dDx3J47btUzm5d
-j/Pi6nsdjgkQTWpX5c89m/PFkm2s2WknLiqK4hLMLGA/0LHAMOWDx4ct+/HeaUDTAsuxzjp/2hTX
-d5dzGg3n9fjR1DXALFXNcY6wfsaKcgac8fM2sO9INn/vZwUtzcm59YJW1KhciWdnWSHMiuKECUZV
-71XV2sD048OUnamGM2S5JIuAOBFpISKRwFCgcImZqcBwZzRZdyDDOf1VXN+pwAhnfgQwxZnfAlwE
-ICLVge7AGj/iNBXE7oPH+M+PG7m0YyM6xtb2OhwTYGpXi+TWC1vz3ZrdzN+w1+twDP7dB+PPBf2i
-+uXie/LlbGA18KmqJovIKBEZ5TSbAWwAUoG3gFuL6+v0eRroLSLrgF7OMvhGnUWJSDK+BPWuqi4v
-TezGGy9/u46cvHzu7WsFLU3p/LlncxrVqsJTM60QZkXgTy2yUlPVGfiSSMF14wrMK3Cbv32d9XuB
-i4tYfxjfUGUTgNanH2bSoq1cd1YzTqtX3etwTICqEhHO33q34b7PlzNz5U4GdGjkdUgh7aRutDTG
-Lc/NSqFKpTD+erEVtDSn5k9dY2kTE8Vzs1PIycv3OpyQZgnGeG7x5v3MSt7JyPNaUT+qstfhmAAX
-Hib8vV87Nu45wsRFW0vuYFxzwlNkIrKC/z8E+A9UtaMrEZmQoqo8M3MN9aMq83/ntvA6HBMkLmrX
-gG4t6vLKN+sY3KUJ1Su7ejXAnEBxRzCX4rt7f5YzXetMRV4bMaY05qzaxcJN+7ijV5z9J2DKjK8Q
-Zjv2HM7iPz9u9DqckFXcMOXNqroZ6K2q96nqCmcaA/QpvxBNsMrOzeepmWtoFV2dYWc2LbmDMSeh
-a7M69D+9IePnrWf3oRLLJxoX+HMNRkTk7AILPf3sZ0yxPlqwmY17jvDgJe2pFG4/Uqbs3devHdl5
-+VZCxiP+/FbfBLwhIptEZDO+Z8Hc6G5YJthlZObwyrfrOLt1PS5s28DrcEyQalG/OsN7NGfSoq2s
-3mElZMqbPzdaLlbVTkAnoKOqdlbVJe6HZoLZa9+tI+NoDg8OiLeSMMZVt18UR82qETw5fbXdfFnO
-/HkeTC0ReRHfs1e+FZEXRKSW+6GZYLV57xEm/LqJq86IJb6xP1WHjCm9WtUiuOPiOH5K3cPcFKug
-Xp78OUX2Dr5nwAxxpoPAu24GZYLb0zPXUCksjLv7WEkYUz6u634aLetX54npq+zmy3LkT4JppaqP
-OA//2qCqjwF/KINvjD8WbdrHzJU7GXV+K2JqVvE6HBMiIsLDuH9Ae9anH2Hiwi1ehxMy/EkwR0Xk
-nOMLzogye2ycOWn5+coT01cTU7MyfznPbqo05atX+wb0aFmPl77xXf8z7vMnwdwCjC0wiux14GZ3
-wzLBaNry7SzbeoB7+7ajWqTdVGnKl4jw4CXt2Z+ZzdjvU70OJyT4M4psqTOKrCPQQVW7WBl8c7KO
-5eTx7KwUEhrXZHCXwk/ONqZ8nN6kFld2jeW9nzexee8Rr8MJeicziuw74DsbRWZK4615G0g7cJQH
-L2lPWJgNSzbeuadvW8LDhGdm2fMI3WajyIzrth84yti5qfQ/vSE9W9X3OhwT4mJqVmHU+a2YsWKn
-PfnSZTaKzLjO93RBeGBAe69DMQaAkee1pEntqjw6NZlcG7bsGhtFZly1cOM+pi3bzs3nt6Jp3Wpe
-h2MMAFUjw/nHJe1Zs/MQn9iwZdf4k2BG8cdRZKP8eXMR6SciKSKSKiJjitguIvKqs325iHQtqa+I
-1BWROSKyznmtU2BbRxH5VUSSRWSFiNiNFh7Ky1cemZpM41pVuOX8Vl6HY8zv9Du9IT1b1eP5r9ey
-70i21+EEJX9GkS0rYhTZspL6iUg4MBboD8QDw0QkvlCz/kCcM40E3vSj7xjgW1WNw1e+ZozTpxLw
-ITBKVROACwAb7O6hiYu2sHrHQR64pD1VI8O9DseY3xERHrksgcNZubzwdYrX4QSlEm9GEJHKwJ+A
-5kCl44UJVfXxErp2A1JVdYPzPhOBgcCqAm0GAu+rrwLdfBGpLSKNnM86Ud+B+JIHwARgLvB3fM+o
-WX48+amqXb3zUEZmDs/PTuGsFnW5pEMjr8MxpkhtG9bg+u6nMeHXTQzr1ozTm9gA2bLkzymyKfj+
-U88FjhSYStIEKPhA7G3OOn/aFNc3RlV3OPM7gRhnvg2gIjJbRJaIyH1FBSUiI0UkSUSS0tOt8J1b
-XvpmLRlHc3j08gSrlmwqtL/1bkOdapE8Ni3Zqi2XMX9up45V1X6uR1IKqqoicvwnohJwDnAmkImv
-8vNiVf22UJ/xwHiAxMRE+2lyweodB/lg/mauOasZ7RtZtWRTsdWqGsF9fdsy5ssVTF22nYGd7Ubg
-suLPEcwvItKhFO+dBhR8Dm6ss86fNsX13eWcRsN53e2s3wbMU9U9qpoJzAC6YspVfr7yj69WUqtq
-BPdYtWQTIK5KbEqHJrX414zVHDpml27LygkTjDMKazm+o4Ilzoiu5QXWl2QRECciLUQkEhgKTC3U
-Ziow3BlN1h3IcE5/Fdd3KjDCmR+B7xQewGygg4hUcy74n8/vr/eYcvD54m0s3ryf+/u3o3a1SK/D
-McYv4WHC4wMT2H0oi5fmrPM6nKBR3CmyS0/ljVU1V0RG4/uPPxx4R1WTRWSUs30cvqOMAUAqvtNa
-NxTX13nrp4FPReQmYDO+6gKo6n6npM0iQIEZqjr9VPbBnJz9R7J5auZqujWvy5VnxHodjjEnpUuz
-OlzTrRnv/bKRwV2b2AX/MlBcgtmvqgdFpG5p31xVZ+BLIgXXjSswr8Bt/vZ11u8FLj5Bnw/xDVU2
-Hnh65hoOHcvln4NOtwv7JiDd17cds5N38uBXK/nylp6EW928U1LcNZiPndfFQJLzurjAsjH/s3jz
-PiYlbeWmc1rQtmENr8MxplRqVYvgwUvas2zrAbvDvwycMMGo6qXOawtVbem8Hp+sFpn5n9y8fB6c
-vJLGtapw+8VxXodjzCkZ1LkJPVrW45lZa0g/lOV1OAGtuIv8XYubyjNIU7G998sm1uw8xMOXJVC9
-sj1IzARyGDdmAAAVy0lEQVQ2EeGJK04nKyefJ6fbOKFTUdz/Bi8Us02Bi8o4FhOA0g4c5aU5a7mo
-XQP6JsSU3MGYANAqOopR57fk1e9SGZLYlJ6t7TETpXHCBKOqF5ZnICbwqCoPTl6BAo/ZHfsmyNx6
-YWumLNvOg1+tZOYd51IlwurpnSx/nmhZTUT+ISLjneU4ETmlIcwmOHy1NI25Kenc27etleI3QadK
-RDj/uqIDG/cc4eVv7N6Y0vDnTv53gWygp7OcBjzhWkQmIOw5nMVj01bRtVlthvdo7nU4xrji7Nb1
-uTqxKW/9uIEV2zK8Difg+PtEy2dxSt87ZVjsXEiIe2zaKjKz8njmTx3tXgET1B64pD31oyK59/Nl
-ZOfa0y9Phj8JJltEquK7sI+ItAJs7F4I+2bVLqYt287oi1oTF2P3vJjgVqtqBE8M6sCanYd4c+56
-r8MJKP4kmEeAWUBTEfkI30O+iiyFb4LfwWM5/OOrlbSNqcEoe0qlCRG942O4rFNjXv9+HSk7D3kd
-TsDw54mWc4DBwJ+BT4BEVZ3rblimonp65hp2HzrGM1d2JLKSP3+fGBMcHr0snhpVIrjvi+Xk5duT
-Pvzhzyiyx1V1r6pOV9X/AvucIxkTYn5Ym87HC7Zw0zkt6Ny0ttfhGFOu6kVV5pHL4lm29QDv/LTR
-63ACgj9/gjYVkfvhf49PngzYmL0QcyAzm/s+X0Zcgyjutue8mBB1eafG9Gofw3Nfp7Bul50qK4k/
-CeZGfM9ZuR+YBsxV1UddjcpUOA9NSWbv4Wxeurqz3XBmQpaI8NTgDkRVrsSdk5baqLISlFiLDOgC
-vAJcje/I5QerRRZapi7bzrRl27nj4jh7RoYJedE1KvPU4A4kbz/Iy9+s9TqcCu1kapHtB+Kd9VaL
-LETsOniMh75aSeemtbnlAhs1ZgxA34SGDEmMZdwP67mwXQPObF7qx2YFNatFZk5IVbn38+Vk5ebx
-4pBOVAq3UWPGHPfwZQn8umEvd326lJl3nEeUVRL/g+JOkV3nvN5V1OTPm4tIPxFJEZFUERlTxHYR
-kVed7csLnno7UV8RqSsic0RknfNap9B7NhORwyJyjz8xmhP7cMEW5q1N54EB7WkZHeV1OMZUKFGV
-K/HikM6k7T/KP6dZWf+iFPcnaXXntUYRU4n/24hIODAW6I/v1NowEYkv1Kw/EOdMI4E3/eg7BvhW
-VePw3fRZOHG9CMwsKT5TvLW7DvHk9FWcG1ef67uf5nU4xlRIZzavy6jzWzEpaSuzk3d6HU6FU9wp
-sn87r48V3iYid/rx3t2AVFXd4PSZCAwECqb6gcD7qqrAfBGpLSKNgObF9B0IXOD0nwDMBf7utBsE
-bASO+BGfOYGj2XmM/ngJUZUr8cKQTlaG35hi3NmrDT+sTefvXyynQ5NaNK5d1euQKozSnlT35xRZ
-E2BrgeVtzjp/2hTXN0ZVdzjzO4EYABGJwpdo/pAQzcl5/L+rWLvrMC8O6UyDGlW8DseYCi2yUhiv
-DetCTm4+t3/yG7l5NnT5uNImmArxJ61z5HO8ZsOjwEuqeri4PiIyUkSSRCQpPT3d7RADzn+Xb+eT
-hVsYdX4rzmsT7XU4xgSEltFR/GtwB5I277dnxxRQ2mEP/hTiSQOaFliOddb50yaimL67RKSRqu5w
-TqftdtafBVwpIs8CtYF8ETmmqq//LnDV8cB4gMTERCsoVMDWfZnc/8UKOjetzd192ngdjjEBZWDn
-JvySupexc1M5q2Vdzo2zP9CKG0V2SEQOFjEdAhr78d6LgDgRaSEikcBQYGqhNlOB4c5osu5AhnP6
-q7i+U4ERzvwIYAqAqp6rqs1VtTnwMvCvwsnFnNixnDxu+WgxCLw2rAsRNiTZmJP26OUJtI6O4m+T
-lrL74DGvw/HcCf8XUdUaqlqziKmGqpZ45KOqucBoYDawGvhUVZNFZJSIjHKazQA2AKnAW8CtxfV1
-+jwN9BaRdUAvZ9mcokemJLMy7SAvDelsjz82ppSqRoYz9tquHMnK47aPl5AT4tdjXL0zSFVn4Esi
-BdeNKzCvwG3+9nXW7wUuLuFzHy1FuCFr4sItTErayugLW9MrPsbrcIwJaG1iavD0nzpwx8SlPDl9
-NY9enuB1SJ6xW09D3IptGTw8NZlz4+rzt9523cWYsjCwcxOWb8vg7Z820qlpLa7oEut1SJ6wE+0h
-bN+RbEZ9uJjoqMq8MrQL4WEVYnCgMUFhTP92nNWiLvd/uYLk7Rleh+MJSzAhKjs3n1EfLmbP4Sze
-uLYrdatHeh2SMUElIjyM16/pSu2qkYz6cDH7jmR7HVK5swQTglSVh75aycKN+3j2yo50sqdTGuOK
-6BqVGXf9Gew6mMWoDxaTlZvndUjlyhJMCHrn503/u6g/sHPh4grGmLLUuWltnr+qEws37ePBySvx
-jW0KDXaRP8TMTdnNk9NX0Sc+hrvsor4x5eLyTo1Zv/swr3y7jtYNohh1fmg8W8kSTAhJ3p7B6I9/
-o01MDV66ujNhdlHfmHJzZ6841qcf5plZa2hRvzp9Exp6HZLr7BRZiNi2P5M/v7uIGlUq8e4NZ1Ld
-Ho5kTLkSEZ6/qhMdY2tz+ye/sXjzPq9Dcp0lmBBwIDObEe8s5FhOHhNu7EajWlZO3BgvVIkI550R
-iTSuXZUb30sidfchr0NylSWYIHcsJ4+/vJ/E1n1HeWt4Im1iangdkjEhrV5UZd6/sRuRlcIY/vZC
-dmQc9Tok11iCCWI5efmM/ngJizbt58WrO9G9ZT2vQzLGAE3rVuO9G87k4LFcRryzkIzMHK9DcoUl
-mCCVl6/cOWkp36zezT8HJnBpR38KYBtjyktC41qMv/4MNu3JZPi7Czl0LPiSjCWYIJSfr/z9i+VM
-X76DBwa04/oezb0OyRhThJ6t6/PGtV1JTsvghncXcSQr1+uQypQlmCCjqjw2LZnPF2/jjovjGHle
-aIy3NyZQ9YqP4dVhXViyZT//NyGJYznBc7e/JZggkp+vPDwlmQm/bmbkeS25s1ec1yEZY/wwoEMj
-XhzSmfkb9zLyg8VBk2QswQSJ/Hzlgckr+GC+L7nc378dInYjpTGBYlCXJjwzuCM/rksPmtNllmCC
-QG5ePvd8toyJi7by14taW3IxJkANObMpLw7x1S27/u0FZBwN7Av/lmACXFZuHndMXMqXv6Vxd+82
-3N2nrSUXYwLYFV1iGXtNF1akZXDNW/MDusy/qwlGRPqJSIqIpIrImCK2i4i86mxfLiJdS+orInVF
-ZI6IrHNe6zjre4vIYhFZ4bxe5Oa+VQQHj+Uw4p2FTF+xgwcHtOevF9s1F2OCQb/TGzF+eCKpuw9z
-5bhf2Lov0+uQSsW1BCMi4cBYoD8QDwwTkfhCzfoDcc40EnjTj75jgG9VNQ741lkG2ANcpqodgBHA
-By7tWoWw6+Axhoz7laRN+3n56s785byWXodkjClDF7ZtwAc3ncXew9lc8cYvrNgWeE/FdPMIphuQ
-qqobVDUbmAgMLNRmIPC++swHaotIoxL6DgQmOPMTgEEAqvqbqm531icDVUWksls756V1uw4x+A3f
-XzXv/PlMBnWxZ7oYE4y6tajLF7f0oHKlMK4e/yvfp+z2OqST4maCaQJsLbC8zVnnT5vi+sao6g5n
-ficQU8Rn/wlYoqpZpQu94vpuzS6ueOMXsnLzmXRzD85rE+11SMYYF7VuUIPJt/akRf3q/N+EJN7/
-dVPAPLQsoC/yq+9f+Xf/0iKSADwD3FxUHxEZKSJJIpKUnp5eDlGWDVVl3A/ruWlCEs3rV2Pq6LM5
-vUktr8MyxpSDBjWrMOnmHlzYNpqHpyQz5osVAfH4ZTcTTBrQtMByrLPOnzbF9d3lnEbDef3fMaOI
-xAKTgeGqur6ooFR1vKomqmpidHRg/PV/NDuPuz5dxtMz1zCgQyM+u7knjWtbyX1jQklU5UqMvz6R
-v17UmklJWxk2fj67Dx7zOqxiuZlgFgFxItJCRCKBocDUQm2mAsOd0WTdgQzn9Fdxfafiu4iP8zoF
-QERqA9OBMar6s4v7Va5Sdx9m0Nif+WppGnf1bsPrw7pQNTLc67CMMR4ICxPu7tOWN67typqdh7j0
-tZ/4df1er8M6IdcSjKrmAqOB2cBq4FNVTRaRUSIyymk2A9gApAJvAbcW19fp8zTQW0TWAb2cZZz2
-rYGHRWSpMzVwa//Kw1e/pXH56z+RfjiL927oxu0Xx9k9LsYYBnRoxJe39iSqSiWu/c98Xv5mLXn5
-Fe+6jATKxSI3JCYmalJSktdh/MHhrFwen5bMp0nb6Na8Lq8O60LDWlW8DstUAFf/+1cAJt3cw+NI
-TEVwJCuXh6as5MslaXRvWZdXhnYhpqb7/1eIyGJVTSypXUBf5A9GCzbspd/L8/hs8TZuvaAVH//l
-LEsuxpgiVa9ciReHdOb5qzqxbGsGfV6ax5SlaRVmlJklmAriWE4e/5qxmqFvzSc8TPjs5h7c168d
-lcLtKzLGFO/KM2KZfvs5tIquzh0Tl3LLh0vYc9j7uzTsf68K4OfUPfR/5UfGz9vANd2aMeP2c0ls
-XtfrsIwxAaRldBSfjerJ/f3b8V3Kbvq8NI8vl2zz9GjGEoyH9hzO4m+TlnLtfxagqnx401k8eUUH
-qleu5HVoxpgAFB4m3Hx+K6b/9Rya1a3GXZ8uY+j4+azbdciTeOx/Mg9k5+bzwfzNvPLNWo7m5HH7
-Ra259cLWVImw4cfGmFMXF1ODL2/pyaSkrTw9cw39X/mRm85twegLW1OjSkS5xWEJphypKl+v2sVT
-M1azaW8m58bV55HL4mndoIbXoRljgkxYmDCsWzP6xMfw1Mw1/PuHDXyWtI07e8UxrFszIsrh+q4l
-mHIyf8NeXvx6LQs37aN1gyjeveFMLmgTbfe1GGNcVS+qMs9f1YkRPZrz5IxVPDwlmfd+3sSY/u3o
-k9DQ1c+2BOOyRZv28eLXa/l1w14a1KjMPwcmMKxbMxsdZowpVx1ia/HJX7rz3ZrdPDVzDd+t2W0J
-JhDl5Svfrt7Ff37ayMKN+6gfVZmHLo3n2rOa2XUWY4xnRISL28dwfptojuXmu/55lmDKUGZ2Ll8s
-3sbbP21k095MmtSuyj8uac+1Z51m9cOMMRVGpfAwouwaTGBYs/Mgny7axpe/beNAZg6dm9ZmbN92
-9E2IsVNhxpiQZQmmlDKO5jB12XY+S9rK8m0ZRIaH0TshhhvPbk7XZnXs4r0xJuRZgimFhRv3cf3b
-C8jKzaddwxo8clk8gzo3oU71SK9DM8aYCsMSTCl0aFKLYd2a8aeusZzepKYdrRhjTBEswZRC1chw
-Hr08weswjDGmQrMr0MYYY1xhCcYYY4wrLMEYY4xxhasJRkT6iUiKiKSKyJgitouIvOpsXy4iXUvq
-KyJ1RWSOiKxzXusU2Ha/0z5FRPq6uW/GGGOK51qCEZFwYCzQH4gHholIfKFm/YE4ZxoJvOlH3zHA
-t6oaB3zrLONsHwokAP2AN5z3McYY4wE3j2C6AamqukFVs4GJwMBCbQYC76vPfKC2iDQqoe9AYIIz
-PwEYVGD9RFXNUtWNQKrzPsYYYzzgZoJpAmwtsLzNWedPm+L6xqjqDmd+JxBzEp9njDGmnAT0fTCq
-qiJyUg+cFpGR+E7H0axZM1fiMsYt8Y1reh2CMX5zM8GkAU0LLMc66/xpE1FM310i0khVdzin03af
-xOehquOB8QCJiYknlZyM8dojl9kNviZwuHmKbBEQJyItRCQS3wX4qYXaTAWGO6PJugMZzumv4vpO
-BUY48yOAKQXWDxWRyiLSAt/AgYVu7ZwxxpjiuXYEo6q5IjIamA2EA++oarKIjHK2jwNmAAPwXZDP
-BG4orq/z1k8Dn4rITcBmYIjTJ1lEPgVWAbnAbaqa59b+GWOMKZ6ohu5ZosTERE1KSvI6DGOMCSgi
-slhVE0tqZ3fyG2OMcYUlGGOMMa6wBGOMMcYVlmCMMca4whKMMcYYV4T0KDIRScc31Lm06gN7yiic
-QGH7HBpsn0NDaff5NFWNLqlRSCeYUyUiSf4M1Qsmts+hwfY5NLi9z3aKzBhjjCsswRhjjHGFJZhT
-M97rADxg+xwabJ9Dg6v7bNdgjDHGuMKOYIwxxrjCEoyfRKSuiMwRkXXOa50TtNskIitEZKmIBGQl
-TRHpJyIpIpIqImOK2C4i8qqzfbmIdPUizrLkxz5fICIZzve6VEQe9iLOsiQi74jIbhFZeYLtwfg9
-l7TPwfg9NxWR70VklYgki8gdRbRx57tWVZv8mIBngTHO/BjgmRO02wTU9zreU9jPcGA90BKIBJYB
-8YXaDABmAgJ0BxZ4HXc57PMFwH+9jrWM9/s8oCuw8gTbg+p79nOfg/F7bgR0deZrAGvL63fajmD8
-NxCY4MxPAAZ5GIubugGpqrpBVbOBifj2vaCBwPvqMx+o7TxdNFD5s89BR1XnAfuKaRJs37M/+xx0
-VHWHqi5x5g8Bq4EmhZq58l1bgvFfjPqetgmwE4g5QTsFvhGRxSIysnxCK1NNgK0Flrfxxx9Gf9oE
-En/3p6dz+mCmiITCs4uD7Xv2V9B+zyLSHOgCLCi0yZXv2rUnWgYiEfkGaFjEpgcLLqiqisiJht+d
-o6ppItIAmCMia5y/mkxgWwI0U9XDIjIA+ArfY7lNcAna71lEooAvgDtV9WB5fKYdwRSgqr1U9fQi
-pinAruOHjM7r7hO8R5rzuhuYjO/0SyBJA5oWWI511p1sm0BS4v6o6kFVPezMzwAiRKR++YXoiWD7
-nksUrN+ziETgSy4fqeqXRTRx5bu2BOO/qcAIZ34EMKVwAxGpLiI1js8DfYAiR6tUYIuAOBFpISKR
-wFB8+17QVGC4M/KkO5BR4PRhICpxn0WkoYiIM98N3+/O3nKPtHwF2/dcomD8np39eRtYraovnqCZ
-K9+1nSLz39PApyJyE74KzEMARKQx8B9VHYDvusxk5+ezEvCxqs7yKN5SUdVcERkNzMY3uuodVU0W
-kVHO9nHADHyjTlKBTOAGr+ItC37u85XALSKSCxwFhqoz/CZQicgn+EZN1ReRbcAjQAQE5/cMfu1z
-0H3PwNnA9cAKEVnqrHsAaAbuftd2J78xxhhX2CkyY4wxrrAEY4wxxhWWYIwxxrjCEowxxhhXWIIx
-xhjjCkswxhhjXGEJxhhjjCsswRhTQYhIcxGZ58x3FREVkfoiEi6+ZwxV8zpGY06G3clvTMVxAIhy
-5v8KzAdqAz2Bb1Q106vAjCkNO4IxpuI4CFRziis2An4G6gAjgTe9DMyY0rAEY0wFoar5+J4n9H/4
-ihMeAjoB4aq61svYjCkNSzDGVCz5wOX4HvVwELgbGOdpRMaUkiUYYyqWHGCmqubinDID/uttSMaU
-jlVTNsYY4wo7gjHGGOMKSzDGGGNcYQnGGGOMKyzBGGOMcYUlGGOMMa6wBGOMMcYVlmCMMca4whKM
-McYYV/w/ib38c7r9mEoAAAAASUVORK5CYII=
+<img src="data:image/png;base64,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
 "
 >
 </div>
@@ -12351,7 +12497,7 @@ McYYV/w/ib38c7r9mEoAAAAASUVORK5CYII=
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><strong>4.4.</strong> Plot the prediction function over the data scatter plot </li>
+<li><strong>1.4.</strong> Plot the prediction function over the data scatter plot </li>
 </ul>
 
 </div>
@@ -12359,15 +12505,17 @@ McYYV/w/ib38c7r9mEoAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">xgrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
 <span class="c1"># sML = &lt;FILL IN&gt;</span>
+<span class="n">sML</span> <span class="o">=</span> <span class="n">wML</span> <span class="o">*</span> <span class="n">x</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
 <span class="c1"># plt.plot(&lt;FILL IN&gt;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sML</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
@@ -12575,539 +12723,12 @@ AAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="2.1.-Model-assumptions">2.1. Model assumptions<a class="anchor-link" href="#2.1.-Model-assumptions">&#182;</a></h3><p>In order to solve exercise 4 we have taken advantage of the statistical independence of the noise components. Some independence assumptions are required in general to compute the ML estimate in other scenarios.</p>
-<p>In order to estimate ${\bf w}$ from the training data in a mathematicaly rigorous and compact form let us group the target variables into a vector
+<h4 id="Exercise-2:">Exercise 2:<a class="anchor-link" href="#Exercise-2:">&#182;</a></h4><p>Assume the dataset $\mathcal{D} = \{(x^{(k)}, s^{(k)}, k=1,\ldots, K\}$ contains i.i.d. samples from a distribution with posterior density given by
 $$
-{\bf s} = \left(s^{(0)}, \dots, s^{(K-1)}\right)^\top
-$$
-and the input vectors into a matrix
-$$
-{\bf X} = \left({\bf x}^{(0)}, \dots, {\bf x}^{(K-1)}\right)^\top
-$$</p>
-<p>We will make the following assumptions:</p>
-<ul>
-<li>A1. All samples in ${\cal D}$ have been generated by the same distribution, $p({\bf x}, s \mid {\bf w})$</li>
-<li>A2. Input variables ${\bf x}$ do not depend on ${\bf w}$. This implies that
-$$
-p({\bf X} \mid {\bf w}) = p({\bf X})
-$$</li>
-<li>A3. Targets $s^{(0)},\ldots, s^{(K-1)}$ are statistically independent, given ${\bf w}$ and the inputs ${\bf x}^{(0)},\ldots, {\bf x}^{(K-1)}$, that is:
-$$
-p({\bf s} \mid {\bf X}, {\bf w}) = \prod_{k=0}^{K-1} p(s^{(k)} \mid {\bf x}^{(k)}, {\bf w})
-$$</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Since ${\cal D} = ({\bf X}, {\bf s})$, we can write
-$$p(\mathcal{D}|{\bf w}) 
-    = p({\bf s}, {\bf X}|{\bf w}) 
-    = p({\bf s} | {\bf X}, {\bf w}) p({\bf X}|{\bf w})
-$$
-Using assumption A2,
-$$
-p(\mathcal{D}|{\bf w}) 
-    = p({\bf s} | {\bf X}, {\bf w}) p({\bf X})
-$$</p>
-<p>and, finally, using assumption A3, we can express the estimation problem as the computation of</p>
-\begin{align}
-\hat{\bf w}_{\text{ML}}
-                &= \arg \max_{\bf w} p({\bf s}|{\bf X},{\bf w})  \\
-   \qquad \quad &= \arg \max_{\bf w} \prod_{k=0}^{K-1} p(s^{(k)} \mid {\bf x}^{(k)}, {\bf w})  \\
-   \qquad \quad &= \arg \max_{\bf w} \sum_{k=0}^{K-1}\log  p(s^{(k)} \mid {\bf x}^{(k)}, {\bf w})
-\end{align}<p>Any of the last three terms can be used to optimize ${\bf w}$. The sum in the last term is usually called the <strong>log-likelihood</strong> function.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="2.2.-Summary.">2.2. Summary.<a class="anchor-link" href="#2.2.-Summary.">&#182;</a></h3><p>Let's summarize what we need to do in order to design a regression algorithm:</p>
-<ol>
-<li>Assume a parametric data model $p(s| {\bf x},{\bf w})$</li>
-<li>Using the data model and the i.i.d. assumption, compute $p({\bf s}| {\bf X},{\bf w})$.</li>
-<li>Find an expression for ${\bf w}_{\text{ML}}$</li>
-<li>Assuming ${\bf w} = {\bf w}_{\text{ML}}$, compute the MAP or the minimum MSE estimate of $s$ given ${\bf x}$.</li>
-</ol>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-ML-estimation-for-a-Gaussian-model.">3. ML estimation for a Gaussian model.<a class="anchor-link" href="#3.-ML-estimation-for-a-Gaussian-model.">&#182;</a></h2><h3 id="3.1.-Step-1:-The-Gaussian-generative-model">3.1. Step 1: The Gaussian generative model<a class="anchor-link" href="#3.1.-Step-1:-The-Gaussian-generative-model">&#182;</a></h3><p>Let us assume that the target variables $s^{(k)}$ in dataset $\mathcal{D}$ are given by
-$$
-s^{(k)} = {\bf w}^\top {\bf z}^{(k)} + \varepsilon^{(k)}
-$$</p>
-<p>where ${\bf z}^{(k)}$ is the result of some transformation of the inputs, ${\bf z}^{(k)} = T({\bf x}^{(k)})$, and $\varepsilon^{(k)}$ are i.i.d. instances of a Gaussian random variable with mean zero and varianze $\sigma_\varepsilon^2$, i.e.,
-$$
-p_E(\varepsilon) = \frac{1}{\sqrt{2\pi}\sigma_\varepsilon}
-                   \exp\left(-\frac{\varepsilon^2}{2\sigma_\varepsilon^2}\right)
-$$</p>
-<p>Assuming that the noise variables are independent on ${\bf x}$ and ${\bf w}$, then, for a given ${\bf x}$ and ${\bf w}$, the target variable is gaussian with mean ${\bf w}^\top {\bf z}^{(k)}$ and variance $\varepsilon^2$
-$$
-p(s|{\bf x}, {\bf w}) = p_E(s-{\bf w}^\top{\bf z}) =
-    \frac{1}{\sqrt{2\pi}\sigma_\varepsilon}
-    \exp\left(-\frac{(s-{\bf w}^\top{\bf z})^2}{2\sigma_\varepsilon^2}\right)
-$$</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="3.2.-Step-2:-Likelihood-function">3.2. Step 2: Likelihood function<a class="anchor-link" href="#3.2.-Step-2:-Likelihood-function">&#182;</a></h3><p>Now we need to compute the likelihood function $p({\bf s}, {\bf X} | {\bf w})$. If the samples are i.i.d. we can write
-$$
-p({\bf s}| {\bf X}, {\bf w})
-    = \prod_{k=1}^{K} p(s^{(k)}| {\bf x}^{(k)}, {\bf w}) 
-    = \prod_{k=1}^{K} \frac{1}{\sqrt{2\pi}\sigma_\varepsilon}
-    \exp\left(-\frac{\left(s^{(k)}-{\bf w}^\top{\bf z}^{(k)}\right)^2}{2\sigma_\varepsilon^2}\right) \\
-    = \left(\frac{1}{\sqrt{2\pi}\sigma_\varepsilon}\right)^K
-      \exp\left(-\sum_{k=1}^K \frac{\left(s^{(k)}-{\bf w}^\top{\bf z}^{(k)}\right)^2}{2\sigma_\varepsilon^2}\right) \\
-$$
-Finally, grouping variables ${\bf z}^{(k)}$ in
-$${\bf Z} = \left({\bf z}^{(1)}, \dots, {\bf z}^{(K)}\right)^\top$$
-we get
-$$
-p({\bf s}| {\bf X}, {\bf w})
-    = \left(\frac{1}{\sqrt{2\pi}\sigma_\varepsilon}\right)^K
-      \exp\left(-\frac{1}{2\sigma_\varepsilon^2}\|{\bf s}-{\bf Z}{\bf w}\|^2\right)
-$$</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="3.3.-Step-3:-ML-estimation.">3.3. Step 3: ML estimation.<a class="anchor-link" href="#3.3.-Step-3:-ML-estimation.">&#182;</a></h3><p>The <b>maximum likelihood</b> solution is then given by:
-$$
-{\bf w}_{ML} = \arg \max_{\bf w} p({\bf s}|{\bf w}) = \arg \min_{\bf w} \|{\bf s} - {\bf Z}{\bf w}\|^2
-$$
-Note that $\|{\bf s} - {\bf Z}{\bf w}\|^2$ is the sum or the squared prediction errors for all samples in the dataset. This is also called the <em> <strong>Least Squares</strong> </em> (LS) solution.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The LS solution can be easily computed by differentiation,
-$$
-\nabla_{\bf w} \|{\bf s} - {\bf Z}{\bf w}\|^2\Bigg|_{{\bf w} = {\bf w}_\text{ML}}
-= - 2 {\bf Z}^\top{\bf s} + 2 {\bf Z}^\top{\bf Z} {\bf w}_{\text{ML}}
-= {\bf 0}
-$$
-and it is equal to
-$$
-{\bf w}_\text{ML} = ({\bf Z}^\top{\bf Z})^{-1}{\bf Z}^\top{\bf s}
-$$</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="3.4.-Step-4:-Prediction-function.">3.4. Step 4: Prediction function.<a class="anchor-link" href="#3.4.-Step-4:-Prediction-function.">&#182;</a></h3><p>The last step consists on computing an estimate of $s$ by assuming that the true value of the weight parameters is ${\bf w}_\text{ML}$. In particular, the minimum MSE estimate is
-$$
-\hat{s}_\text{MSE} = \mathbb{E}\{s|{\bf x},{\bf w}_\text{ML}\}
-$$</p>
-<p>Knowing that, given ${\bf x}$ and ${\bf w}$, $s$ is normally distributed with mean ${\bf w}^\top {\bf z}$ we can write
-$$
-\hat{s}_\text{MSE} = {\bf w}_\text{ML}^\top {\bf z}
-$$</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Exercise-5:">Exercise 5:<a class="anchor-link" href="#Exercise-5:">&#182;</a></h4><p>Assume that the targets in the one-dimensional dataset given by</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.41</span><span class="p">,</span> <span class="mf">0.53</span><span class="p">,</span> <span class="mf">0.80</span><span class="p">,</span> <span class="mf">0.89</span><span class="p">,</span> <span class="mf">0.92</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span> 
-<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.09</span><span class="p">,</span> <span class="mf">0.16</span><span class="p">,</span> <span class="mf">0.63</span><span class="p">,</span> <span class="mf">0.44</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">,</span> <span class="mf">0.82</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>have been generated by the polynomial Gaussian model 
-$$
-s = w_0 + w_1 x + w_2 x^2 + \epsilon
-$$
-(i.e., with ${\bf z} = T(x) = (1, x, x^2)^\intercal$) with noise variance</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sigma_eps</span> <span class="o">=</span> <span class="mf">0.3</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li><strong>5.1.</strong> Compute the ML estimate.</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Compute the extended input matrix Z</span>
-<span class="n">nx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="c1"># Z = &lt;FILL IN&gt;</span>
-
-<span class="c1"># Compute the ML estimate using linalg.lstsq from Numpy.</span>
-<span class="c1"># wML = &lt;FILL IN&gt;</span>
- 
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li><strong>5.2.</strong> Compute the value of the log-likelihood function for ${\bf w}={\bf w}_\text{ML}$.</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-
-<span class="c1"># Compute the likelihood for the ML parameter wML</span>
-<span class="c1"># d = &lt;FILL IN&gt;</span>
-
-<span class="c1"># LwML = [&lt;FILL IN&gt;]</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">LwML</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>1.02722564621
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li><strong>5.3.</strong> Plot the prediction function over the data scatter plot </li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">xgrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
-<span class="n">nx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xgrid</span><span class="p">)</span>
-<span class="c1"># Compute the input matrix for the grid data in x</span>
-<span class="c1"># Z = &lt;FILL IN&gt;</span>
-
-<span class="c1"># sML = &lt;FILL IN&gt;</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
-<span class="c1"># plt.plot(&lt;FILL IN&gt;)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-
-
-<div class="output_png output_subarea ">
-<img src="data:image/png;base64,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
-/X8/ce9gm8IvRwAAAABJRU5ErkJggg==
-"
->
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Exercise-6:">Exercise 6:<a class="anchor-link" href="#Exercise-6:">&#182;</a></h4><p>Assume the dataset $\mathcal{D} = \{(x^{(k)}, s^{(k)}, k=1,\ldots, K\}$ contains i.i.d. samples from a distribution with posterior density given by
-$$
-p(s \mid x, w) = w x \exp(- w x s), \qquad s\ge0, \,\, x\ge 0, \,\, w\ge 0
+p(s|x, w) = w x \exp(- w x s), \qquad s\ge0, \,\, x\ge 0, \,\, w\ge 0
 $$</p>
 <ul>
-<li><strong>6.1.</strong> Determine an expression for the likelihood function</li>
+<li><strong>2.1.</strong> Determine an expression for the likelihood function</li>
 </ul>
 
 </div>
@@ -13120,6 +12741,12 @@ $$</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Solution</strong>:</p>
 <SOL>
+The likelihood function is 
+$$
+p({\bf s}|w, {\bf X}) 
+    = \prod_{k=1}^K w x^{(k)} \exp(- w x^{(k)} s^{(k)})
+    = w^K \left(\prod_{k=1}^K x^{(k)}\right)  \exp\left(- w \sum_{k=1}^K x^{(k)} s^{(k)}\right)
+$$
 </SOL>
 </div>
 </div>
@@ -13130,7 +12757,7 @@ $$</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><strong>6.2.</strong> Draw the likelihood function for the dataset in <strong>Exercise 4</strong> in the range $0\le w\le 6$.</li>
+<li><strong>2.2.</strong> Draw the likelihood function for the dataset in <strong>Exercise 1</strong> in the range $0\le w\le 6$.</li>
 </ul>
 
 </div>
@@ -13138,7 +12765,7 @@ $$</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
@@ -13149,9 +12776,11 @@ $$</p>
 <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">s</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">wGrid</span><span class="p">:</span>
     <span class="c1"># p.append(&lt;FILL IN&gt;)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">w</span><span class="o">**</span><span class="n">K</span><span class="p">)</span><span class="o">*</span><span class="n">Px</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="o">*</span><span class="n">xs</span><span class="p">))</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="c1"># plt.plot(&lt;FILL IN&gt;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wGrid</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$w$&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Likelihood function&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -13161,241 +12790,6 @@ $$</p>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-
-
-<div class="output_png output_subarea ">
-<img src="data:image/png;base64,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
-"
->
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -13403,9 +12797,9 @@ aRMrJMYYY9rECokxxpg2sUJijDGmTf4/YHcNVJOpWawAAAAASUVORK5CYII=
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><strong>6.3.</strong> Determine the maximum likelihood coefficient, $w_\text{ML}$. </li>
+<li><strong>2.3.</strong> Determine the maximum likelihood coefficient, $w_\text{ML}$. 
+(<em>Hint: you can maximize the log of the likelihood function instead of the likelihood function in order to simplify the differentiation</em>)</li>
 </ul>
-<p>(<em>Hint: you can maximize the log-likelihood function instead of the likelihood function in order to simplify the differentiation</em>)</p>
 
 </div>
 </div>
@@ -13417,6 +12811,15 @@ aRMrJMYYY9rECokxxpg2sUJijDGmTf4/YHcNVJOpWawAAAAASUVORK5CYII=
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Solution</strong>:</p>
 <SOL>
+Applyng the logarithm to the likelihood function we get
+$$
+\log p({\bf s}|{\bf w}, {\bf X}) 
+    = K\log  w + \sum_{k=1}^K \log\left(x^{(k)}\right)  - w {\bf X}^\top {\bf s}
+$$
+which is minimum for 
+$$
+w_\text{ML} = \frac{K}{{\bf X}^\top {\bf s}}
+$$
 </SOL>
 </div>
 </div>
@@ -13427,7 +12830,7 @@ aRMrJMYYY9rECokxxpg2sUJijDGmTf4/YHcNVJOpWawAAAAASUVORK5CYII=
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><strong> 6.4.</strong> Compute $w_\text{ML}$ for the dataset in <strong>Exercise 4</strong></li>
+<li><strong>2.4.</strong> Compute $w_\text{ML}$ for the dataset in <strong>Exercise 1</strong></li>
 </ul>
 
 </div>
@@ -13435,10 +12838,11 @@ aRMrJMYYY9rECokxxpg2sUJijDGmTf4/YHcNVJOpWawAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># wML = &lt;FILL IN&gt;</span>
+<span class="n">wML</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="o">/</span><span class="n">xs</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">wML</span><span class="p">)</span>
 </pre></div>
 
@@ -13446,273 +12850,18 @@ aRMrJMYYY9rECokxxpg2sUJijDGmTf4/YHcNVJOpWawAAAAASUVORK5CYII=
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>2.40434155389
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="2.4.-Multiple-explanations-of-the-data">2.4. Multiple explanations of the data<a class="anchor-link" href="#2.4.-Multiple-explanations-of-the-data">&#182;</a></h3><p>With an additive Gaussian independent noise model, the maximum likelihood and the least squares solutions are the same. We have not improved much ...</p>
+<p>However, we have already formulated the problem in a probabilistic way. This opens the door to reasoning in terms of a set of possible explanations, not just one. We believe more than one of our models could have generated the data.</p>
 <ul>
-<li><strong> 6.5.</strong> Assuming $w = w_\text{ML}$, compute the prediction function based on the estimate $s_{MSE}$</li>
+<li>We do not believe all models are equally likely to have generated the data</li>
+<li>We may <b>believe</b> that a simpler model is more likely than a complex one</li>
 </ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Solution</strong>:</p>
-<SOL>
-</SOL>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li><strong> 6.6.</strong> Plot the prediction function obtained in ap. 6.5, and compare it with the linear predictor in exercise 4</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">xgrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
-<span class="c1"># sML = &lt;FILL IN&gt;</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
-<span class="c1"># plt.plot(&lt;FILL IN&gt;)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-
-
-<div class="output_png output_subarea ">
-<img src="data:image/png;base64,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
-"
->
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Subjectively, we can see that the predictor computed in exercise 6 does not fit the given data very well. This could be a false perception. If the data have been truly generated by the parametric model assumed in exercise 6 (i.e. $p(s \mid x, w) = w x \exp(- w x s)$, the apparent missbehavior of the estimator could be caused by the natural randomness of the data, and a greater amount of data would show a better adjustement.</p>
-<p>Alternative, it may be the case the model assumed in sec. 6 is incorrect. Again, more data would be useful to asses that.</p>
-<p>This shows that the choice of the data model is important. In many applications, no parametric data model is available, and the data scientist must make a choice based on the nature of the data or any previous knowledge about the statistical behavior of the data.</p>
-<p>If no previous information is available, the data scientist can try different models, and compare using validation data and some cross validation technique.</p>
 
 </div>
 </div>
