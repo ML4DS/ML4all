@@ -11726,9 +11726,7 @@ body {
 div#notebook {
   overflow: visible;
   border-top: none;
-}
-
-@media print {
+}@media print {
   div.cell {
     display: block;
     page-break-inside: avoid;
@@ -11749,7 +11747,7 @@ div#notebook {
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -11773,13 +11771,12 @@ div#notebook {
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Bayesian-and-Gaussian-Process-regression">Bayesian and Gaussian Process regression<a class="anchor-link" href="#Bayesian-and-Gaussian-Process-regression">&#182;</a></h1>
-<pre><code>Notebook version: 1.1 (Sep 29, 2017)
+<pre><code>Notebook version: 1.2 (Sep 28, 2018)
 
 Authors: Miguel Lázaro Gredilla
          Jerónimo Arenas García (jarenas@tsc.uc3m.es)
@@ -11788,14 +11785,14 @@ Authors: Miguel Lázaro Gredilla
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 
 <pre><code>Changes: v.1.0 - First version. Python version
          v.1.1 - Python 3 compatibility. ML section.
+         v.1.2 - Revised content. 2D visualization removed.
 
 Pending changes: </code></pre>
 
@@ -11828,20 +11825,24 @@ Pending changes: </code></pre>
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.-Introduction">1. Introduction<a class="anchor-link" href="#1.-Introduction">&#182;</a></h2><p>In this exercise the student will review several key concepts of Bayesian regression and Gaussian processes.</p>
-<p>For the purpose of this exercise, the regression model is</p>
-$${s}({\bf x}) = f({\bf x}) + \varepsilon$$<p>where ${s}({\bf x})$ is the output corresponding to input ${\bf x}$, $f({\bf x})$ is the unobservable latent function, and $\varepsilon$ is white zero-mean Gaussian noise, i.e., $\varepsilon \sim {\cal N}(0,\sigma_\varepsilon^2)$.</p>
+<h2 id="1.-Introduction">1. Introduction<a class="anchor-link" href="#1.-Introduction">&#182;</a></h2><p>In this exercise the student will review several key concepts of Maximum Likelihood and Bayesian regression. To do so, we will assume the regression model</p>
+<p>$$s = f({\bf x}) + \varepsilon$$</p>
+<p>where $s$ is the output corresponding to input ${\bf x}$, $f({\bf x})$ is an unobservable latent function, and $\varepsilon$ is white zero-mean Gaussian noise, i.e.,</p>
+<p>$$\varepsilon \sim {\cal N}(0,\sigma_\varepsilon^2).$$</p>
+<p>In addition, we will assume that the latent function is <em>linear in the parameters</em></p>
+<p>$$f({\bf x}) = {\bf w}^\top {\bf z}$$</p>
+<p>where ${\bf z} = T({\bf x})$ is a possibly non-linear transformation of the input. Along this notebook, we will explore different types of transformations.</p>
+<p>Also, we will assume an <i>a priori</i> distribution for ${\bf w}$ given by</p>
+<p>$${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11857,8 +11858,7 @@ $${s}({\bf x}) = f({\bf x}) + \varepsilon$$<p>where ${s}({\bf x})$ is the output
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11880,19 +11880,19 @@ $${s}({\bf x}) = f({\bf x}) + \varepsilon$$<p>where ${s}({\bf x})$ is the output
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Data-generation-with-a-linear-model">2. Data generation with a linear model<a class="anchor-link" href="#2.-Data-generation-with-a-linear-model">&#182;</a></h2><p>During this section, we will assume the following parametric model for the latent function</p>
-$$f({\bf x}) = {\bf w}^\top {\bf z}$$<p>where ${\bf z} = (1, {\bf x}^\top)^\top$. This is a linear model in the observations, where ${\bf w}$ contains the parameters of the model. The <i>a priori</i> distribution of ${\bf w}$ is assumed to be</p>
-$${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
+<h2 id="2.-Data-generation-with-a-linear-model">2. Data generation with a linear model<a class="anchor-link" href="#2.-Data-generation-with-a-linear-model">&#182;</a></h2><p>During this section, we will assume affine transformation
+$${\bf z} = T({\bf x}) = (1, {\bf x}^\top)^\top$$.</p>
+<p>The <i>a priori</i> distribution of ${\bf w}$ is assumed to be</p>
+<p>$${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$</p>
+
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11920,8 +11920,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11952,13 +11951,12 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>[3] Generate an input matrix $\mbox{X}$ containing 20 samples equally spaced values between 0 and 2 in the second column.</li>
+<li>[3] Generate an input matrix $\mbox{X}$ containing 20 samples with equally spaced values between 0 and 2 in the second column (method <code>linspace</code> from numpy can be useful for this)</li>
 </ul>
 
 </div>
@@ -11978,8 +11976,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11997,7 +11994,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Expand input matrix with an all-ones column</span>
 <span class="n">col_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_points</span><span class="p">,))</span>
-<span class="c1"># Xe = &lt;FILL IN&gt;</span>
+<span class="c1"># Z = &lt;FILL IN&gt;</span>
 
 <span class="c1"># Generate values of the target variable</span>
 <span class="c1"># s = &lt;FILL IN&gt;</span>
@@ -12009,8 +12006,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12018,8 +12014,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12044,23 +12039,20 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-Maximum-Likelihood-(ML)-regression">3. Maximum Likelihood (ML) regression<a class="anchor-link" href="#3.-Maximum-Likelihood-(ML)-regression">&#182;</a></h2><h3 id="3.1.-Likelihood-function">3.1. Likelihood function<a class="anchor-link" href="#3.1.-Likelihood-function">&#182;</a></h3><p>i.e., a linear model in the observations, where ${\bf w}$ contains the parameters of the model. The <i>a priori</i> distribution of ${\bf w}$ is assumed to be</p>
-$${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
+<h2 id="3.-Maximum-Likelihood-(ML)-regression">3. Maximum Likelihood (ML) regression<a class="anchor-link" href="#3.-Maximum-Likelihood-(ML)-regression">&#182;</a></h2><h3 id="3.1.-Likelihood-function">3.1. Likelihood function<a class="anchor-link" href="#3.1.-Likelihood-function">&#182;</a></h3>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>[1] Define a function <code>predict(we, Xe)</code> that computes the linear predictions for all inputs in data matrix <code>Xe</code> (a 2-D numpy arry), for a given parameter vector <code>we</code> (a 1-D numpy array). The output should be a 1-D array. Test your function with the given dataset and <code>we = [0.4, 0.7]</code></li>
+<li>[1] Define a function <code>predict(we, Z)</code> that computes the linear predictions for all inputs in data matrix <code>Z</code> (a 2-D numpy arry), for a given parameter vector <code>we</code> (a 1-D numpy array). The output should be a 1-D array. Test your function with the given dataset and <code>we = [0.4, 0.7]</code></li>
 </ul>
 
 </div>
@@ -12083,13 +12075,12 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>[2] Define a function <code>sse(we, X, s)</code> that computes the sum of squared errors (SSE) for the linear prediction with parameters <code>we</code> (1D numpy array), inputs <code>Xe</code>  (2D numpy array) and targets <code>s</code> (1D numpy array). Using this function, compute the SSE of the true parameter vector in <code>true_w</code>.</li>
+<li>[2] Define a function <code>sse(we, Z, s)</code> that computes the sum of squared errors (SSE) for the linear prediction with parameters <code>we</code> (1D numpy array), inputs <code>Z</code>  (2D numpy array) and targets <code>s</code> (1D numpy array). Using this function, compute the SSE of the true parameter vector in <code>true_w</code>.</li>
 </ul>
 
 </div>
@@ -12111,13 +12102,12 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>[3] Define a function <code>likelihood(we, Xe, s)</code> that computes the likelihood of parameter vector <code>we</code> for a given dataset in matrix <code>Xe</code> and vector <code>s</code>. Note that this function can use the <code>sse</code> function defined above. Using this function, compute the likelihood of the true parameter vector in <code>true_w</code>.</li>
+<li>[3] Define a function <code>likelihood(we, Z, s, sigma_eps)</code> that computes the likelihood of parameter vector <code>we</code> for a given dataset in matrix <code>Z</code> and vector <code>s</code>, assuming Gaussian noise with varianze $\sigma_\epsilon^2$. Note that this function can use the <code>sse</code> function defined above. Using this function, compute the likelihood of the true parameter vector in <code>true_w</code>.</li>
 </ul>
 
 </div>
@@ -12139,13 +12129,14 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>[4] In order to visualize the likelihood function, generate a set of points in a two dimensional grid going from $(-\sigma_p, -\sigma_p)$ to $(\sigma_p, \sigma_p)$, compute the likelihood for all these points and visualize them using a 2-dimensional plot</li>
+<li><p>[4] Define a function <code>LL(we, Xe, s)</code> that computes the log-likelihood of parameter vector <code>we</code> for a given dataset in matrix <code>Z</code> and vector <code>s</code>. Note that this function can use the <code>likelihood</code> function defined above. However, for a highe numerical precission, implemening a direct expression for the log-likelihood is recommended.</p>
+<p>Using this function, compute the likelihood of the true parameter vector in <code>true_w</code>.</p>
+</li>
 </ul>
 
 </div>
@@ -12156,29 +12147,10 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># First construct a grid of (theta0, theta1) parameter pairs and their</span>
-<span class="c1"># corresponding cost function values.</span>
-<span class="n">N</span> <span class="o">=</span> <span class="mi">200</span>    <span class="c1"># Number of points along each dimension.</span>
-<span class="c1"># w0_grid = np.linspace(&lt;FILL IN&gt;)</span>
-<span class="c1"># w1_grid = np.linspace(&lt;FILL IN&gt;)</span>
-
-
-<span class="n">Lw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
-<span class="c1"># Fill Lw with the likelihood values</span>
-<span class="c1"># &lt; write  your code here&gt;</span>
-<span class="c1"># &lt;SOL&gt;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
 <span class="c1"># &lt;/SOL&gt;</span>
 
-<span class="n">WW0</span><span class="p">,</span> <span class="n">WW1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">w0_grid</span><span class="p">,</span> <span class="n">w1_grid</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
-<span class="n">contours</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">WW0</span><span class="p">,</span> <span class="n">WW1</span><span class="p">,</span> <span class="n">Lw</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">contours</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="n">true_w</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="n">true_w</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="p">[</span><span class="mi">50</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$w_0$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$w_1$&#39;</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">true_w</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The log-likelihood of the true parameter vector is </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">LL_w_true</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -12186,8 +12158,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12214,13 +12185,12 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>[2] Compute the maximum likelihood</li>
+<li>[2] Compute the maximum likelihood, and the maximum log-likelihood.</li>
 </ul>
 
 </div>
@@ -12235,6 +12205,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 <span class="c1"># &lt;/SOL&gt;</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Maximum likelihood: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">L_w_ML</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Maximum log-likelihood: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">LL_w_ML</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -12242,8 +12213,51 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Just as an illustration, the code below generates a set of points in a two dimensional grid going from $(-\sigma_p, -\sigma_p)$ to $(\sigma_p, \sigma_p)$, computes the log-likelihood for all these points and visualize them using a 2-dimensional plot. You can see the difference between the true value of the parameter ${\bf w}$ (black) and the ML estimate (red).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># First construct a grid of (theta0, theta1) parameter pairs and their</span>
+<span class="c1"># corresponding cost function values.</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">200</span>    <span class="c1"># Number of points along each dimension.</span>
+<span class="n">w0_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma_p</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">sigma_p</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">w1_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma_p</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">sigma_p</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+
+<span class="n">Lw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+<span class="c1"># Fill Lw with the likelihood values</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">w0i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">w0_grid</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">w1j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">w1_grid</span><span class="p">):</span>
+        <span class="n">we</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">w0i</span><span class="p">,</span> <span class="n">w1j</span><span class="p">))</span> 
+        <span class="n">Lw</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">likelihood</span><span class="p">(</span><span class="n">we</span><span class="p">,</span> <span class="n">Xe</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-300</span><span class="p">)</span>
+
+<span class="n">WW0</span><span class="p">,</span> <span class="n">WW1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">w0_grid</span><span class="p">,</span> <span class="n">w1_grid</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
+<span class="n">contours</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">WW0</span><span class="p">,</span> <span class="n">WW1</span><span class="p">,</span> <span class="n">Lw</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">contours</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="n">true_w</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="n">true_w</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="p">[</span><span class="mi">50</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="n">w_ML</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="n">w_ML</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="p">[</span><span class="mi">50</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$w_0$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$w_1$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12274,8 +12288,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12300,21 +12313,30 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="4.-Bayesian-regression">4. Bayesian regression<a class="anchor-link" href="#4.-Bayesian-regression">&#182;</a></h2>
+<h2 id="4.-ML-estimation-with-real-data.-The-stocks-dataset.">4. ML estimation with real data. The stocks dataset.<a class="anchor-link" href="#4.-ML-estimation-with-real-data.-The-stocks-dataset.">&#182;</a></h2><p>Once our code has been tested on synthetic data, we will use it with real data.</p>
+
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="4.1.-Posterior-pdf-of-the-weight-vector">4.1. Posterior pdf of the weight vector<a class="anchor-link" href="#4.1.-Posterior-pdf-of-the-weight-vector">&#182;</a></h3><p>In this section we will visualize prior and the posterior distribution functions. First, we will restore the dataset at the begining of this notebook:</p>
+<h3 id="4.1.-Dataset">4.1. Dataset<a class="anchor-link" href="#4.1.-Dataset">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>[1] Load data corresponding to the evolution of the stocks of 10 airline companies. This data set is an adaptation of the Stock dataset from <a href="http://www.dcc.fc.up.pt/~ltorgo/Regression/DataSets.html">http://www.dcc.fc.up.pt/~ltorgo/Regression/DataSets.html</a>, which in turn was taken from the StatLib Repository, <a href="http://lib.stat.cmu.edu/">http://lib.stat.cmu.edu/</a></li>
+</ul>
 
 </div>
 </div>
@@ -12324,13 +12346,8 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">n_points</span> <span class="o">=</span> <span class="mi">21</span>
-<span class="n">true_w</span> <span class="o">=</span> <span class="n">sigma_p</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">dim_x</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">n_points</span><span class="p">)</span>
-<span class="n">col_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_points</span><span class="p">,))</span>
-<span class="n">Xe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">col_1</span><span class="p">,</span> <span class="n">X</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
-<span class="n">s</span> <span class="o">=</span> <span class="n">Xe</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">true_w</span><span class="p">)</span> <span class="o">+</span> <span class="n">sigma_eps</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_points</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
+<span class="c1"># &lt;/SOL&gt;</span>
 </pre></div>
 
 </div>
@@ -12338,13 +12355,204 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>[1] Define a function <code>posterior_stats(Xe, s)</code> that computes the parameters of the posterior coefficient distribution given the dataset in matrix <code>Xe</code> and vector <code>s</code>. This function should return the posterior mean, the covariance matrix and the precision matrix (the inverse of the covariance matrix). Test the function to the given dataset.</li>
+<li>[2] Normalize the data so all training sample components have zero mean and unit standard deviation. Store the normalized training and test samples in 2D numpy arrays <code>Xtrain</code> and <code>Xtest</code>, respectively.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
+<span class="c1"># &lt;/SOL&gt;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="4.2.-Polynomial-ML-regression-with-a-single-variable">4.2. Polynomial ML regression with a single variable<a class="anchor-link" href="#4.2.-Polynomial-ML-regression-with-a-single-variable">&#182;</a></h3><p>In this first part, we will work with the first component of the input only.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>[1] Take the first column of <code>Xtrain</code> and <code>Xtest</code> into arrays <code>X0train</code> and <code>X0test</code>, respectively. </li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>[2] Visualize, in a single scatter plot, the target variable (in the vertical axes) versus the input variable)</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><p>[3] Since the data have been taken from a real scenario, we do not have any <em>true</em> mathematical model of the process that generated the data. Thus, we will explore different models trying to take the one that fits better the training data.</p>
+<p>Assume a polinomial model given by
+$$
+{\bf z} = T({\bf x}) = (1, x_0, x_0^2, \ldots, x_0^{g-1})^\top.
+$$</p>
+<p>Built a method</p>
+<p><code>Ztrain, Ztest = T_poly(Xtrain, Xtest, g)</code></p>
+<p>that, for a given value of $g$, computes normailzed data matrices <code>Ztrain</code> and <code>Ztest</code> that result from applying the polinomial transformation to the inputs in <code>X0train</code> and <code>X0test</code> for an arbitrary value of $g$.</p>
+<p>Note that, despite <code>X0train</code> and <code>X0test</code> where normalized, you will need to re-normalize the transformed variables.</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
+<span class="c1"># &lt;/SOL&gt;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><p>[4] Fit a polynomial model with degree $g$ for $g$ ranging from 0 to 10. Store the weights of all models in a list of weight vectors, named <code>models</code>, such that <code>models[g]</code> returns the parameters estimated for the polynomial model with degree $g$.</p>
+<p>We will use these models in the following sections.</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>[5] Plot the polynomial models with degrees 1, 3 and 10, superimposed over a scatter plot of the training data (in blue) and the test data (in red).</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><p>[6] Show, in the same plot:</p>
+<ul>
+<li>The log-likelihood function corresponding to each model, as a function of $g$, computed over the training set.</li>
+<li>The log-likelihood function corresponding to each model, as a function of $g$, computed over the test set.</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><p>[7] [OPTIONAL] You may have seen the the likelihood function grows with the degree of the polynomial. However, large values of $g$ produce a strong data overfitting. For this reasong, $g$ cannot be selected with the same data used to fit the model.</p>
+<p>This kind of parameters, like $g$ are usually called <em>hyperparameters</em> and need to be selected by cross validation.</p>
+<p>Another hyperparameter is $\sigma_\epsilon^2$. Plot the log-likelihood function corresponding to the polynomial model with degree 3 for different values of $\sigma_\epsilon^2$, for the training set and the test set. What would be the optimal value of this hyperparameters according to the training set?</p>
+<p>In any case, not that  the model coefficients do not depend on $\sigma_eps^2$. Therefore, we do not need to estimat its value for ML regression.</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>[8] Select the optimal value of $g$ by cross-validation. To do so, the cross validation methods provided by sklearn will simplify this task.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><p>[9] For the selected model:</p>
+<ul>
+<li>Plot the regresion function over the scater plot of the data.</li>
+<li>Compute the log-likelihood and the SSE over the test set.</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="5.-Bayesian-regression.-The-stock-dataset.">5. Bayesian regression. The stock dataset.<a class="anchor-link" href="#5.-Bayesian-regression.-The-stock-dataset.">&#182;</a></h2><p>In this section we will keep using the first component of the data from the stock dataset, assuming the same kind of plolynomial model. We will explore the potential advantages of using a Bayesian model. To do so, we will asume that the <i>a priori</i> distribution of ${\bf w}$ is</p>
+<p>$${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="5.1.-Posterior-pdf-of-the-weight-vector">5.1. Posterior pdf of the weight vector<a class="anchor-link" href="#5.1.-Posterior-pdf-of-the-weight-vector">&#182;</a></h3><p>In this section we will visualize prior and the posterior distribution functions. First, we will restore the dataset at the begining of this notebook:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>[1] Define a function <code>posterior_stats(Z, s, sigma_eps, sigma_p)</code> that computes the parameters of the posterior coefficient distribution given the dataset in matrix <code>Z</code> and vector <code>s</code>, for given values of the hyperparameters.
+This function should return the posterior mean, the covariance matrix and the precision matrix (the inverse of the covariance matrix). Test the function to the given dataset, for $g=3$.</li>
 </ul>
 
 </div>
@@ -12358,7 +12566,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
 <span class="c1"># &lt;/SOL&gt;</span>
 
-<span class="n">mean_w</span><span class="p">,</span> <span class="n">Cov_w</span><span class="p">,</span> <span class="n">iCov_w</span> <span class="o">=</span> <span class="n">posterior_stats</span><span class="p">(</span><span class="n">Xe</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="n">mean_w</span><span class="p">,</span> <span class="n">Cov_w</span><span class="p">,</span> <span class="n">iCov_w</span> <span class="o">=</span> <span class="n">posterior_stats</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">sigma_eps</span><span class="p">,</span> <span class="n">sigma_p</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;true_w = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">true_w</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;mean_w = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mean_w</span><span class="p">))</span>
@@ -12371,8 +12579,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12401,13 +12608,40 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>[3] The function <code>computePW</code> computes the posterior distribution over a grid of points. Use this function to compute a bidimensional plot of the prior and the posterior distributions.</li>
+<li>[3] Define a function <code>log_gauss_pdf(we, mean_w, iCov_w)</code> that computes the log of the Gaussian pdf with mean <code>mean_w</code> and precision matrix <code>iCov_w</code>. Use this function to compute and compare the log of the posterior pdf value of the true coefficients, the ML estimate and the MSE estimate, given the dataset.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="5.2.-Hyperparameter-selection">5.2. Hyperparameter selection<a class="anchor-link" href="#5.2.-Hyperparameter-selection">&#182;</a></h3><p>Since the values $\sigma_p$ and $\sigma_\varepsilon$ are no longer known, we have to select them in some way. To see their influence, assume $g=3$ and plot the regression function for different values of $\sigma_p$</p>
+<p>To this end, we will adjust them using the LS solution to the regression problem:</p>
+<ul>
+<li>$\sigma_p^2$ will be taken as the average of the square values of ${\hat {\bf w}}_{LS}$</li>
+<li>$\sigma_\varepsilon^2$ will be taken as two times the average of the square of the residuals when using ${\hat {\bf w}}_{LS}$</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="5.1.-Hyperparameter-selection">5.1. Hyperparameter selection<a class="anchor-link" href="#5.1.-Hyperparameter-selection">&#182;</a></h3><p>Since the values $\sigma_p$ and $\sigma_\varepsilon$ are no longer known, a first rough estimation is needed (we will soon see how to estimate these values in a principled way).</p>
+<p>To this end, we will adjust them using the LS solution to the regression problem:</p>
+<ul>
+<li>$\sigma_p^2$ will be taken as the average of the square values of ${\hat {\bf w}}_{LS}$</li>
+<li>$\sigma_\varepsilon^2$ will be taken as two times the average of the square of the residuals when using ${\hat {\bf w}}_{LS}$</li>
 </ul>
 
 </div>
@@ -12418,48 +12652,11 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">computePW</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">lims</span><span class="p">,</span> <span class="n">mean_w</span><span class="p">,</span> <span class="n">iCov_w</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># w_LS, residuals, rank, s = &lt;FILL IN&gt;</span>
+<span class="c1"># sigma_p = &lt;FILL IN&gt;</span>
+<span class="c1"># sigma_eps = &lt;FILL IN&gt;</span>
 
-    <span class="c1"># First construct a grid of (theta0, theta1) parameter pairs and their</span>
-    <span class="c1"># corresponding cost function values.</span>
-    <span class="n">w0_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">lims</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lims</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">N</span><span class="p">)</span>
-    <span class="n">w1_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">lims</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">lims</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">N</span><span class="p">)</span>
-
-    <span class="n">Pw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">w0i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">w0_grid</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">w1j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">w1_grid</span><span class="p">):</span>
-            <span class="n">we</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">w0i</span><span class="p">,</span> <span class="n">w1j</span><span class="p">))</span> 
-            <span class="n">Pw</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gauss_pdf</span><span class="p">(</span><span class="n">we</span><span class="p">,</span> <span class="n">mean_w</span><span class="p">,</span> <span class="n">iCov_w</span><span class="p">)</span>
-
-    <span class="n">WW0</span><span class="p">,</span> <span class="n">WW1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">w0_grid</span><span class="p">,</span> <span class="n">w1_grid</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">Pw</span><span class="p">,</span> <span class="n">WW0</span><span class="p">,</span> <span class="n">WW1</span>
-
-<span class="c1"># Common parameters for all plots</span>
-<span class="n">lims</span> <span class="o">=</span> <span class="n">sigma_p</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
-<span class="n">N</span> <span class="o">=</span> <span class="mi">200</span>
-
-<span class="c1"># Define figure with two subplots</span>
-<span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-
-<span class="c1"># Compute the values of the prior distribution</span>
-<span class="c1"># Pw, WW0, WW1 = computePW(&lt;FILL IN&gt;)</span>
-<span class="n">contours</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">WW0</span><span class="p">,</span> <span class="n">WW1</span><span class="p">,</span> <span class="n">Pw</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">contours</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$w_0$&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$w_1$&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s1">&#39;on&#39;</span><span class="p">)</span>
-
-<span class="c1"># Compute the values of the posterior distribution</span>
-<span class="c1"># Pw, WW0, WW1 = computePW(&lt;FILL IN&gt;)</span>
-<span class="n">contours</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">WW0</span><span class="p">,</span> <span class="n">WW1</span><span class="p">,</span> <span class="n">Pw</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">contours</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$w_0$&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$w_1$&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s1">&#39;on&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sigma_eps</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12467,12 +12664,11 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="4.2.-Sampling-regression-curves-from-the-posterior">4.2. Sampling regression curves from the posterior<a class="anchor-link" href="#4.2.-Sampling-regression-curves-from-the-posterior">&#182;</a></h3><p>In this section we will plot the functions corresponding to different samples drawn from the posterior distribution of the weight vector.</p>
+<h3 id="5.2.-Sampling-regression-curves-from-the-posterior">5.2. Sampling regression curves from the posterior<a class="anchor-link" href="#5.2.-Sampling-regression-curves-from-the-posterior">&#182;</a></h3><p>In this section we will plot the functions corresponding to different samples drawn from the posterior distribution of the weight vector.</p>
 <p>To this end, we will first generate an input dataset of equally spaced samples. We will compute the functions at these points</p>
 
 </div>
@@ -12500,13 +12696,12 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Generate random vectors ${\bf w}_l$ with $l = 1,\dots, 50$, from the posterior density of the weights, $p({\bf w}\mid{\bf s})$, and use them to generate 50 straight lines, $f({\bf x}^\ast) = {{\bf x}^\ast}^\top {\bf w}_l$, with the second component of ${\bf x}^\ast$ between $-1$ and $3$, with step $0.1$.</p>
-<p>Plot the original ground-truth straight line, corresponding to $\mbox{true_w}$, along with the $50$ generated straight lines and the original samples, all in the same plot. As you can check, the Bayesian model is not providing a single answer, but instead a density over them, from which we have extracted 50 options.</p>
+<p>Generate random vectors ${\bf w}_l$ with $l = 1,\dots, 50$, from the posterior density of the weights, $p({\bf w}\mid{\bf s})$, and use them to generate 50 polinomial regression functions, $f({\bf x}^\ast) = {{\bf z}^\ast}^\top {\bf w}_l$, with ${\bf x}^\ast$ between $-1.2$ and $1.2$, with step $0.1$.</p>
+<p>Plot the line corresponding to the model with the posterior mean parameters, along with the $50$ generated straight lines and the original samples, all in the same plot. As you can check, the Bayesian model is not providing a single answer, but instead a density over them, from which we have extracted 50 options.</p>
 
 </div>
 </div>
@@ -12550,14 +12745,15 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="4.3.-Plotting-the-confidence-intervals">4.3. Plotting the confidence intervals<a class="anchor-link" href="#4.3.-Plotting-the-confidence-intervals">&#182;</a></h3><p>On top of the previous figure (copy here your code from the previous section), plot functions</p>
-$${\mathbb E}\left\{f({\bf x}^\ast)\mid{\bf s}\right\}$$<p>and</p>
-$${\mathbb E}\left\{f({\bf x}^\ast)\mid{\bf s}\right\} \pm 2 \sqrt{{\mathbb V}\left\{f({\bf x}^\ast)\mid{\bf s}\right\}}$$<p>(i.e., the posterior mean of $f({\bf x}^\ast)$, as well as two standard deviations above and below).</p>
+<h3 id="5.3.-Plotting-the-confidence-intervals">5.3. Plotting the confidence intervals<a class="anchor-link" href="#5.3.-Plotting-the-confidence-intervals">&#182;</a></h3><p>On top of the previous figure (copy here your code from the previous section), plot functions</p>
+<p>$${\mathbb E}\left\{f({\bf x}^\ast)\mid{\bf s}\right\}$$</p>
+<p>and</p>
+<p>$${\mathbb E}\left\{f({\bf x}^\ast)\mid{\bf s}\right\} \pm 2 \sqrt{{\mathbb V}\left\{f({\bf x}^\ast)\mid{\bf s}\right\}}$$</p>
+<p>(i.e., the posterior mean of $f({\bf x}^\ast)$, as well as two standard deviations above and below).</p>
 <p>It is possible to show analytically that this region comprises $95.45\%$ probability of the posterior probability $p(f({\bf x}^\ast)\mid {\bf s})$ at each ${\bf x}^\ast$.</p>
 
 </div>
@@ -12594,8 +12790,7 @@ $${\mathbb E}\left\{f({\bf x}^\ast)\mid{\bf s}\right\} \pm 2 \sqrt{{\mathbb V}\l
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12629,180 +12824,12 @@ $${\mathbb E}\left\{f({\bf x}^\ast)\mid{\bf s}\right\} \pm 2 \sqrt{{\mathbb V}\l
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="5.-Bayesian-Inference-with-real-data.-The-stocks-dataset.">5. Bayesian Inference with real data. The stocks dataset.<a class="anchor-link" href="#5.-Bayesian-Inference-with-real-data.-The-stocks-dataset.">&#182;</a></h2><p>Once our code has been tested on synthetic data, we will use it with real data.</p>
-<ul>
-<li>[1] Load data corresponding to the evolution of the stocks of 10 airline companies. This data set is an adaptation of the Stock dataset from <a href="http://www.dcc.fc.up.pt/~ltorgo/Regression/DataSets.html">http://www.dcc.fc.up.pt/~ltorgo/Regression/DataSets.html</a>, which in turn was taken from the StatLib Repository, <a href="http://lib.stat.cmu.edu/">http://lib.stat.cmu.edu/</a></li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
-<span class="c1"># &lt;/SOL&gt;</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>[2] Normalize the data so all training sample components have zero mean and unit standard deviation. Store the normalized training and test samples in 2D numpy arrays <code>Xtrain</code> and <code>Xtest</code>, respectively.</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
-<span class="c1"># &lt;/SOL&gt;</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>[3] Add an all-ones column to the input data. Store the resulting 2D arrays in variables <code>Ztrain</code> and <code>Ztest</code>, respectively.</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
-<span class="c1"># &lt;/SOL&gt;</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>After running this code, you will have inside matrix <code>Ztrain</code> an initial column of ones and the evolution of (normalized) price for 9 airlines, whereas vecto <code>Ytrain</code> will contain a single column with the price evolution of the tenth airline. The objective of the regression task is to estimate the price of the tenth airline from the prices of the other nine.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="5.1.-Hyperparameter-selection">5.1. Hyperparameter selection<a class="anchor-link" href="#5.1.-Hyperparameter-selection">&#182;</a></h3><p>Since the values $\sigma_p$ and $\sigma_\varepsilon$ are no longer known, a first rough estimation is needed (we will soon see how to estimate these values in a principled way).</p>
-<p>To this end, we will adjust them using the LS solution to the regression problem:</p>
-<ul>
-<li>$\sigma_p^2$ will be taken as the average of the square values of ${\hat {\bf w}}_{LS}$</li>
-<li>$\sigma_\varepsilon^2$ will be taken as two times the average of the square of the residuals when using ${\hat {\bf w}}_{LS}$</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># w_LS, residuals, rank, s = &lt;FILL IN&gt;</span>
-<span class="c1"># sigma_p = &lt;FILL IN&gt;</span>
-<span class="c1"># sigma_eps = &lt;FILL IN&gt;</span>
- 
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="5.2.-Posterior-pdf-of-the-weight-vector">5.2. Posterior pdf of the weight vector<a class="anchor-link" href="#5.2.-Posterior-pdf-of-the-weight-vector">&#182;</a></h3><p>Using the previous values for the hyperparameters, compute the <i>a posteriori</i> mean and covariance matrix of the weight vector ${\bf w}$. Instead of two weights there will now be 10.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
-<span class="c1"># &lt;/SOL&gt;</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The resulting posterior is:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;mean_w = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mean_w</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cov_w = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Cov_w</span><span class="p">))</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="5.3.-Model-assessment">5.3. Model assessment<a class="anchor-link" href="#5.3.-Model-assessment">&#182;</a></h3><p>In order to verify the performance of the resulting model, compute the posterior mean and variance of each of the test outputs from the posterior over ${\bf w}$. I.e, compute ${\mathbb E}\left\{s({\bf x}^\ast)\mid{\bf s}\right\}$ and $\sqrt{{\mathbb V}\left\{s({\bf x}^\ast)\mid{\bf s}\right\}}$ for each test sample ${\bf x}^\ast$ contained in each row of <code>Xtest</code>. Be sure not to use the outputs <code>Ytest</code> at any point during this process.</p>
+<h3 id="5.3.-Model-assessment">5.3. Model assessment<a class="anchor-link" href="#5.3.-Model-assessment">&#182;</a></h3><p>[OPTIONAL. You can skip this section]</p>
+<p>In order to verify the performance of the resulting model, compute the posterior mean and variance of each of the test outputs from the posterior over ${\bf w}$. I.e, compute ${\mathbb E}\left\{s({\bf x}^\ast)\mid{\bf s}\right\}$ and $\sqrt{{\mathbb V}\left\{s({\bf x}^\ast)\mid{\bf s}\right\}}$ for each test sample ${\bf x}^\ast$ contained in each row of <code>Xtest</code>. Be sure not to use the outputs <code>Ytest</code> at any point during this process.</p>
 <p>Store the predictive mean and variance of all test samples in two column vectors called <code>m_y</code> and <code>v_y</code>, respectively.</p>
 
 </div>
@@ -12822,8 +12849,7 @@ $${\mathbb E}\left\{f({\bf x}^\ast)\mid{\bf s}\right\} \pm 2 \sqrt{{\mathbb V}\l
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12846,8 +12872,7 @@ $${\mathbb E}\left\{f({\bf x}^\ast)\mid{\bf s}\right\} \pm 2 \sqrt{{\mathbb V}\l
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -12870,12 +12895,24 @@ $${\mathbb E}\left\{f({\bf x}^\ast)\mid{\bf s}\right\} \pm 2 \sqrt{{\mathbb V}\l
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>These two measures reveal the quality of our predictor (with lower values revealing higher quality). The first measure (MSE) only compares the predictive mean with the actual value and always has a positive value (if zero was reached, it would mean a perfect prediction). It does not take into account predictive variance. The second measure (NLPD) takes into account both the deviation and the predictive variance (uncertainty) to measure the quality of the probabilistic prediction (a high error in a prediction that was already known to have high variance has a smaller penalty, but also, announcing a high variance when the prediction error is small won’t award such a good score).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="6.-Regression-with-all-variables-from-the-stocks-dataset.">6. Regression with all variables from the stocks dataset.<a class="anchor-link" href="#6.-Regression-with-all-variables-from-the-stocks-dataset.">&#182;</a></h2><p>Try to improve the performance of the best model used so far. To do so:</p>
+<ul>
+<li>Explore the use of all the input variables from the dataset.</li>
+<li>Explore other regression algorithms from the <code>sklearn</code> library.</li>
+</ul>
 
 </div>
 </div>
