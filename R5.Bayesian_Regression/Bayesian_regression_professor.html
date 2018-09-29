@@ -11830,8 +11830,13 @@ Pending changes: * Include regression on the stock data</code></pre>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="A-quick-note-on-the-mathematical-notation">A quick note on the mathematical notation<a class="anchor-link" href="#A-quick-note-on-the-mathematical-notation">&#182;</a></h2><p>In this notebook we will make extensive use of probability distributions. In general, we will use capital leters
 ${\bf X}$, $S$, $E$ ..., to denote random variables, and lower-case letters ${\bf x}$, $s$, $\epsilon$ ..., to denote the values they can take.</p>
+<<<<<<< HEAD
 <p>In general, we will use letter $p$ for probability density functions (pdf). When necessary, we will use, capital subindices to make the random variable explicit. For instance, $p_{{\bf X}, S}({\bf x}, s)$ would be the joind pdf of random variables ${\bf X}$ and $S$ at values ${\bf x}$ and $s$, respectively.</p>
 <p>However, to avoid a notation overload, we will omit subindices when they are clear from the context. For instance, we will $p({\bf x}, s)$ instead of $p_{{\bf X}, S}({\bf x}, s)$.</p>
+=======
+<p>In general, we will use letter $p$ for probability density functions (pdf). When necessary, we will use, capital subindices to make the random variable explicit. For instance, $p_{{\bf X}, S}({\bf x}, s)$ would be the joint pdf of random variables ${\bf X}$ and $S$ at values ${\bf x}$ and $s$, respectively.</p>
+<p>However, to avoid a notation overload, we will omit subindices when they are clear from the context. For instance, we will use $p({\bf x}, s)$ instead of $p_{{\bf X}, S}({\bf x}, s)$.</p>
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 
 </div>
 </div>
@@ -11870,9 +11875,15 @@ ${\bf X}$, $S$, $E$ ..., to denote random variables, and lower-case letters ${\b
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="1.3.-Model-assumptions">1.3. Model assumptions<a class="anchor-link" href="#1.3.-Model-assumptions">&#182;</a></h3><p>In order to estimate ${\bf w}$ from the training data in a mathematicaly rigorous and compact form let us group the target variables into a vector
+<<<<<<< HEAD
 $$
 {\bf s} = \left(s^{(0)}, \dots, s^{(K-1)}\right)^\top
 $$
+=======
+$$
+{\bf s} = \left(s^{(0)}, \dots, s^{(K-1)}\right)^\top
+$$
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 and the input vectors into a matrix
 $$
 {\bf X} = \left({\bf x}^{(0)}, \dots, {\bf x}^{(K-1)}\right)^\top
@@ -11897,7 +11908,11 @@ $$</li>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<<<<<<< HEAD
 <h2 id="2.-Bayesian-inference.">2. Bayesian inference.<a class="anchor-link" href="#2.-Bayesian-inference.">&#182;</a></h2><h3 id="2.1.-The-Bayesian-approach">2.1. The Bayesian approach<a class="anchor-link" href="#2.1.-The-Bayesian-approach">&#182;</a></h3><p>The main idea of Bayesian inference is the following: assume we want to estimate some unknown variable $U$ given and observed variable $O$. If $U$ and $O$ are random variables, we can describe the relation between $U$ and $O$ through the following functions:</p>
+=======
+<h2 id="2.-Bayesian-inference.">2. Bayesian inference.<a class="anchor-link" href="#2.-Bayesian-inference.">&#182;</a></h2><h3 id="2.1.-The-Bayesian-approach">2.1. The Bayesian approach<a class="anchor-link" href="#2.1.-The-Bayesian-approach">&#182;</a></h3><p>The main idea of Bayesian inference is the following: assume we want to estimate some unknown variable $U$ given an observed variable $O$. If $U$ and $O$ are random variables, we can describe the relation between $U$ and $O$ through the following functions:</p>
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 <ul>
 <li>Prior distribution: $p_U(u)$. It describes our uncertainty on the true value of $U$ before observing $O$.</li>
 <li>Likelihood function: $p_{O \mid U}(o \mid u)$. It describes how the value of the observation is generated for a given value of $U$.</li>
@@ -11905,10 +11920,17 @@ $$</li>
 </ul>
 <p>The major component of the Bayesian inference is the posterior distribution. All Bayesian estimates are computed as some of its central statistics (e.g. the mean, the median or the mode), for instance</p>
 <ul>
+<<<<<<< HEAD
 <li>Maximum A Posteriori (MAP) estimate: $\qquad\hat{u}_{\text{MAP}} = \arg\max_u p_{U \mid O}(u \mid o)$</li>
 <li>Minimum Mean Square Error (MSE) estimate: $\qquad\hat{u}_{\text{MSE}} = \mathbb{E}\{U \mid O=o\}$</li>
 </ul>
 <p>The choice between the MAP or the MSE estimate may depend on practical or computational considerations. From a theoretical point of view, $\hat{u}​_{\text{MSE}}$ has some nice properties: it minimizes the $\mathbb{E}\{(U-\hat{u})^2\}$ among all possible estimates, $\hat{u}$, so it is a natural choice. However, it involves the computation of an integral, which may have no analytical form. In such cases, the MAP estimate can be a better choice.</p>
+=======
+<li>Maximum A Posteriori (MAP) estimate: $\qquad{\widehat{u}}_{\text{MAP}} = \arg\max_u p_{U \mid O}(u \mid o)$</li>
+<li>Minimum Mean Square Error (MSE) estimate: $\qquad\widehat{u}_{\text{MSE}} = \mathbb{E}\{U \mid O=o\}$</li>
+</ul>
+<p>The choice between the MAP or the MSE estimate may depend on practical or computational considerations. From a theoretical point of view, $\widehat{u}_{\text{MSE}}$ has some nice properties: it minimizes $\mathbb{E}\{(U-\widehat{u})^2\}$ among all possible estimates, $\widehat{u}$, so it is a natural choice. However, it involves the computation of an integral, which may not have a closed-form solution. In such cases, the MAP estimate can be a better choice.</p>
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 <p>The prior and the likelihood function are auxiliary distributions: if the posterior distribution is unknown, it can be computed from them using the Bayes rule:
 \begin{equation}
 p_{U|O}(u \mid o) = \frac{p_{O|U}(o \mid u) \cdot p_{U}(u)}{p_{O}(o)}
@@ -11929,8 +11951,13 @@ p_{U|O}(u \mid o) = \frac{p_{O|U}(o \mid u) \cdot p_{U}(u)}{p_{O}(o)}
 </ul>
 <p>the MAP and MSE predictions become</p>
 <ul>
+<<<<<<< HEAD
 <li>Maximum A Posterior (MAP): $\qquad\hat{s}_{\text{MAP}} = \arg\max_s p(s| {\bf x}, {\bf w})$</li>
 <li>Minimum Mean Square Error (MSE): $\qquad\hat{s}_{\text{MSE}} = \mathbb{E}\{S |{\bf x}, {\bf w}\}$</li>
+=======
+<li>Maximum A Posterior (MAP): $\qquad\widehat{s}_{\text{MAP}} = \arg\max_s p(s| {\bf x}, {\bf w})$</li>
+<li>Minimum Mean Square Error (MSE): $\qquad\widehat{s}_{\text{MSE}} = \mathbb{E}\{S |{\bf x}, {\bf w}\}$</li>
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 </ul>
 
 </div>
@@ -11954,7 +11981,13 @@ compute the MAP and MSE predictions of $s$ given $x$ and $w$.</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Solution:">Solution:<a class="anchor-link" href="#Solution:">&#182;</a></h4><SOL>
+<<<<<<< HEAD
 
+=======
+$$\widehat{s}_\text{MAP} = \sqrt{wx^2}$$
+$$\qquad$$
+$$\widehat{s}_\text{MSE} = \sqrt{\frac{wx^2 \pi}{2}}$$
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 </SOL>
 </div>
 </div>
@@ -11970,7 +12003,11 @@ compute the MAP and MSE predictions of $s$ given $x$ and $w$.</p>
 $$</p>
 <p>where ${\bf z}=T({\bf x})$ is a vector with components which can be computed directly from the observed variables. For a Gaussian distribution (and for any unimodal symetric distributions) the mean and the mode are the same and, thus,</p>
 <p>$$
+<<<<<<< HEAD
 \hat{s}_\text{MAP} = \hat{s}_\text{MSE} = {\bf w}^\top{\bf z}
+=======
+\widehat{s}_\text{MAP} = \widehat{s}_\text{MSE} = {\bf w}^\top{\bf z}
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 $$</p>
 <p>Such expression includes a linear regression model, where ${\bf z} = [1; {\bf x}]$, as well as any other non-linear model as long as it can be expressed as a <i>"linear in the parameters"</i> model.</p>
 
@@ -11982,6 +12019,7 @@ $$</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="2.3.-Bayesian-Inference-for-Parameter-Estimation">2.3. Bayesian Inference for Parameter Estimation<a class="anchor-link" href="#2.3.-Bayesian-Inference-for-Parameter-Estimation">&#182;</a></h3><p>In a similar way, we can apply Bayesian inference to estimate the model parameters ${\bf w}$ from a given dataset, $\cal{D}$. In that case</p>
+<<<<<<< HEAD
 <ul>
 <li>the unknown variable is ${\bf w}$, and</li>
 <li>the observation is $\cal{D} \equiv \{{\bf X}, {\bf s}\}$</li>
@@ -11990,6 +12028,16 @@ $$</p>
 <ul>
 <li>Maximum A Posterior (MAP): $\qquad\hat{\bf w}_{\text{MAP}} = \arg\max_{\bf w} p({\bf w}| {\cal D})$</li>
 <li>Minimum Mean Square Error (MSE): $\qquad\hat{\bf w}_{\text{MSE}} = \mathbb{E}\{{\bf W} | {\cal D}\}$</li>
+=======
+<ul>
+<li>the unknown variable is ${\bf w}$, and</li>
+<li>the observation is $\cal{D} \equiv \{{\bf X}, {\bf s}\}$</li>
+</ul>
+<p>so that</p>
+<ul>
+<li>Maximum A Posterior (MAP): $\qquad\widehat{\bf w}_{\text{MAP}} = \arg\max_{\bf w} p({\bf w}| {\cal D})$</li>
+<li>Minimum Mean Square Error (MSE): $\qquad\widehat{\bf w}_{\text{MSE}} = \mathbb{E}\{{\bf W} | {\cal D}\}$</li>
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 </ul>
 
 </div>
@@ -12018,13 +12066,21 @@ $$</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="3.1.-Bayesian-Inference-and-Maximum-Likelihood.">3.1. Bayesian Inference and Maximum Likelihood.<a class="anchor-link" href="#3.1.-Bayesian-Inference-and-Maximum-Likelihood.">&#182;</a></h3><p>Applying the Bayes rule the MAP estimate can be alternatively expressed as
 \begin{align}
+<<<<<<< HEAD
 \qquad\hat{\bf w}_{\text{MAP}} 
+=======
+\qquad\widehat{\bf w}_{\text{MAP}} 
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
    &amp;= \arg\max_{\bf w} \frac{p({\cal D}| {\bf w}) \cdot p({\bf w})}{p({\cal D})} \\
    &amp;= \arg\max_{\bf w} p({\cal D}| {\bf w}) \cdot p({\bf w})
 \end{align}</p>
 <p>By comparisons, the ML (Maximum Likelihood) estimate has the form:
 $$
+<<<<<<< HEAD
 \hat{\bf w}_{\text{ML}} = \arg \max_{\bf w} p(\mathcal{D}|{\bf w})
+=======
+\widehat{\bf w}_{\text{ML}} = \arg \max_{\bf w} p(\mathcal{D}|{\bf w})
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 $$</p>
 <p>This shows that the MAP estimate takes into account the prior distribution on the unknown parameter.</p>
 <p>Another advantage of the Bayesian approach is that it provides not only a point estimate of the unknown parameter, but a whole funtion, the posterior distribution, which encompasses our belief on the unknown parameter given the data. For instance, we can take second order statistics like the variance of the posterior distributions to measure the uncertainty on the true value of the estimate around the mean.</p>
@@ -12036,20 +12092,34 @@ $$</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<<<<<<< HEAD
 <h3 id="3.2.-The-prior-distribution">3.2. The prior distribution<a class="anchor-link" href="#3.2.-The-prior-distribution">&#182;</a></h3><p>Since each value of ${\bf w}$ determines a regression functions, by stating a prior distributios over the weights we state also a prior distribution over the space of regression functions.</p>
+=======
+<h3 id="3.2.-The-prior-distribution">3.2. The prior distribution<a class="anchor-link" href="#3.2.-The-prior-distribution">&#182;</a></h3><p>Since each value of ${\bf w}$ determines a regression function, by stating a prior distribution over the weights we state also a prior distribution over the space of regression functions.</p>
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 <p>For instance, assume that the data likelihood follows the Gaussian model in sec. 2.2.1, with $T(x) = (1, x, x^2, x^3)$, i.e. the regression functions have the form
 $$
 w_0 + w_1 x + w_2 x^2 + w_3 x^3
 $$</p>
 <p>Each value of ${\bf w}$ determines a specific polynomial of degree 3. Thus, the prior distribution over ${\bf w}$ describes which polynomials are more likely before observing the data.</p>
+<<<<<<< HEAD
 <p>For instance, assume a Gaussian prior with zero mean and variancd ${\bf V}_{p}$, i.e.,
 $$
 p({\bf w}) = \frac{1}{(2\pi)^{D/2} \sqrt{|{\bf V}_p|}} 
+=======
+<p>For instance, assume a Gaussian prior with zero mean and variance ${\bf V}_{p}$, i.e.,
+$$
+p({\bf w}) = \frac{1}{(2\pi)^{D/2} |{\bf V}_p|^{1/2}} 
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
               \exp \left(-\frac{1}{2} {\bf w}^\intercal {\bf V}_{p}^{-1}{\bf w} \right)
 $$
 where $D$ is the dimension of ${\bf w}$. To abbreviate, we will also express this as
 $${\bf w} \sim {\cal N}\left({\bf 0},{\bf V}_{p} \right)$$
+<<<<<<< HEAD
 The following code samples ${\bf w}$ according to this distributions, and plots the resulting polynomial over the scater plot of an arbitrary dataset.</p>
+=======
+The following code samples ${\bf w}$ according to this distribution, and plots the resulting polynomial over the scatter plot of an arbitrary dataset.</p>
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 <p>You can check the effect of modifying the variance of the prior distribution.</p>
 
 </div>
@@ -12409,7 +12479,11 @@ AUggCCGEiJBAEEIIAUggCCGEiJBAEEIIAcD/BwFlPdLMOasXAAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<<<<<<< HEAD
 <p>The data observation will modify our belief about the true data model accodring to the posterior distribution. In the following we will analyze this in a Gaussian case.</p>
+=======
+<p>The data observation will modify our belief about the true data model according to the posterior distribution. In the following we will analyze this in a Gaussian case.</p>
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 
 </div>
 </div>
@@ -13074,7 +13148,7 @@ ERMTExMzKrGhiImJiYkZldhQxMTExMSMyv8HAuwvN3uK4u8AAAAASUVORK5CYII=
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Exercise-2:">Exercise 2:<a class="anchor-link" href="#Exercise-2:">&#182;</a></h4><p>Note that, in the example above, the model assumptions are correct: the target variables have been generated by a linear model with noise standard deviation <code>sigma_n</code> which is exactly equal to the value assumed by the model, stored in variable <code>sigma_eps</code>. Check what happens if we take <code>sigma_eps=4*sigma_n</code> or <code>sigma_eps=sigma_n/4</code>.</p>
 <ul>
-<li>Does the algorithm fails in that cases?</li>
+<li>Does the algorithm fail in that cases?</li>
 <li>What differences can you observe with respect to the ideal case <code>sigma_eps=sigma_n</code>?</li>
 </ul>
 
@@ -13086,7 +13160,11 @@ ERMTExMzKrGhiImJiYkZldhQxMTExMSMyv8HAuwvN3uK4u8AAAAASUVORK5CYII=
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="4.4.-Step-4:-Weight-estimation.">4.4. Step 4: Weight estimation.<a class="anchor-link" href="#4.4.-Step-4:-Weight-estimation.">&#182;</a></h3><p>Since the posterior weight distribution is Gaussian, both the MAP and the MSE estimates are equal to the posterior mean, which has been already computed in step 3:</p>
+<<<<<<< HEAD
 <p>$$\hat{\bf w}_\text{MAP} = \hat{\bf w}_\text{MSE} = {\sigma_\varepsilon^{-2}} {\bf V}_{\bf w} {\bf Z}^\top {\bf s}$$</p>
+=======
+<p>$$\widehat{\bf w}_\text{MAP} = \widehat{\bf w}_\text{MSE} = {\sigma_\varepsilon^{-2}} {\bf V}_{\bf w} {\bf Z}^\top {\bf s}$$</p>
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 
 </div>
 </div>
@@ -13097,7 +13175,11 @@ ERMTExMzKrGhiImJiYkZldhQxMTExMSMyv8HAuwvN3uK4u8AAAAASUVORK5CYII=
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="4.5.-Step-5:-Prediction">4.5. Step 5: Prediction<a class="anchor-link" href="#4.5.-Step-5:-Prediction">&#182;</a></h3><p>Using the MSE estimate, the final predictions are given by
 $$
+<<<<<<< HEAD
 \hat{s}_\text{MSE} =  \hat{\bf w}_\text{MSE}^\intercal{\bf z}
+=======
+\widehat{s}_\text{MSE} =  \widehat{\bf w}_\text{MSE}^\top{\bf z}
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 $$</p>
 
 </div>
@@ -13332,12 +13414,20 @@ BBgFu4hIgFGwi4gEmP8PCyprBjN2lDYAAAAASUVORK5CYII=
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="5.-Further-considerations">5. Further considerations<a class="anchor-link" href="#5.-Further-considerations">&#182;</a></h2><h3 id="5.1.-The-Maximum-Likelihood-Estimate.">5.1. The Maximum Likelihood Estimate.<a class="anchor-link" href="#5.1.-The-Maximum-Likelihood-Estimate.">&#182;</a></h3><p>For comparative purposes, it is interesting to see here that the likelihood function is enough to compute the Maximum Likelihood (ML) estimate</p>
 <p>\begin{align}
+<<<<<<< HEAD
 {\bf w}_{ML} &amp;= \arg \max_{\bf w} p(\mathcal{D}|{\bf w}) \\
+=======
+{\bf w}_\text{ML} &amp;= \arg \max_{\bf w} p(\mathcal{D}|{\bf w}) \\
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
              &amp;= \arg \min_{\bf w} \|{\bf s}-{\bf Z}{\bf w}\|^2
 \end{align}
 which leads to the Least Squares (LS) solution
 $$
+<<<<<<< HEAD
 {\bf w}_{ML} = ({\bf Z}^\top{\bf Z})^{-1}{\bf Z}^\top{\bf s}
+=======
+{\bf w}_\text{ML} = ({\bf Z}^\top{\bf Z})^{-1}{\bf Z}^\top{\bf s}
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 $$</p>
 <p>ML estimation is prone to overfiting. In general, if the number of parameters (i.e. the dimension of ${\bf w}$) is large in relation to the size of the training data, the predictor based on the ML estimate may have a small square error over the training set but a large error over the test set. Therefore, in practice, some cross validation procedures is required to keep the complexity of the predictor function under control depending on the size of the training set.</p>
 <p>By defining a prior distribution over the unknown parameters, and using the Bayesian inference methods, the overfitting problems can be alleviated:</p>
@@ -14719,6 +14809,34 @@ gg==
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+<<<<<<< HEAD
+=======
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Exercise-4:">Exercise 4:<a class="anchor-link" href="#Exercise-4:">&#182;</a></h4><p>Assume the dataset ${\cal{D}} = \left\{ x^{(k)}, s^{(k)}\right\}_{k=0}^{K-1}$ containing $K$ i.i.d. samples from a distribution</p>
+<p>$\qquad p(s|x,w) = w x \exp(-w x s), \; s&gt;0, x&gt; 0, w&gt; 0$</p>
+<p>We model also our uncertainty about the value of $w$ assuming a prior distribution for $w$ following a Gamma distribution with parameters $\alpha&gt;0$ and $\beta&gt;0$.</p>
+<p>$ \qquad
+w \sim \text{Gamma}\left(\alpha, \beta\right) = \frac{\beta^\alpha}{\Gamma(\alpha)} w^{\alpha-1} \exp\left(-\beta w\right), \; w&gt;0
+$</p>
+<p>Note that the mean and the mode of a Gamma distribution can be calculated in closed-form as
+$\qquad w_\text{MSE} = \mathbb{E}\left\{w\right\}=\frac{\alpha}{\beta}; \qquad
+w_\text{MAP} = \max_w p(w) = \frac{\alpha-1}{\beta}$</p>
+<p><strong>1.</strong> Determine an expression for the likelihood function.</p>
+<p><strong>2.</strong> Determine the maximum likelihood coefficient,  wML.</p>
+<p><strong>3.</strong> Obtain the posterior distribution $p(w|{\bf s})$. Note that you do not need to calculate $p({\bf s})$ since the posterior distribution can be readily identified as another Gamma distribution.</p>
+<p><strong>4.</strong> Determine the MSE and MAP a posteriori estimators of $w$: $w_\text{MSE}=\mathbb{E}\left\{w|{\bf s}\right\}$ and $w_\text{MAP} = \max_w p(w|{\bf s})$.</p>
+<p><strong>5.</strong> Compute the following estimators of $S$:</p>
+<p>$\qquad\widehat{s}_1 = \mathbb{E}\{s|w_\text{ML},x\}$</p>
+<p>$\qquad\widehat{s}_2 = \mathbb{E}\{s|w_\text{MSE},x\}$</p>
+<p>$\qquad\widehat{s}_3 = \mathbb{E}\{s|w_\text{MAP},x\}$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+>>>>>>> 096f67aaf5d4910037085e23bba7915a3d37f19b
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14771,7 +14889,7 @@ gg==
 <li><p>As we have already mentioned, we could propose a prior distribution for the model parameters, $p({\cal M})$, and use it to infer the posterior. However, this can be very involved (usually no closed-form expressions can be derived)</p>
 </li>
 <li><p>Alternatively, maximizing the evidence is normally good enough</p>
-<p>$${\cal M}_{ML} = \arg\max_{\cal M} p(s~|~{\cal M})$$</p>
+<p>$${\cal M}_\text{ML} = \arg\max_{\cal M} p(s~|~{\cal M})$$</p>
 </li>
 </ul>
 <p>Note that we are using the subscript 'ML' because the evidence can also be referred to as the likelihood of the model</p>
