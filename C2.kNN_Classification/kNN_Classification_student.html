@@ -13126,7 +13126,7 @@ Changes: v.1.0 - First version
          v.1.1 - Function loadDataset updated to work with any number of dimensions
          v.2.0 - Compatible with Python 3 (backcompatible with Python 2.7)
                  Added solution to Exercise 3
-         v.2.1 - Minor corrections regarding notation and assumptions</code></pre>
+         v.2.1 - Minor corrections regarding notation</code></pre>
 
 </div>
 </div>
@@ -13158,7 +13158,7 @@ Changes: v.1.0 - First version
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="1.-The-binary-classification-problem.">1. The binary classification problem.<a class="anchor-link" href="#1.-The-binary-classification-problem.">&#182;</a></h2><p>In a binary classification problem, we are given an observation vector ${\bf x}\in \mathbb{R}^N$ which is known to belong to one and only one <em>category</em> or <em>class</em>, $y$, in the set ${\mathcal Y} = \{0, 1\}$. The goal of a classifier system is to predict the value of $y$ based on ${\bf x}$.</p>
-<p>To design the classifier, we are given a collection of i.i.d. labelled observations ${\mathcal D} = \{({\bf x}^{(k)}, y^{(k)})\}_{k=0}^{K-1}$ where, for each observation ${\bf x}^{(k)}$, the value of its true category, $y^{(k)}$, is known. All samples are independent outcomes of an unknown distribution $p_{{\bf X},Y}({\bf x}, y)$.</p>
+<p>To design the classifier, we are given a collection of labelled observations ${\mathcal D} = \{({\bf x}^{(k)}, y^{(k)})\}_{k=0}^{K-1}$ where, for each observation ${\bf x}^{(k)}$, the value of its true category, $y^{(k)}$, is known. All samples are outcomes of an unknown distribution $p_{{\bf X},Y}({\bf x}, y)$.</p>
 
 </div>
 </div>
@@ -13489,7 +13489,7 @@ In case of ties (i.e. if there is more than one instance at minimum distance) th
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can observe that the decision boudary of the 1-NN classifier is rather intricate, and it may contain small <em>islands</em> covering one or few samples from one class. Actually, the extension of this small regions usually reduces as we have more training samples, though the number of them may increase.</p>
+<p>We can observe that the decision boudary of the 1-NN classifier is rather intricate, and it may contain small <em>islands</em> covering one or few samples from one class. Actually, the extension of these small regions usually reduces as we have more training samples, though the number of them may increase.</p>
 <p>Now we compute the error rates over the training and test sets.</p>
 
 </div>
@@ -13549,14 +13549,14 @@ In case of ties (i.e. if there is more than one instance at minimum distance) th
 <p><strong>Exercise 1</strong>: In this exercise we test the non-consistency of the 1-NN classifier for overlapping distributions. Generate an artificial dataset for classification as follows:</p>
 <ul>
 <li>Generate $N$ binary labels at random with values '0' and '1'. Store them in vector ${\bf y}$</li>
-<li>For every label $y_k$ in ${\bf y}$:<ul>
-<li>If the label is 0, take sample $x_k$ at random from a uniform distribution $U(0,2)$.</li>
-<li>If the label is 1, take sample $x_k$ at random from a uniform distribution $U(1,5)$.</li>
+<li>For every label $y^{(k)}$ in ${\bf y}$:<ul>
+<li>If the label is 0, take sample $x^{(k)}$ at random from a uniform distribution $U(0,2)$.</li>
+<li>If the label is 1, take sample $x^{(k)}$ at random from a uniform distribution $U(1,5)$.</li>
 </ul>
 </li>
 </ul>
 <p>Take $N=1000$ for the test set. This is a large sample to get accurate error rate estimates. Also, take $N=10$, $20$, $40$, $80$,... for the training set. Compute the 1-NN classifier, and observe the test error rate as a function of $N$.</p>
-<p>Now, compute the test error rate of the classifier making decision $1$ if $x_k&gt;1.5$, and $0$ otherwise.</p>
+<p>Now, compute the test error rate of the classifier making decision $1$ if $x^{(k)}&gt;1.5$, and $0$ otherwise.</p>
 
 </div>
 </div>
