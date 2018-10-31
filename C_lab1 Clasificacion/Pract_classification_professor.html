@@ -13605,7 +13605,7 @@ where</p>
 
         <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xcv_tr</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">Ycv_tr</span><span class="p">))</span>
 
-        <span class="n">pe_val</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">Xval</span><span class="p">,</span> <span class="n">Yval</span><span class="p">)</span>
+        <span class="n">pe_val</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">Xcv_val</span><span class="p">,</span> <span class="n">Ycv_val</span><span class="p">)</span>
 
     <span class="n">pe_val</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">pe_val</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">/</span><span class="n">n_folds</span>
 
