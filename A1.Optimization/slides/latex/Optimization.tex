@@ -268,8 +268,8 @@ You can follow the following notebooks to learn more about optimization methods 
 	\frametitle{Mathematical optimization in machine learning}
 \begin{itemize}
 \item In supervised Machine Learning we are typically given a set of data
-$${\cal D} = \left\{{\xM^{(k)}, y^{(k)}}\right\}_{k=1}^K$$
-where labels $y^{(k)}$ represent the desired output or prediction associated to data vector $\xM^{(k)}$.
+$${\cal D} = \left\{{\xM_{k}, y_{k}}\right\}_{k=0}^{K-1}$$
+where labels $y_k$ represent the desired output or prediction associated to data vector $\xM_k$.
 
 \item The problem can be formulated as that of learning a function that models the relation between $\xM$ and $y$
 $$y = h(\xM)$$
@@ -291,7 +291,7 @@ $$h^\ast (\xM) = h_{\w^\ast}(\xM)$$
 	\frametitle{Mathematical optimization in machine learning (II)}
 \begin{itemize}
 \item A typical objective of machine learning methods is to pursue that the postulated model fits well the training data, what frequently results in cost functions similar to
-$$f(\w) = \sum_{k=1}^K \ell(y^{(k)}, h_\w(\xM^{(k)}))$$
+$$f(\w) = \sum_{k=0}^{K-1} \ell(y_k, h_\w(\xM_k))$$
 where $\ell(\cdot, \cdot)$ is an error function that measures discrepancy between the arguments. 
 
 \item In this context, optimization methods can be used to minimize $f(\w)$, and therefore to obtain a good prediction model.
@@ -310,7 +310,7 @@ where $\ell(\cdot, \cdot)$ is an error function that measures discrepancy betwee
 \begin{frame}
 
 	\frametitle{Mathematical optimization in machine learning (III)}
-$$f(\w) = \sum_{k=1}^K \ell(y^{(k)}, h_\w(\xM^{(k)})) ~~~~~~ \color{red}{[+R(\w)]}$$
+$$f(\w) = \sum_{k=0}^{K-1} \ell(y_k, h_\w(\xM_k)) ~~~~~~ \color{red}{[+R(\w)]}$$
 \begin{itemize}
 
 \item Evaluation and optimization of the cost function can get challenging because of
@@ -464,11 +464,11 @@ where $\rho_n>0$ is a learning step
 
 \begin{itemize}
 \item For very large training sets, repeated computation of $f(\w)$ and $\nabla_\w f(\w)$ gets prohibitive
-$$\nabla_\w f(\w) = \sum_{k=1}^K \nabla_\w \ell(y^{(k)}, h_\w(\xM^{(k)})) ~~~~~~ \color{red}{[+\nabla_\w R(\w)]}$$
+$$\nabla_\w f(\w) = \sum_{k=0}^{K-1} \nabla_\w \ell(y_k, h_\w(\xM_k)) ~~~~~~ \color{red}{[+\nabla_\w R(\w)]}$$
 
 \item In Stochastic Gradient Descent the gradient is approximated by a sum over subsets of the training samples, i.e.,
-$$\hat \nabla_\w f(\w) = \sum_{k \in {\cal D}_n} \nabla_\w \ell(y^{(k)}, h_\w(\xM^{(k)})) ~~~~~~ \color{red}{[+\nabla_\w R(\w)]}$$
-where ${\cal D}_n \subset \left\{1,\dots,K \right\}$
+$$\hat \nabla_\w f(\w) = \sum_{k \in {\cal D}_n} \nabla_\w \ell(y_k, h_\w(\xM_k)) ~~~~~~ \color{red}{[+\nabla_\w R(\w)]}$$
+where ${\cal D}_n \subset \left\{0,\dots,K-1 \right\}$
 
 \item The computational cost of each iteration of SGD is much smaller than that of gradient descent, though it usually needs more iterations to converge.
 \end{itemize}
