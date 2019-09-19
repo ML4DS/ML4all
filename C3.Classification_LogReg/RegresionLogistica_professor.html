@@ -13089,7 +13089,7 @@ div#notebook {
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -13549,7 +13549,7 @@ P_{{\mathcal D}|{\bf W}}({\mathcal D}|{\bf w}) &amp; =  p(y^{(0)}, \cdots, y^{(K
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="3.2.-Gradient-descent.">3.2. Gradient descent.<a class="anchor-link" href="#3.2.-Gradient-descent.">&#182;</a></h3><p>A simple iterative optimization algorithm is &lt;a href = <a href="https://en.wikipedia.org/wiki/Gradient_descent&gt;">https://en.wikipedia.org/wiki/Gradient_descent&gt;</a> gradient descent&lt;/a&gt;.</p>
+<h3 id="3.2.-Gradient-descent.">3.2. Gradient descent.<a class="anchor-link" href="#3.2.-Gradient-descent.">&#182;</a></h3><p>A simple iterative optimization algorithm is <a href = https://en.wikipedia.org/wiki/Gradient_descent> gradient descent</a>.</p>
 \begin{align}
 {\bf w}_{n+1} = {\bf w}_n - \rho_n \nabla_{\bf w} \text{NLL}({\bf w}_n)
 \end{align}<p>where $\rho_n &gt;0$ is the <em>learning step</em>.</p>
@@ -13584,7 +13584,7 @@ P_{{\mathcal D}|{\bf W}}({\mathcal D}|{\bf w}) &amp; =  p(y^{(0)}, \cdots, y^{(K
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="3.2.1-Example:-Iris-Dataset.">3.2.1 Example: Iris Dataset.<a class="anchor-link" href="#3.2.1-Example:-Iris-Dataset.">&#182;</a></h4><p>As an illustration, consider the &lt;a href = <a href="http://archive.ics.uci.edu/ml/datasets/Iris&gt;">http://archive.ics.uci.edu/ml/datasets/Iris&gt;</a> Iris dataset &lt;/a&gt;, taken from the <a href=http://archive.ics.uci.edu/ml/> UCI Machine Learning repository</a>. This data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant (<em>setosa</em>, <em>versicolor</em> or <em>virginica</em>). Each instance contains 4 measurements of given flowers: sepal length, sepal width, petal length and petal width, all in centimeters.</p>
+<h4 id="3.2.1-Example:-Iris-Dataset.">3.2.1 Example: Iris Dataset.<a class="anchor-link" href="#3.2.1-Example:-Iris-Dataset.">&#182;</a></h4><p>As an illustration, consider the <a href = http://archive.ics.uci.edu/ml/datasets/Iris> Iris dataset </a>, taken from the <a href=http://archive.ics.uci.edu/ml/> UCI Machine Learning repository</a>. This data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant (<em>setosa</em>, <em>versicolor</em> or <em>virginica</em>). Each instance contains 4 measurements of given flowers: sepal length, sepal width, petal length and petal width, all in centimeters.</p>
 <p>We will try to fit the logistic regression model to discriminate between two classes using only two attributes.</p>
 <p>First, we load the dataset and split them in training and test subsets.</p>
 

@@ -13089,7 +13089,7 @@ div#notebook {
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -13464,7 +13464,7 @@ $$</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="4.-The-Laplacian-matrix">4. The Laplacian matrix<a class="anchor-link" href="#4.-The-Laplacian-matrix">&#182;</a></h2><p>The &lt;a href = <a href="https://en.wikipedia.org/wiki/Laplacian_matrix&gt;Laplacian">https://en.wikipedia.org/wiki/Laplacian_matrix&gt;Laplacian</a> matrix&lt;/a&gt; of a given affinity matrix ${\bf K}$ is given by
+<h2 id="4.-The-Laplacian-matrix">4. The Laplacian matrix<a class="anchor-link" href="#4.-The-Laplacian-matrix">&#182;</a></h2><p>The <a href = https://en.wikipedia.org/wiki/Laplacian_matrix>Laplacian matrix</a> of a given affinity matrix ${\bf K}$ is given by
 $${\bf L} = {\bf D} - {\bf K}$$
 where ${\bf D}$ is the diagonal <strong>degree matrix</strong> given by
 $$D_{ii}=\sum^{n}_{j} K_{ij}$$</p>
@@ -13565,7 +13565,7 @@ $${\bf L} \cdot {\bf v}_{i} = {\bf 0}_{N}$$</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Exercise-4:">Exercise 4:<a class="anchor-link" href="#Exercise-4:">&#182;</a></h4><p>Verify that ${\bf 1}_N$ is an eigenvector with zero eigenvalues. To do so, compute ${\bf L}_{st} \cdot {\bf 1}_N$ and verify that its &lt;a href= <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.norm.html&gt;euclidean">https://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.norm.html&gt;euclidean</a> norm&lt;/a&gt; is close to zero (it may be not exactly zero due to finite precission errors).</p>
+<h4 id="Exercise-4:">Exercise 4:<a class="anchor-link" href="#Exercise-4:">&#182;</a></h4><p>Verify that ${\bf 1}_N$ is an eigenvector with zero eigenvalues. To do so, compute ${\bf L}_{st} \cdot {\bf 1}_N$ and verify that its <a href= https://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.norm.html>euclidean norm</a> is close to zero (it may be not exactly zero due to finite precission errors).</p>
 <p>Verify that vectors ${\bf v}_i$ defined above (that you can compute using <code>vi = (ys==i)</code>) also have zero eigenvalue.</p>
 
 </div>

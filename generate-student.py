@@ -101,8 +101,8 @@ if len(sys.argv) > 1:
     if not os.path.exists(datapath):
         sys.exit("Data path does not exist.")
 else:
-    datapath = raw_input("Select the (absolute or relative) path to " +
-                         "the data source (file or folder): ")
+    datapath = input("Select the (absolute or relative) path to " +
+                     "the data source (file or folder): ")
 
 # File processing
 if os.path.isfile(datapath):

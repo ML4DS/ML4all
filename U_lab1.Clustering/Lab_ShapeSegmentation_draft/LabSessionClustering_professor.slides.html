@@ -1,13 +1,65 @@
+
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8" />
+<head>
 
-<title>RegresionLogistica_student</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+
+<title>LabSessionClustering_professor slides</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
+<!-- General and theme style sheets -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/css/reveal.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/css/theme/simple.css" id="theme">
 
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+}
+
+</script>
+
+<!--[if lt IE 9]>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/lib/js/html5shiv.js"></script>
+<![endif]-->
+
+<!-- Loading the mathjax macro -->
+<!-- Load mathjax -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration -->
+
+<!-- Get Font-awesome from cdn -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 
 <style type="text/css">
     /*!
@@ -13060,74 +13112,138 @@ ul.typeahead-list  > li > a.pull-right {
 
 <style type="text/css">
 /* Overrides of notebook CSS for static HTML export */
-body {
-  overflow: visible;
-  padding: 8px;
+.reveal {
+  font-size: 160%;
 }
-
-div#notebook {
-  overflow: visible;
-  border-top: none;
-}@media print {
-  div.cell {
-    display: block;
-    page-break-inside: avoid;
-  } 
-  div.output_wrapper { 
-    display: block;
-    page-break-inside: avoid; 
-  }
-  div.output { 
-    display: block;
-    page-break-inside: avoid; 
-  }
+.reveal pre {
+  width: inherit;
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+}
+.reveal pre code {
+  padding: 0px;
+}
+.reveal section img {
+  border: 0px solid black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+}
+.reveal i {
+  font-style: normal;
+  font-family: FontAwesome;
+  font-size: 2em;
+}
+.reveal .slides {
+  text-align: left;
+}
+.reveal.fade {
+  opacity: 1;
+}
+.reveal .progress {
+  position: static;
+}
+.reveal .controls .navigate-left,
+.reveal .controls .navigate-left.enabled {
+  border-right-color: #727272;
+}
+.reveal .controls .navigate-left.enabled:hover,
+.reveal .controls .navigate-left.enabled.enabled:hover {
+  border-right-color: #dfdfdf;
+}
+.reveal .controls .navigate-right,
+.reveal .controls .navigate-right.enabled {
+  border-left-color: #727272;
+}
+.reveal .controls .navigate-right.enabled:hover,
+.reveal .controls .navigate-right.enabled.enabled:hover {
+  border-left-color: #dfdfdf;
+}
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-up.enabled {
+  border-bottom-color: #727272;
+}
+.reveal .controls .navigate-up.enabled:hover,
+.reveal .controls .navigate-up.enabled.enabled:hover {
+  border-bottom-color: #dfdfdf;
+}
+.reveal .controls .navigate-down,
+.reveal .controls .navigate-down.enabled {
+  border-top-color: #727272;
+}
+.reveal .controls .navigate-down.enabled:hover,
+.reveal .controls .navigate-down.enabled.enabled:hover {
+  border-top-color: #dfdfdf;
+}
+.reveal .progress span {
+  background: #727272;
+}
+div.input_area {
+  padding: 0.06em;
+}
+div.code_cell {
+  background-color: transparent;
+}
+div.prompt {
+  width: 11ex;
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+  text-align: right;
+}
+div.output_area pre {
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+}
+div.output_prompt {
+  /* 5px right shift to account for margin in parent container */
+  margin: 5px 5px 0 0;
+}
+div.text_cell.rendered .rendered_html {
+  /* The H1 height seems miscalculated, we are just hidding the scrollbar */
+  overflow-y: hidden;
+}
+a.anchor-link {
+  /* There is still an anchor, we are only hidding it */
+  display: none;
+}
+.rendered_html p {
+  text-align: inherit;
+}
+::-webkit-scrollbar
+{
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar *
+{
+  background:transparent;
+}
+::-webkit-scrollbar-thumb
+{
+  background: #727272 !important;
 }
 </style>
 
 <!-- Custom stylesheet, it must be in the same directory as the html file -->
 <link rel="stylesheet" href="custom.css">
 
-<!-- Loading mathjax macro -->
-<!-- Load mathjax -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
-    <!-- MathJax configuration -->
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-            processEscapes: true,
-            processEnvironments: true
-        },
-        // Center justify equations in code and markdown cells. Elsewhere
-        // we use CSS to left justify single line equations in code cells.
-        displayAlign: 'center',
-        "HTML-CSS": {
-            styles: {'.MathJax_Display': {"margin": 0}},
-            linebreaks: { automatic: true }
-        }
-    });
-    </script>
-    <!-- End of mathjax configuration --></head>
+</head>
+
+
 <body>
-  <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container" id="notebook-container">
 
+
+<div class="reveal">
+<div class="slides">
+<section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Logistic-Regression">Logistic Regression<a class="anchor-link" href="#Logistic-Regression">&#182;</a></h1>
-<pre><code>Notebook version: 2.0 (Nov 21, 2017)
-                  2.1 (Oct 19, 2018)
-
-Author: Jesús Cid Sueiro (jcid@tsc.uc3m.es)
-        Jerónimo Arenas García (jarenas@tsc.uc3m.es)
-
-Changes: v.1.0 - First version
-         v.1.1 - Typo correction. Prepared for slide presentation
-         v.2.0 - Prepared for Python 3.0 (backcompmatible with 2.7)
-                 Assumptions for regression model modified
-         v.2.1 - Minor changes regarding notation and assumptions</code></pre>
+<h1 id="Lab-Session:-Clustering-algorithms-for-Image-Segmentation">Lab Session: Clustering algorithms for Image Segmentation<a class="anchor-link" href="#Lab-Session:-Clustering-algorithms-for-Image-Segmentation">&#182;</a></h1><p>Author: Jesús Cid Sueiro
+Jan. 2017</p>
 
 </div>
 </div>
@@ -13137,21 +13253,10 @@ Changes: v.1.0 - First version
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
-<span class="c1"># To visualize plots in the notebook</span>
-<span class="o">%</span><span class="k">matplotlib</span> inline
-
-<span class="c1"># Imported libraries</span>
-<span class="kn">import</span> <span class="nn">csv</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">matplotlib</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">pylab</span>
-
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="k">import</span> <span class="n">Axes3D</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">PolynomialFeatures</span>
-<span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">linear_model</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.misc</span> <span class="kn">import</span> <span class="n">imread</span>
 </pre></div>
 
     </div>
@@ -13162,8 +13267,7 @@ Changes: v.1.0 - First version
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Logistic-Regression">Logistic Regression<a class="anchor-link" href="#Logistic-Regression">&#182;</a></h1><h2 id="1.-Introduction">1. Introduction<a class="anchor-link" href="#1.-Introduction">&#182;</a></h2><h3 id="1.1.-Binary-classification-and-decision-theory.-The-MAP-criterion">1.1. Binary classification and decision theory. The MAP criterion<a class="anchor-link" href="#1.1.-Binary-classification-and-decision-theory.-The-MAP-criterion">&#182;</a></h3><p>The goal of a classification problem is to assign a <em>class</em> or <em>category</em> to every <em>instance</em> or <em>observation</em> of a data collection. Here, we will assume that every instance ${\bf x}$ is an $N$-dimensional vector in $\mathbb{R}^N$, and that the class $y$ of sample ${\bf x}$ is an element of a binary set ${\mathcal Y} = \{0, 1\}$. The goal of a classifier is to predict the true value of $y$ after observing ${\bf x}$.</p>
-<p>We will denote as $\hat{y}$ the classifier output or <em>decision</em>. If $y=\hat{y}$, the decision is a <em>hit</em>, otherwise $y\neq \hat{y}$ and the decision is an <em>error</em>.</p>
+<h2 id="1.-Introduction">1. Introduction<a class="anchor-link" href="#1.-Introduction">&#182;</a></h2><p>In this notebook we explore an application of clustering algorithms to shape segmentation from binary images. We will carry out some exploratory work with a small set of images provided with this notebook. Most of them are not binary images, so we must do some preliminary work to extract he binary shape images and apply the clustering algorithms to them. We will have the opportunity to test the differences between $k$-means and spectral clustering in this problem.</p>
 
 </div>
 </div>
@@ -13171,83 +13275,23 @@ Changes: v.1.0 - First version
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Decision theory provides a solution to the classification problem in situations where the relation between instance ${\bf x}$ and its class $y$ is given by a known probabilistic model: assume that every tuple $({\bf x}, y)$ is an outcome of a random vector $({\bf X}, Y)$ with joint distribution $p_{{\bf X},Y}({\bf x}, y)$. A natural criteria for classification is to select predictor $\hat{Y}=f({\bf x})$ in such a way that the probability or error, $P\{\hat{Y} \neq Y\}$ is minimum. Noting that</p>
-$$
-P\{\hat{Y} \neq Y\} = \int P\{\hat{Y} \neq Y | {\bf x}\} p_{\bf X}({\bf x}) d{\bf x}
-$$<p>the optimal decision is got if, for every sample ${\bf x}$, we make decision minimizing the conditional error probability:</p>
-\begin{align}
-\hat{y}^* &amp;= \arg\min_{\hat{y}} P\{\hat{y} \neq Y |{\bf x}\} \\
-          &amp;= \arg\max_{\hat{y}} P\{\hat{y} = Y |{\bf x}\} \\
-\end{align}
+<h3 id="1.1.-Load-Image">1.1. Load Image<a class="anchor-link" href="#1.1.-Load-Image">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Thus, the optimal decision rule can be expressed as</p>
-$$
-P_{Y|{\bf X}}(1|{\bf x}) \quad\mathop{\gtrless}^{\hat{y}=1}_{\hat{y}=0}\quad  P_{Y|{\bf X}}(0|{\bf x}) 
-$$<p>or, equivalently</p>
-$$
-P_{Y|{\bf X}}(1|{\bf x}) \quad\mathop{\gtrless}^{\hat{y}=1}_{\hat{y}=0}\quad  \frac{1}{2} 
-$$<p>The classifier implementing this decision rule is usually referred to as the MAP (<em>Maximum A Posteriori</em>) classifier. As we have seen, the MAP classifier minimizes the error probability for binary classification, but the result can also be generalized to multiclass classification problems.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="1.2.-Parametric-classification.">1.2. Parametric classification.<a class="anchor-link" href="#1.2.-Parametric-classification.">&#182;</a></h3><p>Classical decision theory is grounded on the assumption that the probabilistic model relating the observed sample ${\bf X}$ and the true hypothesis $Y$ is known. Unfortunately, this is unrealistic in many applications, where the only available information to construct the classifier is a dataset $\mathcal D = \{{\bf x}^{(k)}, y^{(k)}\}_{k=0}^{K-1}$ of instances and their respective class labels.</p>
-<p>A more realistic formulation of the classification problem is the following: given a dataset $\mathcal D = \{({\bf x}^{(k)}, y^{(k)}) \in {\mathbb{R}}^N \times {\mathcal Y}, \, k=0,\ldots,{K-1}\}$ of independent and identically distributed (i.i.d.) samples from an <strong><em>unknown</em></strong> distribution $p_{{\bf X},Y}({\bf x}, y)$, predict the class $y$ of a new sample ${\bf x}$ with the minimum probability of error.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Since the probabilistic model generating the data is unknown, the MAP decision rule cannot be applied. However, many classification algorithms use the dataset to obtain an estimate of the posterior class probabilities, and apply it to implement an approximation to the MAP decision maker.</p>
-<p>Parametric classifiers based on this idea assume, additionally, that the posterior class probabilty satisfies some parametric formula:</p>
-$$
-P_{Y|X}(1|{\bf x},{\bf w}) = f_{\bf w}({\bf x})
-$$<p>where ${\bf w}$ is a vector of parameters. Given the expression of the MAP decision maker, classification consists in comparing the value of $f_{\bf w}({\bf x})$ with the threshold $\frac{1}{2}$, and each parameter vector would be associated to a different decision maker.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>In practice, the dataset ${\mathcal D}$ is used to select a particular parameter vector $\hat{\bf w}$ according to certain criterion. Accordingly, the decision rule becomes</p>
-$$
-f_{\hat{\bf w}}({\bf x}) \quad\mathop{\gtrless}^{\hat{y}=1}_{\hat{y}=0}\quad  \frac{1}{2} 
-$$<p>In this lesson, we explore one of the most popular model-based parametric classification methods: <strong>logistic regression</strong>.</p>
-<p><img src="./figs/parametric_decision.png" width=400></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Logistic-regression.">2. Logistic regression.<a class="anchor-link" href="#2.-Logistic-regression.">&#182;</a></h2><h3 id="2.1.-The-logistic-function">2.1. The logistic function<a class="anchor-link" href="#2.1.-The-logistic-function">&#182;</a></h3><p>The logistic regression model assumes that the binary class label $Y \in \{0,1\}$ of observation $X\in \mathbb{R}^N$ satisfies the expression.</p>
-$$P_{Y|{\bf X}}(1|{\bf x}, {\bf w}) = g({\bf w}^\intercal{\bf x})$$$$P_{Y|{\bf,X}}(0|{\bf x}, {\bf w}) = 1-g({\bf w}^\intercal{\bf x})$$<p>where ${\bf w}$ is a parameter vector and $g(·)$ is the <em>logistic</em> function, which is defined by</p>
-$$g(t) = \frac{1}{1+\exp(-t)}$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>It is straightforward to see that the logistic function has the following properties:</p>
+<p>Several images are provided with this notebook:</p>
 <ul>
-<li><strong>P1</strong>: Probabilistic output: $\quad 0 \le g(t) \le 1$</li>
-<li><strong>P2</strong>: Symmetry: $\quad g(-t) = 1-g(t)$</li>
-<li><strong>P3</strong>: Monotonicity: $\quad g'(t) = g(t)·[1-g(t)] \ge 0$</li>
+<li>BinarySeeds.png</li>
+<li>birds.jpg</li>
+<li>blood_frog_1.jpg</li>
+<li>cKyDP.jpg</li>
+<li>Matricula.jpg</li>
+<li>Matricula2.jpg</li>
+<li>Seeds.png</li>
 </ul>
-<p>In the following we define a logistic function in python, and use it to plot a graphical representation.</p>
 
 </div>
 </div>
@@ -13255,8 +13299,7 @@ $$g(t) = \frac{1}{1+\exp(-t)}$$
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Exercise 1</strong>: Verify properties P2 and P3.</p>
-<p><strong>Exercise 2</strong>: Implement a function to compute the logistic function, and use it to plot such function in the inverval $[-6,6]$.</p>
+<p>Select and visualize image <code>birds.jpg</code> from file and plot it in grayscale</p>
 
 </div>
 </div>
@@ -13266,71 +13309,18 @@ $$g(t) = \frac{1}{1+\exp(-t)}$$
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Define the logistic function</span>
-<span class="k">def</span> <span class="nf">logistic</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-    <span class="c1">#&lt;SOL&gt;</span>
-    <span class="c1">#&lt;/SOL&gt;</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;birds.jpg&quot;</span>
+<span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Seeds.jpg&quot;</span>
 
-<span class="c1"># Plot the logistic function</span>
-<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
-<span class="n">z</span> <span class="o">=</span> <span class="n">logistic</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">birds</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s2">&quot;Images/&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+<span class="n">birdsG</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">birds</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$t$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$g(t)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;The logistic function&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="2.2.-Classifiers-based-on-the-logistic-model.">2.2. Classifiers based on the logistic model.<a class="anchor-link" href="#2.2.-Classifiers-based-on-the-logistic-model.">&#182;</a></h3><p>The MAP classifier under a logistic model will have the form</p>
-$$P_{Y|{\bf X}}(1|{\bf x}, {\bf w}) = g({\bf w}^\intercal{\bf x}) \quad\mathop{\gtrless}^{\hat{y}=1}_{\hat{y}=0} \quad \frac{1}{2} $$<p>Therefore</p>
-$$
-2 \quad\mathop{\gtrless}^{\hat{y}=1}_{\hat{y}=0} \quad  
-1 + \exp(-{\bf w}^\intercal{\bf x}) $$<p>which is equivalent to</p>
-$${\bf w}^\intercal{\bf x} 
-\quad\mathop{\gtrless}^{\hat{y}=1}_{\hat{y}=0}\quad 
-0 $$<p>Therefore, the classifiers based on the logistic model are given by linear decision boundaries passing through the origin, ${\bf x} = {\bf 0}$.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Weight vector:</span>
-<span class="n">w</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>   <span class="c1"># Try different weights</span>
-
-<span class="c1"># Create a rectangular grid.</span>
-<span class="n">x_min</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-<span class="n">x_max</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">dx</span> <span class="o">=</span> <span class="n">x_max</span> <span class="o">-</span> <span class="n">x_min</span>
-<span class="n">h</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span> <span class="o">/</span> <span class="mi">200</span>
-<span class="n">xgrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
-<span class="n">xx0</span><span class="p">,</span> <span class="n">xx1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">xgrid</span><span class="p">,</span> <span class="n">xgrid</span><span class="p">)</span>
-
-<span class="c1"># Compute the logistic map for the given weights</span>
-<span class="n">Z</span> <span class="o">=</span> <span class="n">logistic</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">xx0</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">xx1</span><span class="p">)</span>
-
-<span class="c1"># Plot the logistic map</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">xx0</span><span class="p">,</span> <span class="n">xx1</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">copper</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx0</span><span class="p">,</span> <span class="n">xx1</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x_0$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$x_1$&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;P(1|x,w)&#39;</span><span class="p">)</span>
-
+<span class="c1"># &lt;SOL&gt;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">birdsG</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># &lt;/SOL&gt;</span>
 </pre></div>
 
     </div>
@@ -13341,7 +13331,7 @@ $${\bf w}^\intercal{\bf x}
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The next code fragment represents the output of the same classifier, representing the output of the logistic function in the $x_0$-$x_1$ plane, encoding the value of the logistic function in the representation color.</p>
+<h3 id="&#160;2.-Thresholding">&#160;2. Thresholding<a class="anchor-link" href="#&#160;2.-Thresholding">&#182;</a></h3><p>Select an intensity threshold by manual inspection of the image histogram</p>
 
 </div>
 </div>
@@ -13351,15 +13341,10 @@ $${\bf w}^\intercal{\bf x}
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">CS</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx0</span><span class="p">,</span> <span class="n">xx1</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
-<span class="n">CS2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span>
-                  <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x_0$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$x_1$&#39;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">birdsG</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>  
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># &lt;/SOL&gt;</span>
 </pre></div>
 
     </div>
@@ -13370,21 +13355,8 @@ $${\bf w}^\intercal{\bf x}
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="3.3.-Nonlinear-classifiers.">3.3. Nonlinear classifiers.<a class="anchor-link" href="#3.3.-Nonlinear-classifiers.">&#182;</a></h3><p>The logistic model can be extended to construct non-linear classifiers by using non-linear data transformations. A general form for a nonlinear logistic regression model is</p>
-$$P_{Y|{\bf X}}(1|{\bf x}, {\bf w}) = g[{\bf w}^\intercal{\bf z}({\bf x})] $$<p>where ${\bf z}({\bf x})$ is an arbitrary nonlinear transformation of the original variables. The boundary decision in that case is given by equation</p>
-$$
-{\bf w}^\intercal{\bf z} = 0
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Exercise 3</strong>: Modify the code above to generate a 3D surface plot of the polynomial logistic regression model given by</p>
-$$
-P_{Y|{\bf X}}(1|{\bf x}, {\bf w}) = g(1 + 10 x_0 + 10 x_1 - 20 x_0^2 + 5 x_0 x_1 + x_1^2) 
-$$
+<p>Plot the binary image after thresholding.</p>
+
 </div>
 </div>
 </div>
@@ -13393,29 +13365,49 @@ $$
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Weight vector:</span>
-<span class="n">w</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>   <span class="c1"># Try different weights</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
+<span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;birds.jpg&quot;</span><span class="p">:</span>
+    <span class="n">th</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;Seeds.jpg&quot;</span><span class="p">:</span>
+    <span class="n">th</span> <span class="o">=</span> <span class="mi">650</span>
 
-<span class="c1"># Create a regtangular grid.</span>
-<span class="n">x_min</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-<span class="n">x_max</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">dx</span> <span class="o">=</span> <span class="n">x_max</span> <span class="o">-</span> <span class="n">x_min</span>
-<span class="n">h</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span> <span class="o">/</span> <span class="mi">200</span>
-<span class="n">xgrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
-<span class="n">xx0</span><span class="p">,</span> <span class="n">xx1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">xgrid</span><span class="p">,</span> <span class="n">xgrid</span><span class="p">)</span>
+<span class="n">birdsBN</span> <span class="o">=</span> <span class="n">birdsG</span> <span class="o">&gt;</span> <span class="n">th</span>
 
-<span class="c1"># Compute the logistic map for the given weights</span>
-<span class="c1"># Z = &lt;FILL IN&gt;</span>
-
-<span class="c1"># Plot the logistic map</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">xx0</span><span class="p">,</span> <span class="n">xx1</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">copper</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x_0$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$x_1$&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;P(1|x,w)&#39;</span><span class="p">)</span>
-
+<span class="c1"># If there are more white than black pixels, reverse the image</span>
+<span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">birdsBN</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">birdsBN</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">birdsBN</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">birdsBN</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">birdsBN</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># &lt;/SOL&gt;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="3.-Dataset-generation">3. Dataset generation<a class="anchor-link" href="#3.-Dataset-generation">&#182;</a></h3><p>Extract pixel coordinates dataset from image and plot them in a scatter plot.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
+<span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">=</span> <span class="n">birdsBN</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">bW</span> <span class="o">=</span> <span class="n">birdsBN</span> <span class="o">*</span> <span class="nb">range</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="n">bH</span> <span class="o">=</span> <span class="n">birdsBN</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">h</span><span class="p">))[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">pSet</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bW</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bH</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span> <span class="k">if</span> <span class="n">t</span><span class="o">!=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pSet</span><span class="p">)</span>
+<span class="c1"># &lt;/SOL&gt;</span>
 </pre></div>
 
     </div>
@@ -13428,338 +13420,9 @@ $$
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">CS</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx0</span><span class="p">,</span> <span class="n">xx1</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
-<span class="n">CS2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span>
-                  <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x_0$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$x_1$&#39;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-Inference">3. Inference<a class="anchor-link" href="#3.-Inference">&#182;</a></h2><p>Remember that the idea of parametric classification is to use the training data set $\mathcal D = \{({\bf x}^{(k)}, y^{(k)}) \in {\mathbb{R}}^N \times \{0,1\}, k=0,\ldots,{K-1}\}$ to set the parameter vector ${\bf w}$ according to certain criterion. Then, the estimate $\hat{\bf w}$ can be used to compute the label prediction for any new observation as</p>
-$$\hat{y} = \arg\max_y P_{Y|{\bf X}}(y|{\bf x},\hat{\bf w}).$$<p><img src="figs/parametric_decision.png" width=400></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We need still to choose a criterion to optimize with the selection of the parameter vector. In the notebook, we will discuss two different approaches to the estimation of ${\bf w}$:</p>
-<ul>
-<li>Maximum Likelihood (ML): $\hat{\bf w}_{\text{ML}} = \arg\max_{\bf w} P_{{\mathcal D}|{\bf W}}({\mathcal D}|{\bf w})$</li>
-<li>Maximum <em>A Posteriori</em> (MAP): $\hat{\bf w}_{\text{MAP}} = \arg\max_{\bf w} p_{{\bf W}|{\mathcal D}}({\bf w}|{\mathcal D})$</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>For the mathematical derivation of the logistic regression algorithm, the following representation of the logistic model will be useful: noting that</p>
-$$P_{Y|{\bf X}}(0|{\bf x}, {\bf w}) = 1-g[{\bf w}^\intercal{\bf z}({\bf x})]
-= g[-{\bf w}^\intercal{\bf z}({\bf x})]$$<p>we can write</p>
-$$P_{Y|{\bf X}}(y|{\bf x}, {\bf w}) = g[\overline{y}{\bf w}^\intercal{\bf z}({\bf x})]$$<p>where $\overline{y} = 2y-1$ is a <em>symmetrized label</em> ($\overline{y}\in\{-1, 1\}$).</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="3.1.-Model-assumptions">3.1. Model assumptions<a class="anchor-link" href="#3.1.-Model-assumptions">&#182;</a></h3><p>In the following, we will make the following assumptions:</p>
-<ul>
-<li><strong>A1</strong>. (Logistic Regression): We assume a logistic model for the <em>a posteriori</em> probability of ${Y}$ given ${\bf X}$, i.e.,</li>
-</ul>
-$$P_{Y|{\bf X}}(y|{\bf x}, {\bf w}) = g[{\bar y}{\bf w}^\intercal{\bf z}({\bf x})].$$<ul>
-<li><p><strong>A2</strong>. All samples in ${\mathcal D}$ have been generated from the same distribution, $p_{{\bf X}, Y}({\bf x}, y)$.</p>
-</li>
-<li><p><strong>A3</strong>. Input variables $\bf x$ do not depend on $\bf w$. This implies that</p>
-</li>
-</ul>
-$$p({\bf x}|{\bf w}) = p({\bf x})$$<ul>
-<li><strong>A4</strong>. Targets $y^{(0)}, \cdots, y^{(K-1)}$ are statistically independent given $\bf w$ and the inputs ${\bf x}^{(0)}, \cdots, {\bf x}^{(K-1)}$, that is:</li>
-</ul>
-$$P(y^{(0)}, \cdots, y^{(K-1)} | {\bf x}^{(0)}, \cdots, {\bf x}^{(K-1)}, {\bf w}) = \prod_{k=0}^{K-1} P(y^{(k)} | {\bf x}^{(k)}, {\bf w})$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="3.2.-ML-estimation.">3.2. ML estimation.<a class="anchor-link" href="#3.2.-ML-estimation.">&#182;</a></h3><p>The ML estimate is defined as</p>
-$$\hat{\bf w}_{\text{ML}} = \arg\max_{\bf w} P_{{\mathcal D}|{\bf W}}({\mathcal D}|{\bf w})$$<p>Ussing assumptions A2 and A3 above, we have that</p>
-\begin{align}
-P_{{\mathcal D}|{\bf W}}({\mathcal D}|{\bf w}) &amp; =  p(y^{(0)}, \cdots, y^{(K-1)},{\bf x}^{(0)}, \cdots, {\bf x}^{(K-1)}| {\bf w}) \\
-&amp; =  P(y^{(0)}, \cdots, y^{(K-1)}|{\bf x}^{(0)}, \cdots, {\bf x}^{(K-1)}, {\bf w}) \; p({\bf x}^{(0)}, \cdots, {\bf x}^{(K-1)}| {\bf w}) \\
-&amp; = P(y^{(0)}, \cdots, y^{(K-1)}|{\bf x}^{(0)}, \cdots, {\bf x}^{(K-1)}, {\bf w}) \; p({\bf x}^{(0)}, \cdots, {\bf x}^{(K-1)})\end{align}<p>Finally, using assumption A4, we can formulate the ML estimation of $\bf w$ as the resolution of the following optimization problem</p>
-\begin{align}
-\hat {\bf w}_\text{ML} &amp; = \arg \max_{\bf w} P(y^{(0)}, \cdots, y^{(K-1)}|{\bf x}^{(0)}, \cdots, {\bf x}^{(K-1)}, {\bf w}) \\
-&amp; = \arg \max_{\bf w} \prod_{k=0}^{K-1} P(y^{(k)}|{\bf x}^{(k)}, {\bf w}) \\
-&amp; = \arg \max_{\bf w} \sum_{k=0}^{K-1} \log P(y^{(k)}|{\bf x}^{(k)}, {\bf w}) \\
-&amp; = \arg \min_{\bf w} \sum_{k=0}^{K-1} - \log P(y^{(k)}|{\bf x}^{(k)}, {\bf w})
-\end{align}<p>where the arguments of the maximization or minimization problems of the last three lines are usually referred to as the <strong>likelihood</strong>, <strong>log-likelihood</strong> $\left[L(\bf w)\right]$, and <strong>negative log-likelihood</strong> $\left[\text{NLL}(\bf w)\right]$, respectively.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now, using A1 (the logistic model)</p>
-\begin{align}
-\text{NLL}({\bf w}) 
-    &amp;= - \sum_{k=0}^{K-1}\log\left[g\left(\overline{y}^{(k)}{\bf w}^\intercal {\bf z}^{(k)}\right)\right]   \\
-    &amp;= \sum_{k=0}^{K-1}\log\left[1+\exp\left(-\overline{y}^{(k)}{\bf w}^\intercal {\bf z}^{(k)}\right)\right]
-\end{align}<p>where ${\bf z}^{(k)}={\bf z}({\bf x}^{(k)})$.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>It can be shown that $\text{NLL}({\bf w})$ is a convex and differentiable function of ${\bf w}$. Therefore, its minimum is a point with zero gradient.</p>
-\begin{align}
-\nabla_{\bf w} \text{NLL}(\hat{\bf w}_{\text{ML}}) 
-    &amp;= - \sum_{k=0}^{K-1} 
-       \frac{\exp\left(-\overline{y}^{(k)}\hat{\bf w}_{\text{ML}}^\intercal {\bf z}^{(k)}\right) \overline{y}^{(k)} {\bf z}^{(k)}}
-       {1+\exp\left(-\overline{y}^{(k)}\hat{\bf w}_{\text{ML}}^\intercal {\bf z}^{(k)}
-       \right)} = \\
-    &amp;= - \sum_{k=0}^{K-1} \left[y^{(k)}-g(\hat{\bf w}_{\text{ML}}^T {\bf z}^{(k)})\right] {\bf z}^{(k)} = 0
-\end{align}<p>Unfortunately, $\hat{\bf w}_{\text{ML}}$ cannot be taken out from the above equation, and some iterative optimization algorithm must be used to search for the minimum.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="3.2.-Gradient-descent.">3.2. Gradient descent.<a class="anchor-link" href="#3.2.-Gradient-descent.">&#182;</a></h3><p>A simple iterative optimization algorithm is &lt;a href = <a href="https://en.wikipedia.org/wiki/Gradient_descent&gt;">https://en.wikipedia.org/wiki/Gradient_descent&gt;</a> gradient descent&lt;/a&gt;.</p>
-\begin{align}
-{\bf w}_{n+1} = {\bf w}_n - \rho_n \nabla_{\bf w} \text{NLL}({\bf w}_n)
-\end{align}<p>where $\rho_n &gt;0$ is the <em>learning step</em>.</p>
-<p>Applying the gradient descent rule to logistic regression, we get the following algorithm:</p>
-\begin{align}
-{\bf w}_{n+1} &amp;= {\bf w}_n 
-    + \rho_n \sum_{k=0}^{K-1} \left[y^{(k)}-g({\bf w}_n^\intercal {\bf z}^{(k)})\right] {\bf z}^{(k)}
-\end{align}
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Defining vectors</p>
-\begin{align}
-{\bf y} &amp;= [y^{(0)},\ldots,y^{(K-1)}]^\top \\
-\hat{\bf p}_n &amp;= [g({\bf w}_n^\top {\bf z}^{(0)}), \ldots, g({\bf w}_n^\top {\bf z}^{(K-1)})]^\top
-\end{align}<p>and matrix
-\begin{align}
-{\bf Z} = \left[{\bf z}^{(0)},\ldots,{\bf z}^{(K-1)}\right]^\top
-\end{align}</p>
-<p>we can write</p>
-\begin{align}
-{\bf w}_{n+1} &amp;= {\bf w}_n 
-    + \rho_n {\bf Z}^\top \left({\bf y}-\hat{\bf p}_n\right)
-\end{align}<p>In the following, we will explore the behavior of the gradient descend method using the Iris Dataset.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="3.2.1-Example:-Iris-Dataset.">3.2.1 Example: Iris Dataset.<a class="anchor-link" href="#3.2.1-Example:-Iris-Dataset.">&#182;</a></h4><p>As an illustration, consider the &lt;a href = <a href="http://archive.ics.uci.edu/ml/datasets/Iris&gt;">http://archive.ics.uci.edu/ml/datasets/Iris&gt;</a> Iris dataset &lt;/a&gt;, taken from the <a href=http://archive.ics.uci.edu/ml/> UCI Machine Learning repository</a>. This data set contains 3 classes of 50 instances each, where each class refers to a type of iris plant (<em>setosa</em>, <em>versicolor</em> or <em>virginica</em>). Each instance contains 4 measurements of given flowers: sepal length, sepal width, petal length and petal width, all in centimeters.</p>
-<p>We will try to fit the logistic regression model to discriminate between two classes using only two attributes.</p>
-<p>First, we load the dataset and split them in training and test subsets.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Adapted from a notebook by Jason Brownlee</span>
-<span class="k">def</span> <span class="nf">loadDataset</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">split</span><span class="p">):</span>
-    <span class="n">xTrain</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">cTrain</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">xTest</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">cTest</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
-        <span class="n">lines</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csvfile</span><span class="p">)</span>
-        <span class="n">dataset</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-            <span class="n">dataset</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">y</span><span class="p">])</span>
-        <span class="n">item</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">split</span><span class="p">:</span>
-            <span class="n">xTrain</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
-            <span class="n">cTrain</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">xTest</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
-            <span class="n">cTest</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">xTrain</span><span class="p">,</span> <span class="n">cTrain</span><span class="p">,</span> <span class="n">xTest</span><span class="p">,</span> <span class="n">cTest</span>
-
-<span class="n">xTrain_all</span><span class="p">,</span> <span class="n">cTrain_all</span><span class="p">,</span> <span class="n">xTest_all</span><span class="p">,</span> <span class="n">cTest_all</span> <span class="o">=</span> <span class="n">loadDataset</span><span class="p">(</span><span class="s1">&#39;iris.data&#39;</span><span class="p">,</span> <span class="mf">0.66</span><span class="p">)</span>
-<span class="n">nTrain_all</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xTrain_all</span><span class="p">)</span>
-<span class="n">nTest_all</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xTest_all</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Train:&#39;</span><span class="p">,</span> <span class="n">nTrain_all</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Test:&#39;</span><span class="p">,</span> <span class="n">nTest_all</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now, we select two classes and two attributes.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Select attributes</span>
-<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Try 0,1,2,3</span>
-<span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Try 0,1,2,3 with j!=i</span>
-
-<span class="c1"># Select two classes</span>
-<span class="n">c0</span> <span class="o">=</span> <span class="s1">&#39;Iris-versicolor&#39;</span> 
-<span class="n">c1</span> <span class="o">=</span> <span class="s1">&#39;Iris-virginica&#39;</span>
-
-<span class="c1"># Select two coordinates</span>
-<span class="n">ind</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
-
-<span class="c1"># Take training test</span>
-<span class="n">X_tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">xTrain_all</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ind</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nTrain_all</span><span class="p">)</span> 
-                  <span class="k">if</span> <span class="n">cTrain_all</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">==</span><span class="n">c0</span> <span class="ow">or</span> <span class="n">cTrain_all</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">==</span><span class="n">c1</span><span class="p">])</span>
-<span class="n">C_tr</span> <span class="o">=</span> <span class="p">[</span><span class="n">cTrain_all</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nTrain_all</span><span class="p">)</span> 
-          <span class="k">if</span> <span class="n">cTrain_all</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">==</span><span class="n">c0</span> <span class="ow">or</span> <span class="n">cTrain_all</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">==</span><span class="n">c1</span><span class="p">]</span>
-<span class="n">Y_tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="o">==</span><span class="n">c1</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">C_tr</span><span class="p">])</span>
-<span class="n">n_tr</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_tr</span><span class="p">)</span>
-
-<span class="c1"># Take test set</span>
-<span class="n">X_tst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">xTest_all</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ind</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nTest_all</span><span class="p">)</span> 
-                 <span class="k">if</span> <span class="n">cTest_all</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">==</span><span class="n">c0</span> <span class="ow">or</span> <span class="n">cTest_all</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">==</span><span class="n">c1</span><span class="p">])</span>
-<span class="n">C_tst</span> <span class="o">=</span> <span class="p">[</span><span class="n">cTest_all</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nTest_all</span><span class="p">)</span> 
-         <span class="k">if</span> <span class="n">cTest_all</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">==</span><span class="n">c0</span> <span class="ow">or</span> <span class="n">cTest_all</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">==</span><span class="n">c1</span><span class="p">]</span>
-<span class="n">Y_tst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="o">==</span><span class="n">c1</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">C_tst</span><span class="p">])</span>
-<span class="n">n_tst</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_tst</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="3.2.2.-Data-normalization">3.2.2. Data normalization<a class="anchor-link" href="#3.2.2.-Data-normalization">&#182;</a></h4><p>Normalization of data is a common pre-processing step in many machine learning algorithms. Its goal is to get a dataset where all input coordinates have a similar scale. Learning algorithms usually show less instabilities and convergence problems when data are normalized.</p>
-<p>We will define a normalization function that returns a training data matrix with zero sample mean and unit sample variance.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">mx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    
-    <span class="c1"># Compute means and standard deviations</span>
-    <span class="k">if</span> <span class="n">mx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">mx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">sx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">sx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-    <span class="c1"># Normalize</span>
-    <span class="n">X0</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="o">-</span><span class="n">mx</span><span class="p">)</span><span class="o">/</span><span class="n">sx</span>
-
-    <span class="k">return</span> <span class="n">X0</span><span class="p">,</span> <span class="n">mx</span><span class="p">,</span> <span class="n">sx</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now, we can normalize training and test data. Observe in the code that the same transformation should be applied to training and test data. This is the reason why normalization with the test data is done using the means and the variances computed with the training set.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Normalize data</span>
-<span class="n">Xn_tr</span><span class="p">,</span> <span class="n">mx</span><span class="p">,</span> <span class="n">sx</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">X_tr</span><span class="p">)</span>
-<span class="n">Xn_tst</span><span class="p">,</span> <span class="n">mx</span><span class="p">,</span> <span class="n">sx</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">X_tst</span><span class="p">,</span> <span class="n">mx</span><span class="p">,</span> <span class="n">sx</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The following figure generates a plot of the normalized training data.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Separate components of x into different arrays (just for the plots)</span>
-<span class="n">x0c0</span> <span class="o">=</span> <span class="p">[</span><span class="n">Xn_tr</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_tr</span><span class="p">)</span> <span class="k">if</span> <span class="n">Y_tr</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">x1c0</span> <span class="o">=</span> <span class="p">[</span><span class="n">Xn_tr</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_tr</span><span class="p">)</span> <span class="k">if</span> <span class="n">Y_tr</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">x0c1</span> <span class="o">=</span> <span class="p">[</span><span class="n">Xn_tr</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_tr</span><span class="p">)</span> <span class="k">if</span> <span class="n">Y_tr</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">x1c1</span> <span class="o">=</span> <span class="p">[</span><span class="n">Xn_tr</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_tr</span><span class="p">)</span> <span class="k">if</span> <span class="n">Y_tr</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
-
-<span class="c1"># Scatterplot.</span>
-<span class="n">labels</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Iris-setosa&#39;</span><span class="p">:</span> <span class="s1">&#39;Setosa&#39;</span><span class="p">,</span> 
-          <span class="s1">&#39;Iris-versicolor&#39;</span><span class="p">:</span> <span class="s1">&#39;Versicolor&#39;</span><span class="p">,</span>
-          <span class="s1">&#39;Iris-virginica&#39;</span><span class="p">:</span> <span class="s1">&#39;Virginica&#39;</span><span class="p">}</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0c0</span><span class="p">,</span> <span class="n">x1c0</span><span class="p">,</span><span class="s1">&#39;r.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">c0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0c1</span><span class="p">,</span> <span class="n">x1c1</span><span class="p">,</span><span class="s1">&#39;g+&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">c1</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ind</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$x_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ind</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span> <span class="n">X</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
-
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
@@ -13771,11 +13434,14 @@ P_{{\mathcal D}|{\bf W}}({\mathcal D}|{\bf w}) &amp; =  p(y^{(0)}, \cdots, y^{(K
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In order to apply the gradient descent rule, we need to define two methods:</p>
-<ul>
-<li>A <code>fit</code> method, that receives the training data and returns the model weights and the value of the negative log-likelihood during all iterations.</li>
-<li>A <code>predict</code> method, that receives the model weight and a set of inputs, and returns the posterior class probabilities for that input, as well as their corresponding class predictions.</li>
-</ul>
+<h3 id="4.-k-means-clustering-algorithm">4. k-means clustering algorithm<a class="anchor-link" href="#4.-k-means-clustering-algorithm">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Use the pixel coordinates as the input data for a k-means algorithm. Plot the result of the clustering by means of a scatter plot, showing each cluster with a different colour.</p>
 
 </div>
 </div>
@@ -13785,217 +13451,17 @@ P_{{\mathcal D}|{\bf W}}({\mathcal D}|{\bf w}) &amp; =  p(y^{(0)}, \cdots, y^{(K
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">logregFit</span><span class="p">(</span><span class="n">Z_tr</span><span class="p">,</span> <span class="n">Y_tr</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">n_it</span><span class="p">):</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
 
-    <span class="c1"># Data dimension</span>
-    <span class="n">n_dim</span> <span class="o">=</span> <span class="n">Z_tr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-
-    <span class="c1"># Initialize variables</span>
-    <span class="n">nll_tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_it</span><span class="p">)</span>
-    <span class="n">pe_tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_it</span><span class="p">)</span>
-    <span class="n">Y_tr2</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">Y_tr</span> <span class="o">-</span> <span class="mi">1</span>     <span class="c1"># Transform labels into binary symmetric.</span>
-    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_dim</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="c1"># Running the gradient descent algorithm</span>
-    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_it</span><span class="p">):</span>
-        
-        <span class="c1"># Compute posterior probabilities for weight w</span>
-        <span class="n">p1_tr</span> <span class="o">=</span> <span class="n">logistic</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Z_tr</span><span class="p">,</span> <span class="n">w</span><span class="p">))</span>
-
-        <span class="c1"># Compute negative log-likelihood</span>
-        <span class="c1"># (note that this is not required for the weight update, only for nll tracking)</span>
-        <span class="n">nll_tr</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Y_tr2</span><span class="o">*</span><span class="n">Z_tr</span><span class="p">,</span> <span class="n">w</span><span class="p">))))</span> 
-
-        <span class="c1"># Update weights</span>
-        <span class="n">w</span> <span class="o">+=</span> <span class="n">rho</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Z_tr</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">Y_tr</span> <span class="o">-</span> <span class="n">p1_tr</span><span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">w</span><span class="p">,</span> <span class="n">nll_tr</span>
-
-<span class="k">def</span> <span class="nf">logregPredict</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
-
-    <span class="c1"># Compute posterior probability of class 1 for weights w.</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">logistic</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">w</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-    
-    <span class="c1"># Class</span>
-    <span class="n">D</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">pn</span><span class="p">))</span> <span class="k">for</span> <span class="n">pn</span> <span class="ow">in</span> <span class="n">p</span><span class="p">]</span>
-    
-    <span class="k">return</span> <span class="n">p</span><span class="p">,</span> <span class="n">D</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We can test the behavior of the gradient descent method by fitting a logistic regression model with ${\bf z}({\bf x}) = (1, {\bf x}^\top)^\top$.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Parameters of the algorithms</span>
-<span class="n">rho</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">50</span>    <span class="c1"># Learning step</span>
-<span class="n">n_it</span> <span class="o">=</span> <span class="mi">200</span>   <span class="c1"># Number of iterations</span>
-
-<span class="c1"># Compute Z&#39;s</span>
-<span class="n">Z_tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_tr</span><span class="p">),</span> <span class="n">Xn_tr</span><span class="p">]</span> 
-<span class="n">Z_tst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_tst</span><span class="p">),</span> <span class="n">Xn_tst</span><span class="p">]</span>
-<span class="n">n_dim</span> <span class="o">=</span> <span class="n">Z_tr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-
-<span class="c1"># Convert target arrays to column vectors</span>
-<span class="n">Y_tr2</span> <span class="o">=</span> <span class="n">Y_tr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
-<span class="n">Y_tst2</span> <span class="o">=</span> <span class="n">Y_tst</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
-
-<span class="c1"># Running the gradient descent algorithm</span>
-<span class="n">w</span><span class="p">,</span> <span class="n">nll_tr</span> <span class="o">=</span> <span class="n">logregFit</span><span class="p">(</span><span class="n">Z_tr</span><span class="p">,</span> <span class="n">Y_tr2</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">n_it</span><span class="p">)</span>
-
-<span class="c1"># Classify training and test data</span>
-<span class="n">p_tr</span><span class="p">,</span> <span class="n">D_tr</span> <span class="o">=</span> <span class="n">logregPredict</span><span class="p">(</span><span class="n">Z_tr</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
-<span class="n">p_tst</span><span class="p">,</span> <span class="n">D_tst</span> <span class="o">=</span> <span class="n">logregPredict</span><span class="p">(</span><span class="n">Z_tst</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
-
-<span class="c1"># Compute error rates</span>
-<span class="n">E_tr</span> <span class="o">=</span> <span class="n">D_tr</span><span class="o">!=</span><span class="n">Y_tr</span>
-<span class="n">E_tst</span> <span class="o">=</span> <span class="n">D_tst</span><span class="o">!=</span><span class="n">Y_tst</span>
-
-<span class="c1"># Error rates</span>
-<span class="n">pe_tr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">E_tr</span><span class="p">))</span> <span class="o">/</span> <span class="n">n_tr</span>
-<span class="n">pe_tst</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">E_tst</span><span class="p">))</span> <span class="o">/</span> <span class="n">n_tst</span>
-
-<span class="c1"># NLL plot.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_it</span><span class="p">),</span> <span class="n">nll_tr</span><span class="p">,</span><span class="s1">&#39;b.:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Train&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iteration&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Negative Log-Likelihood&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The optimal weights are:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The final error rates are:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;- Training:&#39;</span><span class="p">,</span> <span class="n">pe_tr</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;- Test:&#39;</span><span class="p">,</span> <span class="n">pe_tst</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The NLL after training is&#39;</span><span class="p">,</span> <span class="n">nll_tr</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">nll_tr</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="3.2.3.-Free-parameters">3.2.3. Free parameters<a class="anchor-link" href="#3.2.3.-Free-parameters">&#182;</a></h4><p>Under certain conditions, the gradient descent method can be shown to converge asymptotically (i.e. as the number of iterations goes to infinity) to the ML estimate of the logistic model. However, in practice, the final estimate of the weights ${\bf w}$ depend on several factors:</p>
-<ul>
-<li>Number of iterations</li>
-<li>Initialization</li>
-<li>Learning step</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Exercise 4</strong>: Visualize the variability of gradient descent caused by initializations. To do so, fix the number of iterations to 200 and the learning step, and execute the gradient descent 100 times, storing the training error rate of each execution. Plot the histogram of the error rate values.</p>
-<p>Note that you can do this exercise with a loop over the 100 executions, including the code in the previous code slide inside the loop, with some proper modifications. To plot a histogram of the values in array <code>p</code> with <code>n</code>bins, you can use <code>plt.hist(p, n)</code></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h5 id="3.2.3.1.-Learning-step">3.2.3.1. Learning step<a class="anchor-link" href="#3.2.3.1.-Learning-step">&#182;</a></h5><p>The learning step, $\rho$, is a free parameter of the algorithm. Its choice is critical for the convergence of the algorithm. Too large values of $\rho$ make the algorithm diverge. For too small values, the convergence gets very slow and more iterations are required for a good convergence.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Exercise 5</strong>: Observe the evolution of the negative log-likelihood with the number of iterations for different values of $\rho$. It is easy to check that, for large enough $\rho$, the gradient descent method does not converge. Can you estimate (through manual observation) an approximate value of $\rho$ stating a boundary between convergence and divergence?</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Exercise 6</strong>: In this exercise we explore the influence of the learning step more sistematically. Use the code in the previouse exercises to compute, for every value of $\rho$, the average error rate over 100 executions. Plot the average error rate vs. $\rho$.</p>
-<p>Note that you should explore the values of $\rho$ in a logarithmic scale. For instance, you can take $\rho = 1, \frac{1}{10}, \frac{1}{100}, \frac{1}{1000}, \ldots$</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>In practice, the selection of $\rho$ may be a matter of trial an error. Also there is some theoretical evidence that the learning step should decrease along time up to cero, and the sequence $\rho_n$ should satisfy two conditions:</p>
-<ul>
-<li>C1: $\sum_{n=0}^{\infty} \rho_n^2 &lt; \infty$ (decrease slowly)</li>
-<li>C2: $\sum_{n=0}^{\infty} \rho_n = \infty$ (but not too slowly)</li>
-</ul>
-<p>For instance, we can take $\rho_n= \frac{1}{n}$. Another common choice is $\rho_n = \frac{\alpha}{1+\beta n}$ where $\alpha$ and $\beta$ are also free parameters that can be selected by trial and error with some heuristic method.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="3.2.4.-Visualizing-the-posterior-map.">3.2.4. Visualizing the posterior map.<a class="anchor-link" href="#3.2.4.-Visualizing-the-posterior-map.">&#182;</a></h4><p>We can also visualize the posterior probability map estimated by the logistic regression model for the estimated weights.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create a regtangular grid.</span>
-<span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">Xn_tr</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">Xn_tr</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> 
-<span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">Xn_tr</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">Xn_tr</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-<span class="n">dx</span> <span class="o">=</span> <span class="n">x_max</span> <span class="o">-</span> <span class="n">x_min</span>
-<span class="n">dy</span> <span class="o">=</span> <span class="n">y_max</span> <span class="o">-</span> <span class="n">y_min</span>
-<span class="n">h</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">/</span><span class="mi">400</span>
-<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_min</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">dx</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">dx</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span>
-                     <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y_min</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">dx</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">dy</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
-<span class="n">X_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span><span class="o">.</span><span class="n">T</span>
-
-<span class="c1"># Compute Z&#39;s</span>
-<span class="n">Z_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">X_grid</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">X_grid</span><span class="p">]</span> 
-
-<span class="c1"># Compute the classifier output for all samples in the grid.</span>
-<span class="n">pp</span><span class="p">,</span> <span class="n">dd</span> <span class="o">=</span> <span class="n">logregPredict</span><span class="p">(</span><span class="n">Z_grid</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
-
-<span class="c1"># Paint output maps</span>
-<span class="n">pylab</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span>  <span class="c1"># Set figure size</span>
-
-<span class="c1"># Put the result into a color plot</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0c0</span><span class="p">,</span> <span class="n">x1c0</span><span class="p">,</span><span class="s1">&#39;r.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">c0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0c1</span><span class="p">,</span> <span class="n">x1c1</span><span class="p">,</span><span class="s1">&#39;g+&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">c1</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ind</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$x_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ind</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="c1"># &lt;SOL&gt;</span>
+<span class="n">est</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 4 clusters</span>
+<span class="n">est</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">y_kmeans</span> <span class="o">=</span> <span class="n">est</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y_kmeans</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;rainbow&#39;</span><span class="p">,</span>
+            <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
-<span class="n">pp</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="n">CS</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">pp</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">copper</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">pp</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span>
-                  <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-
-
-
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># &lt;/SOL&gt;</span>
 </pre></div>
 
     </div>
@@ -14006,8 +13472,7 @@ P_{{\mathcal D}|{\bf W}}({\mathcal D}|{\bf w}) &amp; =  p(y^{(0)}, \cdots, y^{(K
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="3.2.5.-Polynomial-Logistic-Regression">3.2.5. Polynomial Logistic Regression<a class="anchor-link" href="#3.2.5.-Polynomial-Logistic-Regression">&#182;</a></h4><p>The error rates of the logistic regression model can be potentially reduced by using polynomial transformations.</p>
-<p>To compute the polynomial transformation up to a given degree, we can use the <code>PolynomialFeatures</code> method in <code>sklearn.preprocessing</code>.</p>
+<h3 id="5.-Spectral-clustering-algorithm">5. Spectral clustering algorithm<a class="anchor-link" href="#5.-Spectral-clustering-algorithm">&#182;</a></h3><h4 id="5.1.-Affinity-matrix">5.1. Affinity matrix<a class="anchor-link" href="#5.1.-Affinity-matrix">&#182;</a></h4><p>Compute and visualize the affinity matrix for the given dataset, using a rbf kernel with $\gamma=5$.</p>
 
 </div>
 </div>
@@ -14017,54 +13482,37 @@ P_{{\mathcal D}|{\bf W}}({\mathcal D}|{\bf w}) &amp; =  p(y^{(0)}, \cdots, y^{(K
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Parameters of the algorithms</span>
-<span class="n">rho</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">50</span>    <span class="c1"># Learning step</span>
-<span class="n">n_it</span> <span class="o">=</span> <span class="mi">500</span>   <span class="c1"># Number of iterations</span>
-<span class="n">g</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># Degree of polynomial</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">rbf_kernel</span>
 
-<span class="c1"># Compute Z_tr</span>
-<span class="n">poly</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="n">g</span><span class="p">)</span>
-<span class="n">Z_tr</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">Xn_tr</span><span class="p">)</span>
-<span class="c1"># Normalize columns (this is useful to make algorithms more stable).)</span>
-<span class="n">Zn</span><span class="p">,</span> <span class="n">mz</span><span class="p">,</span> <span class="n">sz</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">Z_tr</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:])</span>
-<span class="n">Z_tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_tr</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span> <span class="n">Zn</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># &lt;SOL&gt;</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">sf</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">Xsub</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="n">sf</span><span class="p">]</span>
+<span class="k">print</span> <span class="n">Xsub</span><span class="o">.</span><span class="n">shape</span>
 
-<span class="c1"># Compute Z_tst</span>
-<span class="n">Z_tst</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">Xn_tst</span><span class="p">)</span>
-<span class="n">Zn</span><span class="p">,</span> <span class="n">mz</span><span class="p">,</span> <span class="n">sz</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">Z_tst</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:],</span> <span class="n">mz</span><span class="p">,</span> <span class="n">sz</span><span class="p">)</span>
-<span class="n">Z_tst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_tst</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span> <span class="n">Zn</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.001</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">rbf_kernel</span><span class="p">(</span><span class="n">Xsub</span><span class="p">,</span> <span class="n">Xsub</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">gamma</span><span class="p">)</span>
+<span class="c1"># &lt;/SOL&gt;</span>
+</pre></div>
 
-<span class="c1"># Convert target arrays to column vectors</span>
-<span class="n">Y_tr2</span> <span class="o">=</span> <span class="n">Y_tr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
-<span class="n">Y_tst2</span> <span class="o">=</span> <span class="n">Y_tst</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+    </div>
+</div>
+</div>
 
-<span class="c1"># Running the gradient descent algorithm</span>
-<span class="n">w</span><span class="p">,</span> <span class="n">nll_tr</span> <span class="o">=</span> <span class="n">logregFit</span><span class="p">(</span><span class="n">Z_tr</span><span class="p">,</span> <span class="n">Y_tr2</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">n_it</span><span class="p">)</span>
-
-<span class="c1"># Classify training and test data</span>
-<span class="n">p_tr</span><span class="p">,</span> <span class="n">D_tr</span> <span class="o">=</span> <span class="n">logregPredict</span><span class="p">(</span><span class="n">Z_tr</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
-<span class="n">p_tst</span><span class="p">,</span> <span class="n">D_tst</span> <span class="o">=</span> <span class="n">logregPredict</span><span class="p">(</span><span class="n">Z_tst</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
-    
-<span class="c1"># Compute error rates</span>
-<span class="n">E_tr</span> <span class="o">=</span> <span class="n">D_tr</span><span class="o">!=</span><span class="n">Y_tr</span>
-<span class="n">E_tst</span> <span class="o">=</span> <span class="n">D_tst</span><span class="o">!=</span><span class="n">Y_tst</span>
-
-<span class="c1"># Error rates</span>
-<span class="n">pe_tr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">E_tr</span><span class="p">))</span> <span class="o">/</span> <span class="n">n_tr</span>
-<span class="n">pe_tst</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">E_tst</span><span class="p">))</span> <span class="o">/</span> <span class="n">n_tst</span>
-
-<span class="c1"># NLL plot.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_it</span><span class="p">),</span> <span class="n">nll_tr</span><span class="p">,</span><span class="s1">&#39;b.:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Train&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iteration&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Negative Log-Likelihood&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The optimal weights are:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The final error rates are:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;- Training:&#39;</span><span class="p">,</span> <span class="n">pe_tr</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;- Test:&#39;</span><span class="p">,</span> <span class="n">pe_tst</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The NLL after training is&#39;</span><span class="p">,</span> <span class="n">nll_tr</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">nll_tr</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Visualization</span>
+<span class="c1"># &lt;SOL&gt;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;hot&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;RBF Affinity Matrix for gamma = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">gamma</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># &lt;/SOL&gt;</span>
 </pre></div>
 
     </div>
@@ -14075,7 +13523,14 @@ P_{{\mathcal D}|{\bf W}}({\mathcal D}|{\bf w}) &amp; =  p(y^{(0)}, \cdots, y^{(K
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Visualizing the posterior map we can se that the polynomial transformation produces nonlinear decision boundaries.</p>
+<h3 id="5.2.-Spectral-clusering">5.2. Spectral clusering<a class="anchor-link" href="#5.2.-Spectral-clusering">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Apply the spectral clustering algorithm, and show the clustering results using a scatter plot.</p>
 
 </div>
 </div>
@@ -14085,31 +13540,26 @@ P_{{\mathcal D}|{\bf W}}({\mathcal D}|{\bf w}) &amp; =  p(y^{(0)}, \cdots, y^{(K
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Compute Z_grid</span>
-<span class="n">Z_grid</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_grid</span><span class="p">)</span>
-<span class="n">n_grid</span> <span class="o">=</span> <span class="n">Z_grid</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">Zn</span><span class="p">,</span> <span class="n">mz</span><span class="p">,</span> <span class="n">sz</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">Z_grid</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:],</span> <span class="n">mz</span><span class="p">,</span> <span class="n">sz</span><span class="p">)</span>
-<span class="n">Z_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_grid</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span> <span class="n">Zn</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">SpectralClustering</span>
 
-<span class="c1"># Compute the classifier output for all samples in the grid.</span>
-<span class="n">pp</span><span class="p">,</span> <span class="n">dd</span> <span class="o">=</span> <span class="n">logregPredict</span><span class="p">(</span><span class="n">Z_grid</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
-<span class="n">pp</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">spc</span> <span class="o">=</span> <span class="n">SpectralClustering</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">gamma</span><span class="p">,</span> <span class="n">affinity</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">)</span>
+<span class="n">y_kmeans</span> <span class="o">=</span> <span class="n">spc</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">Xsub</span><span class="p">)</span>
+<span class="c1"># &lt;/SOL&gt;</span>
+</pre></div>
 
-<span class="c1"># Paint output maps</span>
-<span class="n">pylab</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span>  <span class="c1"># Set figure size</span>
+    </div>
+</div>
+</div>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0c0</span><span class="p">,</span> <span class="n">x1c0</span><span class="p">,</span><span class="s1">&#39;r.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">c0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0c1</span><span class="p">,</span> <span class="n">x1c1</span><span class="p">,</span><span class="s1">&#39;g+&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">c1</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ind</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$x_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ind</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;$&#39;</span><span class="p">)</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Xsub</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">Xsub</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y_kmeans</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;rainbow&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
-<span class="n">CS</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">pp</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">copper</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">pp</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span>
-                  <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
@@ -14121,144 +13571,7 @@ P_{{\mathcal D}|{\bf W}}({\mathcal D}|{\bf w}) &amp; =  p(y^{(0)}, \cdots, y^{(K
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="4.-Regularization-and-MAP-estimation.">4. Regularization and MAP estimation.<a class="anchor-link" href="#4.-Regularization-and-MAP-estimation.">&#182;</a></h2><p>An alternative to the ML estimation of the weights in logistic regression is Maximum A Posteriori estimation. Modelling the logistic regression weights as a random variable with prior distribution $p_{\bf W}({\bf w})$, the MAP estimate is defined as</p>
-$$
-\hat{\bf w}_{\text{MAP}} = \arg\max_{\bf w} p({\bf w}|{\mathcal D})
-$$<p>The posterior density $p({\bf w}|{\mathcal D})$ is related to the likelihood function and the prior density of the weights, $p_{\bf W}({\bf w})$ through the Bayes rule</p>
-$$
-p({\bf w}|{\mathcal D}) = 
-    \frac{P\left({\mathcal D}|{\bf w}\right) \; p_{\bf W}({\bf w})}
-         {p\left({\mathcal D}\right)}
-$$<p>In general, the denominator in this expression cannot be computed analytically. However, it is not required for MAP estimation because it does not depend on ${\bf w}$. Therefore, the MAP solution is given by</p>
-\begin{align}
-\hat{\bf w}_{\text{MAP}} &amp; = \arg\max_{\bf w} \left\{ P\left({\mathcal D}|{\bf w}\right) \; p_{\bf W}({\bf w}) \right\}\\
-&amp; = \arg\max_{\bf w} \left\{ L({\mathbf w}) + \log p_{\bf W}({\bf w})\right\} \\
-&amp; = \arg\min_{\bf w} \left\{ \text{NLL}({\mathbf w}) - \log p_{\bf W}({\bf w})\right\}
-\end{align}
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>In the light of this expression, we can conclude that the MAP solution is affected by two terms:</p>
-<ul>
-<li>The likelihood, which takes large values for parameter vectors $\bf w$ that fit well the training data (smaller $\text{NLL}$ values)</li>
-<li>The prior distribution of weights $p_{\bf W}({\bf w})$, which expresses our <em>a priori</em> preference for some solutions. <strong>Usually, we recur to prior distributions that take large values when $\|{\bf w}\|$ is small (associated to smooth classification borders).</strong></li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We can check that the MAP criterion adds a penalty term to the ML objective, that penalizes parameter vectors for which the prior distribution of weights takes small values.</p>
-<h3 id="4.1-MAP-estimation-with-Gaussian-prior">4.1 MAP estimation with Gaussian prior<a class="anchor-link" href="#4.1-MAP-estimation-with-Gaussian-prior">&#182;</a></h3><p>If we assume that ${\bf W}$ follows a zero-mean Gaussian random variable with variance matrix $v{\bf I}$,</p>
-$$
-p_{\bf W}({\bf w}) = \frac{1}{(2\pi v)^{N/2}} \exp\left(-\frac{1}{2v}\|{\bf w}\|^2\right)
-$$<p>the MAP estimate becomes</p>
-\begin{align}
-\hat{\bf w}_{\text{MAP}} 
-  &amp;= \arg\min_{\bf w} \left\{\text{NLL}({\bf w}) + \frac{1}{C}\|{\bf w}\|^2
-         \right\}
-\end{align}<p>where $C = 2v$. Noting that</p>
-$$\nabla_{\bf w}\left\{\text{NLL}({\bf w}) + \frac{1}{C}\|{\bf w}\|^2\right\} 
-= - {\bf Z} \left({\bf y}-\hat{\bf p}_n\right) + \frac{2}{C}{\bf w},
-$$<p>we obtain the following gradient descent rule for MAP estimation</p>
-\begin{align}
-{\bf w}_{n+1} &amp;= \left(1-\frac{2\rho_n}{C}\right){\bf w}_n 
-    + \rho_n {\bf Z} \left({\bf y}-\hat{\bf p}_n\right)
-\end{align}
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="4.2-MAP-estimation-with-Laplacian-prior">4.2 MAP estimation with Laplacian prior<a class="anchor-link" href="#4.2-MAP-estimation-with-Laplacian-prior">&#182;</a></h3><p>If we assume that ${\bf W}$ follows a multivariate zero-mean Laplacian distribution given by</p>
-$$
-p_{\bf W}({\bf w}) = \frac{1}{(2 C)^{N}} \exp\left(-\frac{1}{C}\|{\bf w}\|_1\right)
-$$<p>(where $\|{\bf w}\|=|w_1|+\ldots+|w_N|$ is the $L_1$ norm of ${\bf w}$), the MAP estimate becomes</p>
-\begin{align}
-\hat{\bf w}_{\text{MAP}} 
-  &amp;= \arg\min_{\bf w} \left\{\text{NLL}({\bf w}) + \frac{1}{C}\|{\bf w}\|_1
-         \right\}
-\end{align}<p>The additional term introduced by the prior in the optimization algorithm is usually named the <em>regularization term</em>. It is usually very effective to avoid overfitting when the dimension of the weight vectors is high. Parameter $C$ is named the <em>inverse regularization strength</em>.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Exercise 7</strong>: Derive the gradient descent rules for MAP estimation of the logistic regression weights with Laplacian prior.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="5.-Other-optimization-algorithms">5. Other optimization algorithms<a class="anchor-link" href="#5.-Other-optimization-algorithms">&#182;</a></h2><h3 id="5.1.-Stochastic-Gradient-descent.">5.1. Stochastic Gradient descent.<a class="anchor-link" href="#5.1.-Stochastic-Gradient-descent.">&#182;</a></h3><p>Stochastic gradient descent (SGD) is based on the idea of using a single sample at each iteration of the learning algorithm. The SGD rule for ML logistic regression is</p>
-\begin{align}
-{\bf w}_{n+1} &amp;= {\bf w}_n 
-    + \rho_n {\bf z}^{(n)} \left(y^{(n)}-\hat{p}^{(n)}_n\right)
-\end{align}<p>Once all samples in the training set have been applied, the algorith can continue by applying the training set several times.</p>
-<p>The computational cost of each iteration of SGD is much smaller than that of gradient descent, though it usually needs many more iterations to converge.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Exercise 8</strong>: Modify logregFit to implement an algorithm that applies the SGD rule.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="5.2.-Newton's-method">5.2. Newton's method<a class="anchor-link" href="#5.2.-Newton's-method">&#182;</a></h3><p>Assume that the function to be minimized, $C({\bf w})$, can be approximated by its second order Taylor series expansion around ${\bf w}_0$</p>
-$$ 
-C({\bf w}) \approx C({\bf w}_0) 
-+ \nabla_{\bf w}^\top C({\bf w}_0)({\bf w}-{\bf w}_0)
-+ \frac{1}{2}({\bf w}-{\bf w}_0)^\top{\bf H}({\bf w}_0)({\bf w}-{\bf w}_0)
-$$<p>where ${\bf H}({\bf w}_k)$ is the <a href=https://en.wikipedia.org/wiki/Hessian_matrix> *Hessian* matrix</a> of $C$ at ${\bf w}_k$. Taking the gradient of $C({\bf w})$, and setting the result to ${\bf 0}$, the minimum of C around ${\bf w}_0$ can be approximated as</p>
-$$ 
-{\bf w}^* = {\bf w}_0 - {\bf H}({\bf w}_0)^{-1} \nabla_{\bf w}^\top C({\bf w}_0)
-$$<p>Since the second order polynomial is only an approximation to $C$, ${\bf w}^*$ is only an approximation to the optimal weight vector, but we can expect ${\bf w}^*$ to be closer to the minimizer of $C$ than ${\bf w}_0$. Thus, we can repeat the process, computing a second order approximation around ${\bf w}^*$ and a new approximation to the minimizer.</p>
-<p><a href=https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization> Newton's method</a> is based on this idea. At each optization step, the function to be minimized is approximated by a second order approximation using a Taylor series expansion around the current estimate. As a result, the learning rule becomes</p>
-$$\hat{\bf w}_{n+1} = \hat{\bf w}_{n} - \rho_n {\bf H}({\bf w}_k)^{-1} \nabla_{{\bf w}}C({\bf w}_k)
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>For instance, for the MAP estimate with Gaussian prior, the <em>Hessian</em> matrix becomes</p>
-$$
-{\bf H}({\bf w}) 
-  = \frac{2}{C}{\bf I} + \sum_{k=0}^{K-1} g({\bf w}^\top {\bf z}^{(k)}) \left[1-g({\bf w}^\top {\bf z}^{(k)})\right]{\bf z}^{(k)} ({\bf z}^{(k)})^\top
-$$<p>Defining diagonal matrix</p>
-$$
-{\mathbf S}({\bf w}) = \text{diag}\left[g({\bf w}^\top {\bf z}^{(k)}) \left(1-g({\bf w}^\top {\bf z}^{(k)})\right)\right]
-$$<p>the Hessian matrix can be written in more compact form as</p>
-$$
-{\bf H}({\bf w}) 
-  = \frac{2}{C}{\bf I} + {\bf Z}^\top {\bf S}({\bf w}) {\bf Z}
-$$<p>Therefore, the Newton's algorithm for logistic regression becomes</p>
-\begin{align}
-{\bf w}_{n+1} = {\bf w}_{n} + 
-\rho_n 
-\left(\frac{2}{C}{\bf I} + {\bf Z}^\top {\bf S}({\bf w}_{n})
-{\bf Z}
-\right)^{-1} 
-{\bf Z}^\top \left({\bf y}-\hat{\bf p}_n\right)
-\end{align}<p>Some variants of the Newton method are implemented in the <a href="http://scikit-learn.org/stable/"> Scikit-learn </a> package.</p>
+<p>Try now with other images in the dataset. You will need to re-adjust some free parameters to get a better performance.</p>
 
 </div>
 </div>
@@ -14268,187 +13581,81 @@ $$<p>Therefore, the Newton's algorithm for logistic regression becomes</p>
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">logregFit2</span><span class="p">(</span><span class="n">Z_tr</span><span class="p">,</span> <span class="n">Y_tr</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">n_it</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">1e4</span><span class="p">):</span>
-
-    <span class="c1"># Compute Z&#39;s</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">/</span><span class="n">C</span>
-    <span class="n">n_dim</span> <span class="o">=</span> <span class="n">Z_tr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-
-    <span class="c1"># Initialize variables</span>
-    <span class="n">nll_tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_it</span><span class="p">)</span>
-    <span class="n">pe_tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_it</span><span class="p">)</span>
-    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_dim</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="c1"># Running the gradient descent algorithm</span>
-    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_it</span><span class="p">):</span>
-        <span class="n">p_tr</span> <span class="o">=</span> <span class="n">logistic</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Z_tr</span><span class="p">,</span> <span class="n">w</span><span class="p">))</span>
-        
-        <span class="n">sk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">p_tr</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">p_tr</span><span class="p">)</span>
-        <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">sk</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
-
-        <span class="c1"># Compute negative log-likelihood</span>
-        <span class="n">nll_tr</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Y_tr</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p_tr</span><span class="p">))</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">Y_tr</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p_tr</span><span class="p">))</span>
-
-        <span class="c1"># Update weights</span>
-        <span class="n">invH</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">n_dim</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Z_tr</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">Z_tr</span><span class="p">)))</span>
-
-        <span class="n">w</span> <span class="o">+=</span> <span class="n">rho</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">invH</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Z_tr</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">Y_tr</span> <span class="o">-</span> <span class="n">p_tr</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">w</span><span class="p">,</span> <span class="n">nll_tr</span>
+<div class=" highlight hl-ipython2"><pre><span></span> 
 </pre></div>
 
     </div>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Parameters of the algorithms</span>
-<span class="n">rho</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">50</span>    <span class="c1"># Learning step</span>
-<span class="n">n_it</span> <span class="o">=</span> <span class="mi">500</span>   <span class="c1"># Number of iterations</span>
-<span class="n">C</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="n">g</span> <span class="o">=</span> <span class="mi">4</span>
-
-<span class="c1"># Compute Z_tr</span>
-<span class="n">poly</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="n">g</span><span class="p">)</span>
-<span class="n">Z_tr</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_tr</span><span class="p">)</span>
-<span class="c1"># Normalize columns (this is useful to make algorithms more stable).)</span>
-<span class="n">Zn</span><span class="p">,</span> <span class="n">mz</span><span class="p">,</span> <span class="n">sz</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">Z_tr</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:])</span>
-<span class="n">Z_tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_tr</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span> <span class="n">Zn</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="c1"># Compute Z_tst</span>
-<span class="n">Z_tst</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_tst</span><span class="p">)</span>
-<span class="n">Zn</span><span class="p">,</span> <span class="n">mz</span><span class="p">,</span> <span class="n">sz</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">Z_tst</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:],</span> <span class="n">mz</span><span class="p">,</span> <span class="n">sz</span><span class="p">)</span>
-<span class="n">Z_tst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_tst</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span> <span class="n">Zn</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="c1"># Convert target arrays to column vectors</span>
-<span class="n">Y_tr2</span> <span class="o">=</span> <span class="n">Y_tr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
-<span class="n">Y_tst2</span> <span class="o">=</span> <span class="n">Y_tst</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
-
-<span class="c1"># Running the gradient descent algorithm</span>
-<span class="n">w</span><span class="p">,</span> <span class="n">nll_tr</span> <span class="o">=</span> <span class="n">logregFit2</span><span class="p">(</span><span class="n">Z_tr</span><span class="p">,</span> <span class="n">Y_tr2</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">n_it</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
-
-<span class="c1"># Classify training and test data</span>
-<span class="n">p_tr</span><span class="p">,</span> <span class="n">D_tr</span> <span class="o">=</span> <span class="n">logregPredict</span><span class="p">(</span><span class="n">Z_tr</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
-<span class="n">p_tst</span><span class="p">,</span> <span class="n">D_tst</span> <span class="o">=</span> <span class="n">logregPredict</span><span class="p">(</span><span class="n">Z_tst</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
-    
-<span class="c1"># Compute error rates</span>
-<span class="n">E_tr</span> <span class="o">=</span> <span class="n">D_tr</span><span class="o">!=</span><span class="n">Y_tr</span>
-<span class="n">E_tst</span> <span class="o">=</span> <span class="n">D_tst</span><span class="o">!=</span><span class="n">Y_tst</span>
-
-<span class="c1"># Error rates</span>
-<span class="n">pe_tr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">E_tr</span><span class="p">))</span> <span class="o">/</span> <span class="n">n_tr</span>
-<span class="n">pe_tst</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">E_tst</span><span class="p">))</span> <span class="o">/</span> <span class="n">n_tst</span>
-
-<span class="c1"># NLL plot.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_it</span><span class="p">),</span> <span class="n">nll_tr</span><span class="p">,</span><span class="s1">&#39;b.:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Train&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Iteration&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Negative Log-Likelihood&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The final error rates are:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;- Training:&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">pe_tr</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;- Test:&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">pe_tst</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The NLL after training is:&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">nll_tr</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">nll_tr</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
-</pre></div>
-
-    </div>
+</div></section></section>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="6.-Logistic-regression-in-Scikit-Learn.">6. Logistic regression in Scikit Learn.<a class="anchor-link" href="#6.-Logistic-regression-in-Scikit-Learn.">&#182;</a></h2><p>The <a href="http://scikit-learn.org/stable/"> scikit-learn </a> package includes an efficient implementation of <a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html#sklearn.linear_model.LogisticRegression"> logistic regression</a>. To use it, we must first create a classifier object, specifying the parameters of the logistic regression algorithm.</p>
+<script>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create a logistic regression object.</span>
-<span class="n">LogReg</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+require(
+    {
+      // it makes sense to wait a little bit when you are loading
+      // reveal from a cdn in a slow connection environment
+      waitSeconds: 15
+    },
+    [
+      "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/lib/js/head.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/js/reveal.js"
+    ],
 
-<span class="c1"># Compute Z_tr</span>
-<span class="n">poly</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="n">g</span><span class="p">)</span>
-<span class="n">Z_tr</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">Xn_tr</span><span class="p">)</span>
-<span class="c1"># Normalize columns (this is useful to make algorithms more stable).)</span>
-<span class="n">Zn</span><span class="p">,</span> <span class="n">mz</span><span class="p">,</span> <span class="n">sz</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">Z_tr</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:])</span>
-<span class="n">Z_tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_tr</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span> <span class="n">Zn</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    function(head, Reveal){
 
-<span class="c1"># Compute Z_tst</span>
-<span class="n">Z_tst</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">Xn_tst</span><span class="p">)</span>
-<span class="n">Zn</span><span class="p">,</span> <span class="n">mz</span><span class="p">,</span> <span class="n">sz</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">Z_tst</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:],</span> <span class="n">mz</span><span class="p">,</span> <span class="n">sz</span><span class="p">)</span>
-<span class="n">Z_tst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_tst</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span> <span class="n">Zn</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        // Full list of configuration options available here: https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
 
-<span class="c1"># Fit model to data.</span>
-<span class="n">LogReg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Z_tr</span><span class="p">,</span> <span class="n">Y_tr</span><span class="p">)</span>
+            transition: "slide",
 
-<span class="c1"># Classify training and test data</span>
-<span class="n">D_tr</span> <span class="o">=</span> <span class="n">LogReg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Z_tr</span><span class="p">)</span>
-<span class="n">D_tst</span> <span class="o">=</span> <span class="n">LogReg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Z_tst</span><span class="p">)</span>
-    
-<span class="c1"># Compute error rates</span>
-<span class="n">E_tr</span> <span class="o">=</span> <span class="n">D_tr</span><span class="o">!=</span><span class="n">Y_tr</span>
-<span class="n">E_tst</span> <span class="o">=</span> <span class="n">D_tst</span><span class="o">!=</span><span class="n">Y_tst</span>
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                { src: "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/lib/js/classList.js",
+                  condition: function() { return !document.body.classList; } },
+                { src: "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/plugin/notes/notes.js",
+                  async: true,
+                  condition: function() { return !!document.body.classList; } }
+            ]
+        });
 
-<span class="c1"># Error rates</span>
-<span class="n">pe_tr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">E_tr</span><span class="p">))</span> <span class="o">/</span> <span class="n">n_tr</span>
-<span class="n">pe_tst</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">E_tst</span><span class="p">))</span> <span class="o">/</span> <span class="n">n_tst</span>
+        var update = function(event){
+          if(MathJax.Hub.getAllJax(Reveal.getCurrentSlide())){
+            MathJax.Hub.Rerender(Reveal.getCurrentSlide());
+          }
+        };
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The final error rates are:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;- Training:&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">pe_tr</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;- Test:&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">pe_tst</span><span class="p">))</span>
+        Reveal.addEventListener('slidechanged', update);
 
-<span class="c1"># Compute Z_grid</span>
-<span class="n">Z_grid</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_grid</span><span class="p">)</span>
-<span class="n">n_grid</span> <span class="o">=</span> <span class="n">Z_grid</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">Zn</span><span class="p">,</span> <span class="n">mz</span><span class="p">,</span> <span class="n">sz</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">Z_grid</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:],</span> <span class="n">mz</span><span class="p">,</span> <span class="n">sz</span><span class="p">)</span>
-<span class="n">Z_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_grid</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span> <span class="n">Zn</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        function setScrollingSlide() {
+            var scroll = false
+            if (scroll === true) {
+              var h = $('.reveal').height() * 0.95;
+              $('section.present').find('section')
+                .filter(function() {
+                  return $(this).height() > h;
+                })
+                .css('height', 'calc(95vh)')
+                .css('overflow-y', 'scroll')
+                .css('margin-top', '20px');
+            }
+        }
 
-<span class="c1"># Compute the classifier output for all samples in the grid.</span>
-<span class="n">dd</span> <span class="o">=</span> <span class="n">LogReg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Z_grid</span><span class="p">)</span>
-<span class="n">pp</span> <span class="o">=</span> <span class="n">LogReg</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">Z_grid</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">pp</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        // check and set the scrolling slide every time the slide change
+        Reveal.addEventListener('slidechanged', setScrollingSlide);
 
-<span class="c1"># Paint output maps</span>
-<span class="n">pylab</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span>  <span class="c1"># Set figure size</span>
+    }
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0c0</span><span class="p">,</span> <span class="n">x1c0</span><span class="p">,</span><span class="s1">&#39;r.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">c0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0c1</span><span class="p">,</span> <span class="n">x1c1</span><span class="p">,</span><span class="s1">&#39;g+&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">c1</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ind</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$x_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ind</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+);
+</script>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">pp</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">copper</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">pp</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span>
-                  <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    </div>
-  </div>
 </body>
-
- 
 
 
 </html>
