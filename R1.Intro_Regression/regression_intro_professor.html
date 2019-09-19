@@ -13089,7 +13089,7 @@ div#notebook {
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -13194,7 +13194,7 @@ $$\mathcal{D} = \{{\bf x}_{k}, s_{k}\}_{k=0}^{K-1}$$<p>The dataset $\mathcal{D}$
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="2.-Examples-of-regression-problems.">2. Examples of regression problems.<a class="anchor-link" href="#2.-Examples-of-regression-problems.">&#182;</a></h2><p>The <a href=http://scikit-learn.org/>scikit-learn</a> package contains several <a href=http://scikit-learn.org/stable/datasets/> datasets</a> related to regression problems.</p>
 <ul>
-<li><a href=http://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_boston.html#sklearn.datasets.load_boston > Boston dataset</a>: the target variable contains housing values in different suburbs of Boston. The goal is to predict these values based on several social, economic and demographic variables taken frome theses suburbs (you can get more details in the &lt;a href = <a href="https://archive.ics.uci.edu/ml/datasets/Housing">https://archive.ics.uci.edu/ml/datasets/Housing</a> &gt; UCI repository &lt;/a&gt;).</li>
+<li><a href=http://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_boston.html#sklearn.datasets.load_boston > Boston dataset</a>: the target variable contains housing values in different suburbs of Boston. The goal is to predict these values based on several social, economic and demographic variables taken frome theses suburbs (you can get more details in the <a href = https://archive.ics.uci.edu/ml/datasets/Housing > UCI repository </a>).</li>
 </ul>
 <ul>
 <li><a href=http://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_diabetes.html#sklearn.datasets.load_diabetes /> Diabetes dataset&lt;/a&gt;.</li>
@@ -15746,7 +15746,7 @@ gg==
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="4.1.-Training-and-test-data">4.1. Training and test data<a class="anchor-link" href="#4.1.-Training-and-test-data">&#182;</a></h3><p>The major goal of the regression problem is that the predictor should make good predictions for arbitrary new inputs, not taken from the dataset used by the regression algorithm.</p>
+<h3 id="4.1.-Training-and-test-data">4.1. Training and test data<a class="anchor-link" href="#4.1.-Training-and-test-data">&#182;</a></h3><p>The major goal of the regression problem is that the predictor makes good predictions for arbitrary new inputs, not taken from the dataset used by the regression algorithm.</p>
 <p>Thus, in order to evaluate the prediction accuracy of some regression algorithm, we need some data, not used during the predictor design, to <em>test</em> the performance of the predictor under new data. To do so, the original dataset is usually divided in (at least) two disjoint sets:</p>
 <ul>
 <li><strong>Training set</strong>, $\cal{D}_{\text{train}}$: Used by the regression algorithm to determine predictor $f$.</li>

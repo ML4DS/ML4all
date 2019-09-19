@@ -74,9 +74,19 @@ def transform_nb(dirpath, src_fname, tg_fname):
     f = srcfile.replace(' ', '\ ')
     os.system('jupyter nbconvert --to html ' + f + ' --output ' +
               src_fname.replace('.ipynb', '.html'))
-    f = tgfile.replace(' ', '\ ')
-    os.system('jupyter nbconvert --to html ' + f + ' --output ' +
-              tg_fname.replace('.ipynb', '.html'))
+
+    # Clean student version
+    os.system('jupyter nbconvert --ClearOutputPreprocessor.enabled=True ' +
+              '--inplace ' + tgfile)
+
+    # f = tgfile.replace(' ', '\ ')
+    # os.system('jupyter nbconvert --to html ' + f + ' --output ' +
+    #           tg_fname.replace('.ipynb', '.html'))
+    # f = tgfile.replace(' ', '\ ')
+
+    os.system('jupyter nbconvert --to slides ' + f)
+    os.system('jupyter nbconvert --to pdf ' + f + ' --output ' +
+              src_fname.replace('.ipynb', '.pdf'))
 
     return
 
