@@ -13494,8 +13494,8 @@ Therefore:
 $$
 \hat{\bf w}_{\text{ML}} = \arg \max_{\bf w} p(\mathcal{D}|{\bf w}) 
                         = \arg \min_{\bf w} \sum_{k=0}^{K-1} \left(s_k-wx_k\right)^2
-$$
-Differentiating with respect to w:
+$$</p>
+<p>Differentiating with respect to w:
 $$</p>
 <ul>
 <li>2 \sum_{k=0}^{K-1} \left(s<em>k-\hat{w}</em>\text{ML} x_k\right) x<em>k  = 0
@@ -13778,7 +13778,7 @@ $$</li>
 
 </div>
 </div>
-</div><div class="fragment">
+</div></section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13802,7 +13802,7 @@ $$</p>
 
 </div>
 </div>
-</div></div></section></section><section><section>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13829,6 +13829,13 @@ $$
 p_E(\varepsilon) = \frac{1}{\sqrt{2\pi}\sigma_\varepsilon}
                    \exp\left(-\frac{\varepsilon^2}{2\sigma_\varepsilon^2}\right)
 $$</p>
+
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Assuming that the noise variables are independent of ${\bf x}$ and ${\bf w}$, then, for a given ${\bf x}$ and ${\bf w}$, the target variable is gaussian with mean ${\bf w}^\top {\bf z}_k$ and variance $\sigma_\varepsilon^2$
 $$
 p(s|{\bf x}, {\bf w}) = p_E(s-{\bf w}^\top{\bf z}) =
@@ -13838,7 +13845,7 @@ $$</p>
 
 </div>
 </div>
-</div></section><section>
+</div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13850,8 +13857,15 @@ p({\bf s}| {\bf X}, {\bf w})
     \exp\left(-\frac{\left(s_k-{\bf w}^\top{\bf z}_k\right)^2}{2\sigma_\varepsilon^2}\right) \\
     = \left(\frac{1}{\sqrt{2\pi}\sigma_\varepsilon}\right)^K
       \exp\left(-\sum_{k=1}^K \frac{\left(s_k-{\bf w}^\top{\bf z}_k\right)^2}{2\sigma_\varepsilon^2}\right) \\
-$$
-Finally, grouping variables ${\bf z}_k$ in
+$$</p>
+
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Finally, grouping variables ${\bf z}_k$ in
 $${\bf Z} = \left({\bf z}_0, \dots, {\bf z}_{K-1}\right)^\top$$
 we get
 $$
@@ -13862,7 +13876,7 @@ $$</p>
 
 </div>
 </div>
-</div></section><section>
+</div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13891,7 +13905,7 @@ $$</p>
 
 </div>
 </div>
-</div>
+</div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13906,7 +13920,7 @@ $$</p>
 
 </div>
 </div>
-</div></div></section></section><section><section>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14599,7 +14613,7 @@ $$
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><strong> 6.4.</strong> Compute $w_\text{ML}$ for the dataset in <strong>Exercise 4</strong></li>
+<li><strong>6.4.</strong> Compute $w_\text{ML}$ for the dataset in <strong>Exercise 4</strong></li>
 </ul>
 
 </div>
@@ -14642,7 +14656,7 @@ $$
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><strong> 6.5.</strong> Assuming $w = w_\text{ML}$, compute the prediction function based on the estimate $s_{MSE}$</li>
+<li><strong>6.5.</strong> Assuming $w = w_\text{ML}$, compute the prediction function based on the estimate $s_{MSE}$</li>
 </ul>
 
 </div>
@@ -14666,7 +14680,7 @@ $$
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><strong> 6.6.</strong> Plot the prediction function obtained in ap. 6.5, and compare it with the linear predictor in exercise 4</li>
+<li><strong>6.6.</strong> Plot the prediction function obtained in ap. 6.5, and compare it with the linear predictor in exercise 4</li>
 </ul>
 
 </div>
@@ -14892,19 +14906,6 @@ iIQpFEREJEyhICIiYQoFEREJUyiIiEiYQkFERML+G/93r/pzSB/WAAAAAElFTkSuQmCC
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
 </div></div></section></section>
 </div>
 </div>
