@@ -13243,7 +13243,7 @@ a.anchor-link {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Parametric-Model-Based-regression">Parametric Model-Based regression<a class="anchor-link" href="#Parametric-Model-Based-regression">&#182;</a></h1>
-<pre><code>Notebook version: 1.2 (Sep 17, 2018)
+<pre><code>Notebook version: 1.3 (Sep 20, 2019)
 
 Author: Jesús Cid-Sueiro (jesus.cid@uc3m.es)
         Jerónimo Arenas García (jarenas@tsc.uc3m.es)</code></pre>
@@ -13260,6 +13260,7 @@ Author: Jesús Cid-Sueiro (jesus.cid@uc3m.es)
                  notebook
          v.1.1 - Python 3 version.
          v.1.2 - Revised presentation. 
+         v.1.3 - Updated index notation
 
 Pending changes: * Include regression on the stock data</code></pre>
 
@@ -13303,7 +13304,7 @@ ${\bf X}$, $S$, $E$ ..., to denote random variables, and lower-case letters ${\b
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.-Model-based-parametric-regression">1. Model-based parametric regression<a class="anchor-link" href="#1.-Model-based-parametric-regression">&#182;</a></h2><h3 id="1.1.-The-regression-problem">1.1. The regression problem<a class="anchor-link" href="#1.1.-The-regression-problem">&#182;</a></h3><p>Given an observation vector ${\bf x}$, the goal of the regression problem is to find a function $f({\bf x})$ providing <em>good</em> predictions about some unknown variable $s$. To do so, we assume that a set of <em>labelled</em> training examples, $\{{\bf x}^{(k)}, s^{(k)}\}_{k=0}^{K-1}$ is available.</p>
+<h2 id="1.-Model-based-parametric-regression">1. Model-based parametric regression<a class="anchor-link" href="#1.-Model-based-parametric-regression">&#182;</a></h2><h3 id="1.1.-The-regression-problem">1.1. The regression problem<a class="anchor-link" href="#1.1.-The-regression-problem">&#182;</a></h3><p>Given an observation vector ${\bf x}$, the goal of the regression problem is to find a function $f({\bf x})$ providing <em>good</em> predictions about some unknown variable $s$. To do so, we assume that a set of <em>labelled</em> training examples, $\{{\bf x}_k, s_k\}_{k=0}^{K-1}$ is available.</p>
 <p>The predictor function should make good predictions for new observations ${\bf x}$ not used during training. In practice, this is tested using a second set (the <em>test set</em>) of labelled samples.</p>
 
 </div>
@@ -13312,8 +13313,9 @@ ${\bf X}$, $S$, $E$ ..., to denote random variables, and lower-case letters ${\b
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="1.2.-The-underlying-model-assumption">1.2. The underlying model assumption<a class="anchor-link" href="#1.2.-The-underlying-model-assumption">&#182;</a></h3><p>Many regression algorithms are grounded on the idea that all samples from the training set have been generated independently by some common stochastic process.</p>
-<p>&lt;img src="./figs/DataModel.png", width=180&gt;</p>
+<h3 id="1.2.-The-underlying-model-assumption">1.2. The underlying model assumption<a class="anchor-link" href="#1.2.-The-underlying-model-assumption">&#182;</a></h3><p>Many regression algorithms are grounded on the idea that all samples from the training set have been generated 
+independently by some common stochastic process.</p>
+<p><img src="figs/data_model.png" width=180></p>
 <p>If $p({\bf x}, s)$ were known, we could apply estimation theory to estimate $s$ for a given ${\bf x}$ using $p$. For instance, we could apply any of the following classical estimates:</p>
 <ul>
 <li>Maximum A Posterior (MAP): $$\hat{s}_{\text{MAP}} = \arg\max_s p(s| {\bf x})$$</li>
@@ -13377,7 +13379,7 @@ $$</li>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="1.3.-Model-based-regression">1.3. Model-based regression<a class="anchor-link" href="#1.3.-Model-based-regression">&#182;</a></h3><p>In practice, the underlying model is usually unknown.</p>
 <p>Model based-regression methods exploit the idea of using the training data to estimate the posterior distribution $p(s|{\bf x})$ and then apply estimation theory to make predictions.</p>
-<p>&lt;img src="figs/ModelBasedReg.png", width=280&gt;</p>
+<p><img src="figs/ModelBasedReg.png" width=280></p>
 
 </div>
 </div>
@@ -13437,7 +13439,7 @@ $$</li>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We will use the training data to estimate ${\bf w}$</p>
-<p>&lt;img src="figs/ParametricReg.png", width=300&gt;</p>
+<p><img src="figs/ParametricReg.png" width=300></p>
 <p>The estimation of ${\bf w}$ from a given dataset $\mathcal{D}$ is the goal of the following sections</p>
 
 </div>
@@ -13457,11 +13459,11 @@ $$</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Exercise-3:">Exercise 3:<a class="anchor-link" href="#Exercise-3:">&#182;</a></h4><p>All samples in dataset ${\cal D} = \{(x^{(k)}, s^{(k)}), k=0,\ldots,K-1 \}$ 
+<h4 id="Exercise-3:">Exercise 3:<a class="anchor-link" href="#Exercise-3:">&#182;</a></h4><p>All samples in dataset ${\cal D} = \{(x_k, s_k), k=0,\ldots,K-1 \}$ 
 $$
-s^{(k)} = w \cdot x^{(k)} + \epsilon^{(k)}
+s_k = w \cdot x_k + \epsilon_k
 $$
-where $\epsilon^{(k)}$ are i.i.d. (independent and identically distributed) Gaussian noise random variables with zero mean and unit variance, which do not depend on $x^{(k)}$.</p>
+where $\epsilon_k$ are i.i.d. (independent and identically distributed) Gaussian noise random variables with zero mean and unit variance, which do not depend on $x_k$.</p>
 <p>Compute the ML estimate, $\hat{w}_{\text{ML}}$, of $w$.</p>
 
 </div>
@@ -13472,36 +13474,36 @@ where $\epsilon^{(k)}$ are i.i.d. (independent and identically distributed) Gaus
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Solution:">Solution:<a class="anchor-link" href="#Solution:">&#182;</a></h4><p>From Exercise 2, 
 $$
-p\left(s^{(k)} \mid x^{(k)}, w \right) 
-   = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac12\left(s^{(k)}-wx^{(k)}\right)^2\right)
+p\left(s_k \mid x_k, w \right) 
+   = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac12\left(s_k-wx_k\right)^2\right)
 $$</p>
 <p>Since the noise variables are i.i.d, we have
 $$
 p(\mathcal{D}|w) 
-    = p\left(s^{(0)},\ldots, s^{(K-1)}\mid x^{(0)}, \ldots, x^{(K-1)}, w \right) 
-      p\left(x^{(0)},\ldots, x^{(K-1)}\mid w \right)\\
+    = p\left(s_0,\ldots, s_{K-1}\mid x_{0}, \ldots, x_{K-1}, w \right) 
+      p\left(x_0,\ldots, x_{K-1}\mid w \right)\\
 \qquad \quad   = \prod_{k=0}^{K-1} \frac{1}{\sqrt{2\pi}}
-                                   \exp\left(-\frac12\left(s^{(k)}-wx^{(k)}\right)^2\right) 
-                 p\left(x^{(0)},\ldots, x^{(K-1)} \right)                                   
+                                   \exp\left(-\frac12\left(s_k-wx_k\right)^2\right) 
+                 p\left(x_0,\ldots, x_{K-1} \right)                                   
                                    \\
 \qquad \quad   = \frac{1}{(2\pi)^{\frac{K}{2}}}
-                 \exp\left(-\frac12 \sum_{k=0}^{K-1} \left(s^{(k)}-wx^{(k)}\right)^2\right)
-                 p\left(x^{(0)},\ldots, x^{(K-1)} \right)   
+                 \exp\left(-\frac12 \sum_{k=0}^{K-1} \left(s_k-wx_k\right)^2\right)
+                 p\left(x_0,\ldots, x_{K-1} \right)   
 $$
 Therefore:
 $$
 \hat{\bf w}_{\text{ML}} = \arg \max_{\bf w} p(\mathcal{D}|{\bf w}) 
-                        = \arg \min_{\bf w} \sum_{k=0}^{K-1} \left(s^{(k)}-wx^{(k)}\right)^2
+                        = \arg \min_{\bf w} \sum_{k=0}^{K-1} \left(s_k-wx_k\right)^2
 $$
 Differentiating with respect to w:
 $$</p>
 <ul>
-<li>2 \sum<em>{k=0}^{K-1} \left(s^{(k)}-\hat{w}</em>\text{ML} x^{(k)}\right) x^{(k)}  = 0
+<li>2 \sum_{k=0}^{K-1} \left(s<em>k-\hat{w}</em>\text{ML} x_k\right) x<em>k  = 0
 $$
 that is
 $$
-\hat{w}<em>\text{ML} = \frac{\sum</em>{k=0}^{K-1} s^{(k)} x^{(k)}}
-<pre><code>                   {\sum_{k=0}^{K-1} \left(x^{(k)}\right)^2} 
+\hat{w}</em>\text{ML} = \frac{\sum_{k=0}^{K-1} s_k x_k}
+<pre><code>                   {\sum_{k=0}^{K-1} \left(x_k\right)^2} 
 </code></pre>
 $$</li>
 </ul>
@@ -13755,11 +13757,11 @@ $$</li>
 <h3 id="2.1.-Model-assumptions">2.1. Model assumptions<a class="anchor-link" href="#2.1.-Model-assumptions">&#182;</a></h3><p>In order to solve exercise 4 we have taken advantage of the statistical independence of the noise components. Some independence assumptions are required in general to compute the ML estimate in other scenarios.</p>
 <p>In order to estimate ${\bf w}$ from the training data in a mathematicaly rigorous and compact form let us group the target variables into a vector
 $$
-{\bf s} = \left(s^{(0)}, \dots, s^{(K-1)}\right)^\top
+{\bf s} = \left(s_0, \dots, s_{K-1}\right)^\top
 $$
 and the input vectors into a matrix
 $$
-{\bf X} = \left({\bf x}^{(0)}, \dots, {\bf x}^{(K-1)}\right)^\top
+{\bf X} = \left({\bf x}_0, \dots, {\bf x}_{K-1}\right)^\top
 $$</p>
 <p>We will make the following assumptions:</p>
 <ul>
@@ -13768,9 +13770,9 @@ $$</p>
 $$
 p({\bf X} \mid {\bf w}) = p({\bf X})
 $$</li>
-<li>A3. Targets $s^{(0)},\ldots, s^{(K-1)}$ are statistically independent, given ${\bf w}$ and the inputs ${\bf x}^{(0)},\ldots, {\bf x}^{(K-1)}$, that is:
+<li>A3. Targets $s_{0},\ldots, s_{K-1}$ are statistically independent, given ${\bf w}$ and the inputs ${\bf x}_0,\ldots, {\bf x}_{K-1}$, that is:
 $$
-p({\bf s} \mid {\bf X}, {\bf w}) = \prod_{k=0}^{K-1} p(s^{(k)} \mid {\bf x}^{(k)}, {\bf w})
+p({\bf s} \mid {\bf X}, {\bf w}) = \prod_{k=0}^{K-1} p(s_k \mid {\bf x}_k, {\bf w})
 $$</li>
 </ul>
 
@@ -13794,8 +13796,8 @@ $$</p>
 \begin{align}
 \hat{\bf w}_{\text{ML}}
                 &amp;= \arg \max_{\bf w} p({\bf s}|{\bf X},{\bf w})  \\
-   \qquad \quad &amp;= \arg \max_{\bf w} \prod_{k=0}^{K-1} p(s^{(k)} \mid {\bf x}^{(k)}, {\bf w})  \\
-   \qquad \quad &amp;= \arg \max_{\bf w} \sum_{k=0}^{K-1}\log  p(s^{(k)} \mid {\bf x}^{(k)}, {\bf w})
+   \qquad \quad &amp;= \arg \max_{\bf w} \prod_{k=0}^{K-1} p(s_k \mid {\bf x}_k, {\bf w})  \\
+   \qquad \quad &amp;= \arg \max_{\bf w} \sum_{k=0}^{K-1}\log  p(s_k \mid {\bf x}_k, {\bf w})
 \end{align}<p>Any of the last three terms can be used to optimize ${\bf w}$. The sum in the last term is usually called the <strong>log-likelihood</strong> function, $L({\bf w})$, whereas the product in the previous line is simply referred as the <strong>likelihood</strong> function.</p>
 
 </div>
@@ -13818,16 +13820,16 @@ $$</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-ML-estimation-for-a-Gaussian-model.">3. ML estimation for a Gaussian model.<a class="anchor-link" href="#3.-ML-estimation-for-a-Gaussian-model.">&#182;</a></h2><h3 id="3.1.-Step-1:-The-Gaussian-generative-model">3.1. Step 1: The Gaussian generative model<a class="anchor-link" href="#3.1.-Step-1:-The-Gaussian-generative-model">&#182;</a></h3><p>Let us assume that the target variables $s^{(k)}$ in dataset $\mathcal{D}$ are given by
+<h2 id="3.-ML-estimation-for-a-Gaussian-model.">3. ML estimation for a Gaussian model.<a class="anchor-link" href="#3.-ML-estimation-for-a-Gaussian-model.">&#182;</a></h2><h3 id="3.1.-Step-1:-The-Gaussian-generative-model">3.1. Step 1: The Gaussian generative model<a class="anchor-link" href="#3.1.-Step-1:-The-Gaussian-generative-model">&#182;</a></h3><p>Let us assume that the target variables $s_k$ in dataset $\mathcal{D}$ are given by
 $$
-s^{(k)} = {\bf w}^\top {\bf z}^{(k)} + \varepsilon^{(k)}
+s_k = {\bf w}^\top {\bf z}_k + \varepsilon_k
 $$</p>
-<p>where ${\bf z}^{(k)}$ is the result of some transformation of the inputs, ${\bf z}^{(k)} = T({\bf x}^{(k)})$, and $\varepsilon^{(k)}$ are i.i.d. instances of a Gaussian random variable with mean zero and varianze $\sigma_\varepsilon^2$, i.e.,
+<p>where ${\bf z}_k$ is the result of some transformation of the inputs, ${\bf z}_k = T({\bf x}_k)$, and $\varepsilon_k$ are i.i.d. instances of a Gaussian random variable with mean zero and varianze $\sigma_\varepsilon^2$, i.e.,
 $$
 p_E(\varepsilon) = \frac{1}{\sqrt{2\pi}\sigma_\varepsilon}
                    \exp\left(-\frac{\varepsilon^2}{2\sigma_\varepsilon^2}\right)
 $$</p>
-<p>Assuming that the noise variables are independent of ${\bf x}$ and ${\bf w}$, then, for a given ${\bf x}$ and ${\bf w}$, the target variable is gaussian with mean ${\bf w}^\top {\bf z}^{(k)}$ and variance $\sigma_\varepsilon^2$
+<p>Assuming that the noise variables are independent of ${\bf x}$ and ${\bf w}$, then, for a given ${\bf x}$ and ${\bf w}$, the target variable is gaussian with mean ${\bf w}^\top {\bf z}_k$ and variance $\sigma_\varepsilon^2$
 $$
 p(s|{\bf x}, {\bf w}) = p_E(s-{\bf w}^\top{\bf z}) =
     \frac{1}{\sqrt{2\pi}\sigma_\varepsilon}
@@ -13843,14 +13845,14 @@ $$</p>
 <h3 id="3.2.-Step-2:-Likelihood-function">3.2. Step 2: Likelihood function<a class="anchor-link" href="#3.2.-Step-2:-Likelihood-function">&#182;</a></h3><p>Now we need to compute the likelihood function $p({\bf s}, {\bf X} | {\bf w})$. If the samples are i.i.d. we can write
 $$
 p({\bf s}| {\bf X}, {\bf w})
-    = \prod_{k=1}^{K} p(s^{(k)}| {\bf x}^{(k)}, {\bf w}) 
-    = \prod_{k=1}^{K} \frac{1}{\sqrt{2\pi}\sigma_\varepsilon}
-    \exp\left(-\frac{\left(s^{(k)}-{\bf w}^\top{\bf z}^{(k)}\right)^2}{2\sigma_\varepsilon^2}\right) \\
+    = \prod_{k=0}^{K-1} p(s_k| {\bf x}_k, {\bf w}) 
+    = \prod_{k=0}^{K-1} \frac{1}{\sqrt{2\pi}\sigma_\varepsilon}
+    \exp\left(-\frac{\left(s_k-{\bf w}^\top{\bf z}_k\right)^2}{2\sigma_\varepsilon^2}\right) \\
     = \left(\frac{1}{\sqrt{2\pi}\sigma_\varepsilon}\right)^K
-      \exp\left(-\sum_{k=1}^K \frac{\left(s^{(k)}-{\bf w}^\top{\bf z}^{(k)}\right)^2}{2\sigma_\varepsilon^2}\right) \\
+      \exp\left(-\sum_{k=1}^K \frac{\left(s_k-{\bf w}^\top{\bf z}_k\right)^2}{2\sigma_\varepsilon^2}\right) \\
 $$
-Finally, grouping variables ${\bf z}^{(k)}$ in
-$${\bf Z} = \left({\bf z}^{(1)}, \dots, {\bf z}^{(K)}\right)^\top$$
+Finally, grouping variables ${\bf z}_k$ in
+$${\bf Z} = \left({\bf z}_0, \dots, {\bf z}_{K-1}\right)^\top$$
 we get
 $$
 p({\bf s}| {\bf X}, {\bf w})
@@ -14263,7 +14265,7 @@ bp7f2UROl84URESknMYURESknEpBRETKqRRERKScSkFERMqpFEREpJxKQUREyqkURESknEpBRETK
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Exercise-6:">Exercise 6:<a class="anchor-link" href="#Exercise-6:">&#182;</a></h4><p>Assume the dataset $\mathcal{D} = \{(x^{(k)}, s^{(k)}, k=1,\ldots, K\}$ contains i.i.d. samples from a distribution with posterior density given by
+<h4 id="Exercise-6:">Exercise 6:<a class="anchor-link" href="#Exercise-6:">&#182;</a></h4><p>Assume the dataset $\mathcal{D} = \{(x_k, s_k, k=0,\ldots, K-1\}$ contains i.i.d. samples from a distribution with posterior density given by
 $$
 p(s \mid x, w) = w x \exp(- w x s), \qquad s\ge0, \,\, x\ge 0, \,\, w\ge 0
 $$</p>
@@ -14282,8 +14284,8 @@ $$</p>
 The likelihood function is 
 $$
 p({\bf s}|w, {\bf X}) 
-    = \prod_{k=1}^K w x^{(k)} \exp(- w x^{(k)} s^{(k)})
-    = w^K \left(\prod_{k=0}^{K-1} x^{(k)}\right)  \exp\left(- w \sum_{k=0}^{K-1} x^{(k)} s^{(k)}\right)
+    = \prod_{k=0}^{K-1} w x_k \exp(- w x_k s_k)
+    = w^K \left(\prod_{k=0}^{K-1} x_k\right)  \exp\left(- w \sum_{k=0}^{K-1} x_k s_k\right)
 $$
 </SOL>
 </div>
@@ -14583,7 +14585,7 @@ aRMrJMYYY9rECokxxpg2sUJijDGmTf4/YHcNVJOpWawAAAAASUVORK5CYII=
 Applyng the logarithm to the likelihood function we get
 $$
 \log p({\bf s}|{\bf w}, {\bf X}) 
-    = K\log  w + \sum_{k=1}^K \log\left(x^{(k)}\right)  - w {\bf X}^\top {\bf s}
+    = K\log  w + \sum_{k=0}^{K-1} \log\left(x_k\right)  - w {\bf X}^\top {\bf s}
 $$
 which is minimum for 
 $$
