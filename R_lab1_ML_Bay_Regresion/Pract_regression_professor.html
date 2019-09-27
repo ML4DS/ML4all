@@ -13141,7 +13141,7 @@ Pending changes: </code></pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Import some libraries that will be necessary for working with data and displaying plots</span>
@@ -13202,7 +13202,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -13236,7 +13236,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Parameter settings</span>
@@ -13263,7 +13263,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[62]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Data dimension:</span>
@@ -13293,8 +13293,8 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>The true parameter vector is:
-[[ 32.24149274]
- [-21.79179556]]
+[[2.52950265]
+ [0.61731815]]
 </pre>
 </div>
 </div>
@@ -13315,7 +13315,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;SOL&gt;</span>
@@ -13338,7 +13338,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>[4] Finally, generate the output vector ${\mbox s}$ as the product $\mbox{X} \ast \mbox{true_w}$ plus Gaussian noise of pdf ${\cal N}(0,\sigma_\varepsilon^2)$ at each element.</li>
+<li>[4] Finally, generate the output vector ${\bf s}$ as the product ${\bf Z} \ast \text{true_w}$ plus Gaussian noise of pdf ${\cal N}(0,\sigma_\varepsilon^2)$ at each element.</li>
 </ul>
 
 </div>
@@ -13375,7 +13375,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>Plot the generated data. You will notice a linear behavior, but the presence of noise makes it hard to estimate precisely the original straight line that generated them (which is stored in $\mbox{true_w}$).</li>
+<li>Plot the generated data. You will notice a linear behavior, but the presence of noise makes it hard to estimate precisely the original straight line that generated them (which is stored in <code>true_w</code>).</li>
 </ul>
 
 </div>
@@ -13383,7 +13383,7 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &lt;SOL&gt; </span>
@@ -13407,14 +13407,19 @@ $${\bf w} \sim {\cal N}({\bf 0}, \sigma_p^2~{\bf I})$$
     <div class="prompt"></div>
 
 
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-4-901596f11d84&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-red-fg"># &lt;SOL&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-red-fg"># Plot training points</span>
+<span class="ansi-green-fg">----&gt; 3</span><span class="ansi-red-fg"> </span>plt<span class="ansi-blue-fg">.</span>scatter<span class="ansi-blue-fg">(</span>X<span class="ansi-blue-fg">,</span> s<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">;</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span> plt<span class="ansi-blue-fg">.</span>xlabel<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;$x$&#39;</span><span class="ansi-blue-fg">,</span>fontsize<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">14</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">;</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span> plt<span class="ansi-blue-fg">.</span>ylabel<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;$s$&#39;</span><span class="ansi-blue-fg">,</span>fontsize<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">14</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">;</span>
 
-
-<div class="output_png output_subarea ">
-<img src="data:image/png;base64,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
-"
->
+<span class="ansi-red-fg">NameError</span>: name &#39;X&#39; is not defined</pre>
 </div>
-
 </div>
 
 </div>
