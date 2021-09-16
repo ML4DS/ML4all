@@ -13238,7 +13238,7 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.-Data-preprocessing">1. Data preprocessing<a class="anchor-link" href="#1.-Data-preprocessing">&#182;</a></h2><p>The aim of <a href="https://scikit-learn.org/stable/modules/preprocessing.html">data preprocessing methods</a> is to transform the data into a form that is ready to apply machine learning algorithms. This may include:</p>
+<h3 id="1.1.-Data-preprocessing">1.1. Data preprocessing<a class="anchor-link" href="#1.1.-Data-preprocessing">&#182;</a></h3><p>The aim of <a href="https://scikit-learn.org/stable/modules/preprocessing.html">data preprocessing methods</a> is to transform the data into a form that is ready to apply machine learning algorithms. This may include:</p>
 <ul>
 <li><a href="https://scikit-learn.org/stable/modules/preprocessing.html#standardization-or-mean-removal-and-variance-scaling">Data normalization</a>: transform the individual features to ensure a proper range of variation</li>
 <li><a href="https://scikit-learn.org/stable/modules/impute.html">Data imputation</a>: assign values to features that may be missed for some data samples</li>
@@ -13317,18 +13317,17 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="2.1.-Standard-scaling.">2.1. Standard scaling.<a class="anchor-link" href="#2.1.-Standard-scaling.">&#182;</a></h3><p>A common normalization method consists on applying an affine transformation</p>
-<p>[$$
+<h3 id="2.1.-Standard-scaling.">2.1. Standard scaling.<a class="anchor-link" href="#2.1.-Standard-scaling.">&#182;</a></h3><p>A common normalization method consists on applying an affine transformation
+$$
 {\bf t}_k = {\bf D}({\bf x} - {\bf m})
-$$][Eq1]</p>
+$$</p>
 <p>where ${\bf D}$ is a diagonal matrix, in such a way that the transformed dataset ${\cal S}' = \{{\bf t}_k, k=0, \ldots, K-1\}$ has zero sample mean, i.e.,</p>
 $$
 \frac{1}{K} \sum_{k=0}^{K-1} {\bf t}_k = 0
 $$<p>and unit sample variance, i.e.,</p>
 $$
 \frac{1}{K} \sum_{k=0}^{K-1} t_{ki}^2 = 1
-$$<p>as you sw <a href="Eq1">above</a></p>
-
+$$
 </div>
 </div>
 </div></section><section>
@@ -13346,7 +13345,7 @@ $$<p>Using the data matrix ${\bf X}$ and the <em>broadcasting</em> property of t
 
 </div>
 </div>
-</div>
+</div></section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13401,7 +13400,7 @@ $$<p>Using the data matrix ${\bf X}$ and the <em>broadcasting</em> property of t
 </div>
 </div>
 
-</div>
+</div></section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13409,7 +13408,7 @@ $$<p>Using the data matrix ${\bf X}$ and the <em>broadcasting</em> property of t
 
 </div>
 </div>
-</div>
+</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
@@ -13443,7 +13442,7 @@ $$<p>Using the data matrix ${\bf X}$ and the <em>broadcasting</em> property of t
 </div>
 </div>
 
-</div>
+</div></div><div class="fragment">
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13451,7 +13450,7 @@ $$<p>Using the data matrix ${\bf X}$ and the <em>broadcasting</em> property of t
 
 </div>
 </div>
-</div>
+</div></div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
@@ -13582,7 +13581,7 @@ $$<p>Using the data matrix ${\bf X}$ and the <em>broadcasting</em> property of t
 
 </div>
 </div>
-</div>
+</div></section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13591,7 +13590,7 @@ $$<p>Using the data matrix ${\bf X}$ and the <em>broadcasting</em> property of t
 
 </div>
 </div>
-</div>
+</div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
