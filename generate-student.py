@@ -68,27 +68,26 @@ def transform_nb(dirpath, src_fname, tg_fname):
                         state = False
                 else:
                     if '</SOL>' in line:
-                        fout.write('\n'+line)
+                        fout.write('\n' + line)
                         state = True
 
-    f = srcfile.replace(' ', '\ ')
-    os.system('jupyter nbconvert --to html ' + f + ' --output ' +
-              src_fname.replace('.ipynb', '.html'))
+    # Insert backslash in spaces. This is to avoid error in the interpretation
+    # of spaces (when they are part of the file name) in os commands.
+    f_src = srcfile.replace(' ', '\\ ')
+    os.system('jupyter nbconvert --to html ' + f_src + ' --output '
+              + src_fname.replace('.ipynb', '.html'))
 
     # Clean student version
-    os.system('jupyter nbconvert --ClearOutputPreprocessor.enabled=True ' +
-              '--inplace ' + tgfile)
+    f_tg = tgfile.replace(' ', '\\ ')
+    os.system('jupyter nbconvert --ClearOutputPreprocessor.enabled=True '
+              + '--inplace ' + f_tg)
 
-    # f = tgfile.replace(' ', '\ ')
-    # os.system('jupyter nbconvert --to html ' + f + ' --output ' +
-    #           tg_fname.replace('.ipynb', '.html'))
-    # f = tgfile.replace(' ', '\ ')
-
-    os.system('jupyter nbconvert --to slides ' + f)
-    os.system('jupyter nbconvert --to pdf ' + f + ' --output ' +
-              src_fname.replace('.ipynb', '.pdf'))
+    os.system(f'jupyter nbconvert --to slides {f_src}')
+    os.system(f'jupyter nbconvert --to pdf {f_src} --output '
+              + src_fname.replace('.ipynb', '.pdf'))
 
     return
+
 
 # Configurable variables
 sufixsrc = '_professor.ipynb'
@@ -101,8 +100,8 @@ if len(sys.argv) > 1:
     if not os.path.exists(datapath):
         sys.exit("Data path does not exist.")
 else:
-    datapath = input("Select the (absolute or relative) path to " +
-                     "the data source (file or folder): ")
+    datapath = input("Select the (absolute or relative) path to "
+                     + "the data source (file or folder): ")
 
 # File processing
 if os.path.isfile(datapath):

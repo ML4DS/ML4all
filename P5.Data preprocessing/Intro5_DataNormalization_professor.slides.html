@@ -12998,13 +12998,8 @@ ul.typeahead-list  > li > a.pull-right {
 /*# sourceMappingURL=style.min.css.map */
     </style>
 <style type="text/css">
-    pre { line-height: 125%; }
-td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
-span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
-td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
-span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
-.highlight .hll { background-color: #ffffcc }
-.highlight { background: #f8f8f8; }
+    .highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
 .highlight .c { color: #408080; font-style: italic } /* Comment */
 .highlight .err { border: 1px solid #FF0000 } /* Error */
 .highlight .k { color: #008000; font-weight: bold } /* Keyword */
@@ -13340,7 +13335,7 @@ $$
 $$</p>
 <p>and taking the diagonal components of ${\bf D}$ equal to the inverse of the standard deviation of each feature, i.e.,</p>
 $$
-d_{ii} = \frac{1}{\frac{1}{K} \sum_{k=0}^{K-1} (x_{ki} - m_i)^2}
+d_{ii} = \frac{1}{\sqrt{\frac{1}{K} \sum_{k=0}^{K-1} (x_{ki} - m_i)^2}}
 $$<p>Using the data matrix ${\bf X}$ and the <em>broadcasting</em> property of the basic mathematical operators in Python, the implementation of this normalization is straightforward.</p>
 
 </div>
