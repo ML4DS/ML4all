@@ -15580,6 +15580,7 @@ etime = time.time() - start
 
 <span class="k">for</span> <span class="n">ntrain</span> <span class="ow">in</span> <span class="n">train_size</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Classifying with&#39;</span><span class="p">,</span> <span class="n">ntrain</span><span class="p">,</span> <span class="s1">&#39;samples&#39;</span><span class="p">)</span>
+    <span class="c1"># Write your code here</span>
     <span class="c1"># &lt;SOL&gt;</span>
     <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="n">knn</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">()</span>
@@ -15763,6 +15764,7 @@ etime = time.time() - start
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
     <span class="n">NLL_MLP</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[</span><span class="n">y_tst</span><span class="o">==</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">])</span>
 
+<span class="c1"># &lt;/SOL&gt;</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Negative Log Likelihood for the MLP classifier:&#39;</span><span class="p">,</span> <span class="n">NLL_MLP</span><span class="p">)</span>
 </pre></div>
 
