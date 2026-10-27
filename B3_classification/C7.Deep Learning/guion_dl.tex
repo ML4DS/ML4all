@@ -1,0 +1,151 @@
+%------------------------------------------------------------------------------
+%  Guión del bloque de Deep Learning -- Tratamiento de Datos, UC3M
+%------------------------------------------------------------------------------
+\documentclass[10pt,a4paper]{article}
+\usepackage[a4paper,top=1.6cm,bottom=1.6cm,left=1.8cm,right=1.8cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+\definecolor{uc3m}{RGB}{0,53,120}
+\definecolor{accent}{RGB}{224,118,27}
+\definecolor{rowgrey}{RGB}{242,242,242}
+\hypersetup{colorlinks=true, linkcolor=uc3m, urlcolor=uc3m}
+
+\setlist[itemize]{itemsep=.1em, topsep=.2em, parsep=0pt, leftmargin=1.1em}
+\setlength{\parindent}{0pt}
+
+\pagestyle{fancy}\fancyhf{}
+\lhead{\small\color{uc3m}\textbf{Deep Learning} — guión de sesión}
+\rhead{\small\color{uc3m} Tratamiento de Datos · MUIT}
+\cfoot{\small\thepage}
+\renewcommand{\headrulewidth}{.4pt}
+
+\newcommand{\sesion}[3]{%
+  \noindent{\color{uc3m}\large\textbf{#1}}\hfill{\color{uc3m}\small #2}\\[-.3em]
+  {\color{uc3m}\rule{\textwidth}{1pt}}\\[.2em]
+  {\small #3}\par\vspace{.5em}}
+
+\newenvironment{plan}
+  {\small\begin{tabular}{@{}>{\ttfamily}l>{\raggedright\arraybackslash}p{2.1cm}>{\raggedright\arraybackslash}p{10.6cm}@{}}
+   \toprule \textrm{\textbf{Hora}} & \textbf{Bloque} & \textbf{Contenido / qué hacer} \\ \midrule}
+  {\bottomrule\end{tabular}\par\vspace{.6em}}
+
+\newcommand{\pr}[0]{\cellcolor{accent!15}}
+\newcommand{\avisos}[1]{%
+  \vspace{.2em}\noindent\fcolorbox{accent}{accent!7}{%
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep-2\fboxrule}
+  \small\textbf{Ojo con:}\;#1
+  \end{minipage}}\par}
+
+\begin{document}
+
+%==============================================================================
+\sesion{Sesión 1 — Redes neuronales desde cero}{90 min · notebook \texttt{DL1} · transp. 1--25}
+{Objetivo: que salgan sabiendo que una red es \emph{topología + pérdida + forward +
+backward + regla de actualización}, y que el backward es la regla de la cadena hacia atrás.
+Todo en numpy: ninguna librería nueva.}
+
+\begin{plan}
+0:00 & Apertura & Las tres sesiones y los tres notebooks. Los dos datasets. \textbf{Insistir}: aplanar la imagen tira la estructura; eso explicará los resultados de hoy. \\
+0:08 & Teoría & Red de una capa binaria: combinación lineal $\to$ activación $\to$ umbral. Por qué no se entrena con el acierto. Pérdidas. \textbf{Es regresión logística}: la NLL es la entropía cruzada. Regla de GD: \emph{error $\times$ entrada}. \\
+\pr 0:20 & \pr \textbf{Notebook} & \pr §3.1 completa + ejercicios 1 y 2. Que encuentren un $\rho$ divergente. Que prueben DogsCats. \\
+0:35 & Puesta en común & Dígitos $\approx0.95$, DogsCats $\approx0.60$. \textbf{Pregunta abierta}: ¿por qué? (posición fija vs. objeto en cualquier sitio; un píxel no significa nada por sí solo). Esto motiva capas ocultas y, más adelante, convoluciones. \\
+0:40 & Teoría & Multiclase: one-hot, softmax, hardmax. El gradiente vuelve a ser $(\bm q-\bm y)\bm x^\top$. Estabilidad numérica del softmax (restar el máximo). \\
+\pr 0:48 & \pr \textbf{Notebook} & \pr §3.2 + ejercicios 3, 4 y 5. La matriz de confusión del ej.~4 da conversación. \\
+1:00 & Teoría & Redes multicapa. Grafo forward de la red de 2 capas. Backprop: el error se propaga hacia atrás multiplicado por los pesos y por la derivada de la activación. \textbf{Contar el bug}: la versión anterior usaba $(1-h)^2$ en vez de $1-h^2$; entrenaba igual, y por eso hacía falta $\rho/10$ en la capa oculta. De ahí el \emph{gradient checking}. \\
+\pr 1:12 & \pr \textbf{Notebook} & \pr §3.3. Primero el gradient check; luego que lo rompan a propósito y vean que la curva de pérdida no se entera. Ejercicio 6. \\
+1:24 & Cierre & Funciones de activación y saturación. Regresión (solo cambia la última capa y la pérdida). Qué no escala. \textbf{Tarea}: los dos tutoriales de PyTorch (30 min). \\
+\end{plan}
+
+\avisos{El entrenamiento de DogsCats con 500 épocas tarda $\approx$ 100\,s; que lo lancen
+y sigan leyendo mientras. Si alguien va muy rápido, el ejercicio 7 (\texttt{MLPClassifier})
+le ocupa.}
+
+\vspace{.4em}
+\textbf{Resultados de referencia} (semilla 42, datos normalizados):\;
+dígitos binario 1 capa $\approx0.95$ ·
+DogsCats 1 capa $\approx0.60$ ·
+dígitos 10 clases $\approx0.88$ ·
+2 capas, $n_h=5$, 2000 épocas, $\rho=0.5$: dígitos $\approx0.95$ ·
+gradient check $\approx 10^{-9}$.
+
+\newpage
+%==============================================================================
+\sesion{Sesión 2 — Redes profundas con PyTorch}{90 min · notebook \texttt{DL2} · transp. 26--41}
+{Objetivo: subir la escalera de abstracción de PyTorch entendiendo qué esconde cada
+peldaño, y ver las tres formas de controlar el sobreajuste. El modelo es siempre el mismo:
+lo que cambia es cuánto código escribimos.}
+
+\begin{plan}
+0:00 & Apertura & Qué aporta PyTorch. Anunciar el plan: \emph{el mismo modelo escrito cuatro veces}. \\
+0:05 & Teoría & Tensores (comparten memoria con numpy; \texttt{float32} vs \texttt{float64}). Autograd: el grafo de cómputo y \texttt{backward()}. Los gradientes \textbf{se acumulan}: de ahí \texttt{zero\_grad()}. \\
+\pr 0:15 & \pr \textbf{Notebook} & \pr §1.2--1.3 y ejercicio 1. El apartado 1.5 (ejecutar \texttt{backward} dos veces) es el que enseña de verdad: preguntarles por qué falla. \\
+0:25 & Teoría & Los cuatro niveles: (1) tensores + autograd; (2) \texttt{nn.Module}/\texttt{nn.Parameter}; (3) \texttt{nn.Linear} + \texttt{nn.CrossEntropyLoss}; (4) \texttt{torch.optim}. Señalar que la convergencia más rápida del nivel 3 es por la \textbf{inicialización}, no por el modelo. \\
+\pr 0:39 & \pr \textbf{Notebook} & \pr §2.1--2.3: ejecutar las cuatro versiones y comprobar que dan lo mismo. Ejercicio 2 (Adam + scheduler). \\
+0:53 & Teoría & GD vs SGD con minibatches. \texttt{DataLoader}. \texttt{nn.Sequential}: cuatro capas sin derivar nada (contrastar con las dos transparencias de ayer para derivar dos capas). \\
+\pr 1:01 & \pr \textbf{Notebook} & \pr §2.4--2.5. \textbf{Pedirles que miren la separación entre la curva de train y la de validación}, no solo el acierto final. \\
+1:10 & Teoría & Sobreajuste leído en las curvas: acierto que satura vs. pérdida de validación que \emph{crece} (= equivocarse con más confianza). Weight decay, dropout (\texttt{train()}/\texttt{eval()}), early stopping (mejor modelo, no el último; \emph{paciencia}). \\
+\pr 1:22 & \pr \textbf{Notebook} & \pr §3: que lancen los tres experimentos (tardan varios minutos; que arranquen mientras se comenta). Los ejercicios 3--5 quedan como trabajo en casa. \\
+\end{plan}
+
+\avisos{El experimento de weight decay \textbf{no mejora el acierto} ($0.792\to0.792$) pero
+baja la pérdida de validación final de $1.08$ a $0.79$. No lo vendas como una mejora de
+acierto: el mensaje es que la red regularizada no acierta más, se equivoca con menos
+confianza. Y el early stopping sobre la \emph{pérdida} selecciona la época $\approx$139
+con acierto $0.760$, cuando el mejor acierto ($0.792$) llega mucho después: \textbf{lo que
+monitorizas es el modelo que te llevas}.}
+
+\vspace{.4em}
+\textbf{Resultados de referencia}: red \texttt{Sequential} 4096-200-50-20-10, 300 épocas,
+SGD $\rho=0.01$, batch 64 — acierto de validación $\approx0.79$; con dropout 0.5
+$\approx0.84$; con weight decay $10^{-2}$ $\approx0.79$ (pérdida final 0.79 vs 1.08).
+
+\newpage
+%==============================================================================
+\sesion{Sesión 3 — Redes convolucionales}{90 min · notebook \texttt{DL3} · transp. 42--57}
+{Objetivo: las dos ideas de una CNN (conectividad local y pesos compartidos), saber
+calcular tamaños, y ver que en un problema de imagen real se empieza por una red
+preentrenada.}
+
+\begin{plan}
+0:00 & Apertura & Por qué una capa densa es la herramienta equivocada: número de parámetros y falta de invarianza a traslación. Las dos ideas. \textbf{Que lancen ya la celda de descarga de CIFAR10}, que tarda. \\
+0:06 & Teoría & El operador de convolución: kernel, canales, mapas de activación. La fórmula de tamaños y los tres parámetros (\texttt{padding}, \texttt{stride}, \texttt{kernel}). Los parámetros no dependen del tamaño de la imagen. \\
+0:16 & Teoría & Pooling: max y average. Reduce tamaño, da algo de invarianza, \textbf{no tiene parámetros}. \\
+\pr 0:22 & \pr \textbf{Notebook} & \pr §2 y ejercicio 1. Que \emph{predigan} el tamaño antes de ejecutar cada caso. \\
+0:34 & Teoría & Una CNN completa: parte convolucional (extrae) + parte densa (clasifica). Seguir el tamaño a lo largo de la red hasta el $10\times8\times8=640$. El bucle de entrenamiento es el mismo de la sesión 2. \\
+\pr 0:42 & \pr \textbf{Notebook} & \pr §3: entrenar 10 épocas (en GPU, $\approx$ 20\,s/época) y mirar el acierto \textbf{por clase}. Ejercicio 2 mientras entrena. \\
+0:57 & Teoría & Data augmentation: transformaciones que no cambian la etiqueta, al vuelo, \textbf{solo en train}. Qué transformación es válida es una decisión de modelado (ejemplo de los dígitos y del 6/9). \\
+1:04 & Teoría & Transfer learning: congelar el backbone, sustituir la cabeza, entrenar solo esa capa. Los números: 11.2M parámetros, 5130 entrenables (0.05\,\%). Fine-tuning después, con $\rho$ pequeño. \\
+\pr 1:15 & \pr \textbf{Notebook} & \pr §4 y §5. Comparar el acierto del transfer learning (sobre 4000 imágenes) con el de la CNN entrenada desde cero sobre las 50000. Cierre del bloque. \\
+\end{plan}
+
+\avisos{Esta sesión \textbf{necesita GPU}: Entorno de ejecución $\to$ Cambiar tipo de
+entorno de ejecución $\to$ GPU. Recordarlo al empezar, no a mitad. La descarga de CIFAR10
+(170\,MB) y la de los pesos de ResNet18 (45\,MB) conviene lanzarlas pronto. El transfer
+learning usa un subconjunto de 4000/1000 imágenes a propósito: a $224\times224$ el dataset
+completo no cabe en el tiempo de clase.}
+
+\vspace{.4em}
+\textbf{Resultados de referencia}: CNN pequeña (7010 parámetros), 10 épocas, Adam
+$3\cdot10^{-4}$ — acierto de test $\approx0.55$--$0.60$; con augmentation, algo peor al
+principio y mejor a partir de $\approx$20 épocas; ResNet18 congelada sobre 4000 imágenes
+$\approx0.75$--$0.80$.
+
+\vspace{1em}
+{\color{uc3m}\rule{\textwidth}{.6pt}}\\[.3em]
+\textbf{Material del bloque}\\[.2em]
+\small
+\texttt{DL1\_NeuralNetworks\_numpy.ipynb} · \texttt{DL2\_DeepNetworks\_PyTorch.ipynb} ·
+\texttt{DL3\_ConvolutionalNetworks.ipynb}\\
+\texttt{deeplearning.pdf} (57 transparencias) · \texttt{wooclap\_deeplearning.md}
+
+\end{document}
